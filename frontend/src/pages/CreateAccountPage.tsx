@@ -50,53 +50,55 @@ function CreateAccountPage() {
   };
 
   return (
-    <div className="create-container">
-      <div className="create-card">
-        <h1 className="create-title">Create Account</h1>
-        <form onSubmit={handleSubmit} className="create-form">
-          <input
-            className="create-input"
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Email address"
-            value={email}
-            onChange={handleChange}
-          />
+    <div className="create-page">
+      <div className="create-container">
+        <div className="create-card">
+          <h1 className="create-title">Create Account</h1>
+          <form onSubmit={handleSubmit} className="create-form">
+            <input
+              className="create-input"
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Email address"
+              value={email}
+              onChange={handleChange}
+            />
 
-          <input
-            className="create-input"
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Password"
-            value={password}
-            onChange={handleChange}
-          />
+            <input
+              className="create-input"
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Password"
+              value={password}
+              onChange={handleChange}
+            />
 
-          <input
-            className="create-input"
-            type="password"
-            id="confirmPassword"
-            name="confirmPassword"
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={handleChange}
-          />
+            <input
+              className="create-input"
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={handleChange}
+            />
 
-          <button className="create-button" type="submit">
-            Register
-          </button>
+            <button className="create-button" type="submit">
+              Register
+            </button>
 
-          <button
-            className="go-login-button"
-            type="button"
-            onClick={handleLoginClick}
-          >
-            Go to Login
-          </button>
-        </form>
-        {error && <p className="create-error">{error}</p>}
+            <button
+              className="go-login-button"
+              type="button"
+              onClick={handleLoginClick}
+            >
+              Go to Login
+            </button>
+          </form>
+          {error && <p className="create-error">{error}</p>}
+        </div>
       </div>
     </div>
   );
