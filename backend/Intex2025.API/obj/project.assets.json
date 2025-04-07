@@ -3007,11 +3007,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jayde\\OneDrive\\Desktop\\Intex\\INTEX2025\\backend\\Intex2025.API\\Intex2025.API.csproj",
+      "projectUniqueName": "C:\\Users\\jayde\\OneDrive\\Desktop\\INTEX2025\\backend\\Intex2025.API\\Intex2025.API.csproj",
       "projectName": "Intex2025.API",
-      "projectPath": "C:\\Users\\jayde\\OneDrive\\Desktop\\Intex\\INTEX2025\\backend\\Intex2025.API\\Intex2025.API.csproj",
+      "projectPath": "C:\\Users\\jayde\\OneDrive\\Desktop\\INTEX2025\\backend\\Intex2025.API\\Intex2025.API.csproj",
       "packagesPath": "C:\\Users\\jayde\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jayde\\OneDrive\\Desktop\\Intex\\INTEX2025\\backend\\Intex2025.API\\obj\\",
+      "outputPath": "C:\\Users\\jayde\\OneDrive\\Desktop\\INTEX2025\\backend\\Intex2025.API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
