@@ -1,0 +1,128 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: linear-gradient(135deg, #000000, #111111, #1a1a1a);
+  font-family: "Inter", sans-serif;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.create-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+}
+
+.create-card {
+  width: 100%;
+  max-width: 750px;
+  background-color: #fff;
+  border-radius: 14px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+  padding: 70px 80px;
+  transition: transform 0.3s ease;
+}
+
+.create-card:hover {
+  transform: translateY(-6px);
+}
+
+.create-title {
+  font-size: 36px;
+  font-weight: 600;
+  color: #111;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.create-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.create-input {
+  width: 100%;
+  height: 60px;
+  padding: 0 20px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.create-input:focus {
+  border-color: #00a8e8;
+  box-shadow: 0 0 0 3px rgba(0, 168, 232, 0.3);
+}
+
+.create-input::placeholder {
+  color: #aaa;
+}
+
+.create-button,
+.go-login-button {
+  height: 60px;
+  font-size: 17px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(to right, #00a8e8, #006b94);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  text-transform: uppercase;
+}
+
+.create-button:hover,
+.go-login-button:hover {
+  background: linear-gradient(to right, #006b94, #00a8e8);
+}
+
+.go-login-button {
+  background: transparent;
+  color: #007bb5;
+  border: 2px solid #007bb5;
+  margin-top: 12px;
+}
+
+.go-login-button:hover {
+  background: #007bb5;
+  color: white;
+}
+
+.create-error {
+  color: #e74c3c;
+  text-align: center;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* Responsive Tweaks */
+@media (max-width: 700px) {
+  .create-card {
+    padding: 50px 35px;
+  }
+
+  .create-title {
+    font-size: 30px;
+  }
+
+  .create-input,
+  .create-button,
+  .go-login-button {
+    height: 56px;
+  }
+}
