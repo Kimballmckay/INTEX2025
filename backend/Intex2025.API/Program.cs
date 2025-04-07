@@ -13,6 +13,14 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<MovieDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("MovieConnection")));
 
+builder.Services.AddCors(options =>
+    options.AddPolicy("AllowReactApp", 
+    policy => {
+        policy.WithOrigins("http://localhost:3000")
+        .AllowAnyMethod()
+        .AllowAnyHeader();
+    }));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -22,9 +30,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(x => x.WithOrigins("http://localhost:3000"));
-
 app.UseHttpsRedirection();
+
+app.UseCors("AllowReactApp");
 
 app.UseAuthorization();
 
