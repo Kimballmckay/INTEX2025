@@ -1,30 +1,29 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
+.create-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   background: linear-gradient(135deg, #000000, #111111, #1a1a1a);
   font-family: "Inter", sans-serif;
   color: #333;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  padding: 20px;
+  overflow: auto;
 }
 
-.create-container {
+.create-page .create-container {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding: 20px;
 }
 
-.create-card {
+.create-page .create-card {
   width: 100%;
   max-width: 750px;
   background-color: #fff;
@@ -34,11 +33,11 @@ body {
   transition: transform 0.3s ease;
 }
 
-.create-card:hover {
+.create-page .create-card:hover {
   transform: translateY(-6px);
 }
 
-.create-title {
+.create-page .create-title {
   font-size: 36px;
   font-weight: 600;
   color: #111;
@@ -46,13 +45,13 @@ body {
   margin-bottom: 40px;
 }
 
-.create-form {
+.create-page .create-form {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.create-input {
+.create-page .create-input {
   width: 100%;
   height: 60px;
   padding: 0 20px;
@@ -63,17 +62,17 @@ body {
   transition: all 0.2s ease;
 }
 
-.create-input:focus {
+.create-page .create-input:focus {
   border-color: #00a8e8;
   box-shadow: 0 0 0 3px rgba(0, 168, 232, 0.3);
 }
 
-.create-input::placeholder {
+.create-page .create-input::placeholder {
   color: #aaa;
 }
 
-.create-button,
-.go-login-button {
+.create-page .create-button,
+.create-page .go-login-button {
   height: 60px;
   font-size: 17px;
   font-weight: 600;
@@ -86,24 +85,24 @@ body {
   text-transform: uppercase;
 }
 
-.create-button:hover,
-.go-login-button:hover {
+.create-page .create-button:hover,
+.create-page .go-login-button:hover {
   background: linear-gradient(to right, #006b94, #00a8e8);
 }
 
-.go-login-button {
+.create-page .go-login-button {
   background: transparent;
   color: #007bb5;
   border: 2px solid #007bb5;
   margin-top: 12px;
 }
 
-.go-login-button:hover {
+.create-page .go-login-button:hover {
   background: #007bb5;
   color: white;
 }
 
-.create-error {
+.create-page .create-error {
   color: #e74c3c;
   text-align: center;
   font-size: 14px;
@@ -112,17 +111,17 @@ body {
 
 /* Responsive Tweaks */
 @media (max-width: 700px) {
-  .create-card {
+  .create-page .create-card {
     padding: 50px 35px;
   }
 
-  .create-title {
+  .create-page .create-title {
     font-size: 30px;
   }
 
-  .create-input,
-  .create-button,
-  .go-login-button {
+  .create-page .create-input,
+  .create-page .create-button,
+  .create-page .go-login-button {
     height: 56px;
   }
 }
