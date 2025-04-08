@@ -7,12 +7,11 @@ import LoginPage from "./pages/LoginPage";
 import ManageMoviesPage from "./pages/ManageMoviesPage";
 import PrivacyPage from "./pages/PrivacyPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
-import MovieList from "./components/MovieList";
 
 function App() {
   return (
     <>
-      {/* <Router>
+      <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/home" element={<HomePage />} />
@@ -22,9 +21,7 @@ function App() {
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/productdetail" element={<ProductDetailPage />} />
         </Routes>
-      </Router> */}
-      <MovieList/>
-      
+      </Router>
     </>
   );
 }
