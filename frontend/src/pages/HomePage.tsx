@@ -3,6 +3,8 @@ import { Carousel } from "react-bootstrap";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import { useState } from "react";
+// import AuthorizeView, { AuthorizedUser } from "../components/AuthorizeView";
+// import Logout from "../components/Logout";
 
 function HomePage() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -81,6 +83,13 @@ function HomePage() {
 
   return (
     <>
+      {/* <AuthorizeView>
+        <span>
+          <Logout>
+            Logout
+            <AuthorizedUser value="email" />
+          </Logout>
+        </span> */}
       {/* HOME PAGE */}
       <div className="homepage">
         {/* HEADER CAROUSEL */}
@@ -178,6 +187,7 @@ function HomePage() {
           <Footer />
         </div>
       </div>
+      {/* </AuthorizeView> */}
     </>
   );
 }
