@@ -7,19 +7,20 @@ import LoginPage from "./pages/LoginPage";
 import ManageMoviesPage from "./pages/ManageMoviesPage";
 import PrivacyPage from "./pages/PrivacyPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import {
-  faFacebook,
-  faTwitter,
-  faInstagram,
-} from "@fortawesome/free-brands-svg-icons";
+import MovieList from "./components/MovieList";
+// import { library } from "@fortawesome/fontawesome-svg-core";
+// import {
+//   faFacebook,
+//   faTwitter,
+//   faInstagram,
+// } from "@fortawesome/free-brands-svg-icons";
 
-library.add(faFacebook, faTwitter, faInstagram);
+// library.add(faFacebook, faTwitter, faInstagram);
 
 function App() {
   return (
     <>
-      <Router>
+      {/* <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/home" element={<HomePage />} />
@@ -29,7 +30,8 @@ function App() {
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/productdetail" element={<ProductDetailPage />} />
         </Routes>
-      </Router>
+      </Router> */}
+      <MovieList/>
     </>
   );
 }

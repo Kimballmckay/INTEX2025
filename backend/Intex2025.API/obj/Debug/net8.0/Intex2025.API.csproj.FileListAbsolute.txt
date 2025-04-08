@@ -135,6 +135,7 @@ C:\Users\jayde\OneDrive\Desktop\INTEX2025\backend\Intex2025.API\bin\Debug\net8.0
 C:\Users\jayde\OneDrive\Desktop\INTEX2025\backend\Intex2025.API\bin\Debug\net8.0\Intex2025.API.dll
 C:\Users\jayde\OneDrive\Desktop\INTEX2025\backend\Intex2025.API\bin\Debug\net8.0\Intex2025.API.pdb
 C:\Users\jayde\OneDrive\Desktop\INTEX2025\backend\Intex2025.API\bin\Debug\net8.0\Humanizer.dll
+C:\Users\jayde\OneDrive\Desktop\INTEX2025\backend\Intex2025.API\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\Users\jayde\OneDrive\Desktop\INTEX2025\backend\Intex2025.API\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\jayde\OneDrive\Desktop\INTEX2025\backend\Intex2025.API\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
 C:\Users\jayde\OneDrive\Desktop\INTEX2025\backend\Intex2025.API\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.dll
