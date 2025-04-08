@@ -22,12 +22,12 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/Home" element={<HomePage />} />
-          <Route path="/CreateAccount" element={<CreateAccountPage />} />
-          <Route path="/Login" element={<LoginPage />} />
-          <Route path="/ManageMovies" element={<ManageMoviesPage />} />
-          <Route path="/Privacy" element={<PrivacyPage />} />
-          <Route path="/ProductDetailPage" element={<ProductDetailPage />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/createaccount" element={<CreateAccountPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/managemovies" element={<ManageMoviesPage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="/productdetail" element={<ProductDetailPage />} />
         </Routes>
       </Router>
     </>
