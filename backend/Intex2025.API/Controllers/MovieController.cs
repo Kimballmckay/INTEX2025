@@ -2,11 +2,13 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Intex2025.API.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize]
     public class MovieController : ControllerBase
     {
         private MovieDbContext _movieContext;
