@@ -26,9 +26,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddAuthorization();
 
 //security
-//builder.Services.AddIdentityApiEndpoints<IdentityUser, IdentityRole>()
-    //.AddEntityFrameworkStores<ApplicationDbContext>()
-    //.AddDefaultTokenProviders();
+builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
 
 //security
 builder.Services.Configure<IdentityOptions>(options =>
