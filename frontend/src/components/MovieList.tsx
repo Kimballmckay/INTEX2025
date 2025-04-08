@@ -65,14 +65,7 @@ function MovieList() {
                 <div key={movie.show_id} id="movieCard">
                     <h3>{movie.title}</h3>
                     <ul>
-                        <li>Type: {movie.type}</li>
-                        <li>Director: {movie.director}</li>
-                        <li>Cast: {movie.cast}</li>
-                        <li>Country: {movie.country}</li>
-                        <li>Release year: {movie.release_year}</li>
-                        <li>Rating: {movie.rating}</li>
-                        <li>Duration: {movie.duration}</li>
-                        <li>Description: {movie.description}</li>
+                        <li>Genre: {movie.genre}</li>
                     </ul>
                 </div>
             ))}
