@@ -6,7 +6,7 @@ namespace Intex2025.API.Data
     public class Movies_Title
     {
         [Key]
-        public string? show_id { get; set; }
+        public string show_id { get; set; }
         public string? type { get; set; }
         public string? title { get; set; }
         public string? director { get; set; }

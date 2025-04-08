@@ -9,7 +9,7 @@ interface NewMovieFormProps {
 
 const NewMovieForm = ({ onSuccess, onCancel }: NewMovieFormProps) => {
   const [formData, setFormData] = useState<MoviesTitle>({
-    show_id: 0,
+    show_id: "",
     type: "",
     title: "",
     director: "",
