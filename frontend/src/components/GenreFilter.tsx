@@ -5,7 +5,7 @@ function GenreFilter() {
         useEffect(() =>{
             const fetchGenres = async () => {
                 try {
-                const response = await fetch("https://localhost:5000/Movie/FilteredMovies");
+                const response = await fetch("https://localhost:5000/Movie/GetMovieGenres");
                 const data = await response.json();
                 console.log('Fetched genres', data)
                 setGenres(data);
