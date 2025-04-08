@@ -8,7 +8,7 @@ namespace Intex2025.API.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    [Authorize]
+    // [Authorize]
     public class MovieController : ControllerBase
     {
         private MovieDbContext _movieContext;
