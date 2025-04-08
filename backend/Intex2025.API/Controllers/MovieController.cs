@@ -21,9 +21,14 @@ namespace Intex2025.API.Controllers
 
         // Updated GetMovies to handle pagination
         [HttpGet("AllMovies")]
-        public IActionResult GetMovies(int pageSize = 5, int pageNum = 1)
+        public IActionResult GetMovies(int pageSize = 5, int pageNum = 1, [FromQuery] List<string>? movieGenres = null)
         {
             var query = _movieContext.Movies_Titles.AsQueryable();
+
+            if (movieGenres != null && movieGenres.Any())
+            {
+                query = query.Where(g => movieGenres.Contains(g.genre));
+            }
 
             var totalNumMovies = query.Count();
 
