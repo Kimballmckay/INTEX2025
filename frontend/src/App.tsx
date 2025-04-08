@@ -7,6 +7,14 @@ import LoginPage from "./pages/LoginPage";
 import ManageMoviesPage from "./pages/ManageMoviesPage";
 import PrivacyPage from "./pages/PrivacyPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faFacebook,
+  faTwitter,
+  faInstagram,
+} from "@fortawesome/free-brands-svg-icons";
+
+library.add(faFacebook, faTwitter, faInstagram);
 
 function App() {
   return (
@@ -14,12 +22,12 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/Home" element={<HomePage />} />
-          <Route path="/CreateAccount" element={<CreateAccountPage />} />
-          <Route path="/Login" element={<LoginPage />} />
-          <Route path="/ManageMovies" element={<ManageMoviesPage />} />
-          <Route path="/Privacy" element={<PrivacyPage />} />
-          <Route path="/ProductDetailPage" element={<ProductDetailPage />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/createaccount" element={<CreateAccountPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/managemovies" element={<ManageMoviesPage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="/productdetail" element={<ProductDetailPage />} />
         </Routes>
       </Router>
     </>
