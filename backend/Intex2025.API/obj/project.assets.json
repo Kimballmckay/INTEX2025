@@ -3175,23 +3175,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\jayde\\.nuget\\packages\\": {},
+    "C:\\Users\\prest\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jayde\\OneDrive\\Desktop\\INTEX2025\\backend\\Intex2025.API\\Intex2025.API.csproj",
+      "projectUniqueName": "C:\\Users\\prest\\OneDrive\\Desktop\\IntexII\\INTEX2025\\backend\\Intex2025.API\\Intex2025.API.csproj",
       "projectName": "Intex2025.API",
-      "projectPath": "C:\\Users\\jayde\\OneDrive\\Desktop\\INTEX2025\\backend\\Intex2025.API\\Intex2025.API.csproj",
-      "packagesPath": "C:\\Users\\jayde\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jayde\\OneDrive\\Desktop\\INTEX2025\\backend\\Intex2025.API\\obj\\",
+      "projectPath": "C:\\Users\\prest\\OneDrive\\Desktop\\IntexII\\INTEX2025\\backend\\Intex2025.API\\Intex2025.API.csproj",
+      "packagesPath": "C:\\Users\\prest\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\prest\\OneDrive\\Desktop\\IntexII\\INTEX2025\\backend\\Intex2025.API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\jayde\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\prest\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
