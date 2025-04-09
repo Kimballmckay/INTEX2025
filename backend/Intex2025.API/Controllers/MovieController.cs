@@ -21,9 +21,19 @@ namespace Intex2025.API.Controllers
 
         // Updated GetMovies to handle pagination
         [HttpGet("AllMovies")]
-        public IActionResult GetMovies(int pageSize = 5, int pageNum = 1)
+        public IActionResult GetMovies(int pageSize = 5, int pageNum = 1, [FromQuery] List<string>? movieGenres = null)
         {
             var query = _movieContext.Movies_Titles.AsQueryable();
+
+            if (movieGenres != null && movieGenres.Any())
+            {
+                var lowerTrimmedSelectedGenres = movieGenres.Select(g => g.ToLower().Trim()).ToList();
+
+                // Check if the genre string contains ANY of the selected genres
+                // NOTE: This translates better but has the substring issue (e.g., "action" matches "non-action")
+                query = query.Where(m => !string.IsNullOrEmpty(m.genre) &&
+                       lowerTrimmedSelectedGenres.Any(sg => m.genre.ToLower().Contains(sg)));
+            }
 
             var totalNumMovies = query.Count();
 
@@ -56,6 +66,7 @@ namespace Intex2025.API.Controllers
 
             return Ok(movieGenres);
         }
+
 
         [HttpPost("AddMovie")]
         public IActionResult AddMovie([FromBody] Movies_Title newMovie)
