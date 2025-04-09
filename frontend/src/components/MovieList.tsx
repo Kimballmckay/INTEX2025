@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { MoviesTitle } from "../types/MoviesTitle";
 import { fetchMovies } from "../api/MoviesAPI";
+import "./MovieList.css";
 
 function MovieList({ selectedGenres }: { selectedGenres: string[] }) {
   const [movies, setMovies] = useState<MoviesTitle[]>([]);
@@ -56,19 +57,24 @@ function MovieList({ selectedGenres }: { selectedGenres: string[] }) {
   }, [loading, hasMore]);
 
   return (
-    <div>
+    <div className="row">
       {movies.map((movie, index) => {
-        const imageUrl = `https://movieimagesstorage.blob.core.windows.net/movieimages/Movie%20Posters/Movie%20Posters/${encodeURIComponent(movie.title!)}.jpg`;
+        const cleanTitle = movie.title.replace(/[^a-zA-Z0-9\s]/g, ""); // Removes special characters
+        const imageUrl = `https://movieimagesstorage.blob.core.windows.net/movieimages/Movie%20Posters/Movie%20Posters/${encodeURIComponent(cleanTitle)}.jpg`;
 
         return (
-          <div key={`${movie.show_id}-${index}`} id="movieCard">
-            <h3>{movie.title}</h3>
+          <div
+            key={`${movie.show_id}-${index}`}
+            className="col-md-3 mb-3"
+            id="movieCard"
+          >
             <img
               src={imageUrl}
               alt={`${movie.title} poster`}
               width={200}
               height={300}
             />
+            <h3>{movie.title}</h3>
             <ul>
               <li>Genre: {movie.genre}</li>
             </ul>
