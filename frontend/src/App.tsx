@@ -16,6 +16,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import UserHomePage from "./pages/UserHomePage";
 import AuthorizeView from "./components/AuthorizeView";
+import MoviePage from "./pages/MoviePage";
 
 library.add(faFacebook, faTwitter, faInstagram);
 
@@ -31,6 +32,7 @@ function App() {
           <Route path="/managemovies" element={<ManageMoviesPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/productdetail" element={<ProductDetailPage />} />
+          <Route path="/movies" element={<MoviePage />} />
           <Route
             path="/userhome"
             element={
