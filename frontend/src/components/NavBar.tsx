@@ -1,11 +1,13 @@
 import "../css/NavBar.css"; // Make sure this path is correct
+import { useNavigate } from "react-router-dom";
 
 function NavBar() {
+  const navigate = useNavigate();
   return (
     <div className="App">
       <nav className="navbar">
         <div className="logo">
-          <img src="/images/Cine.svg" alt="Logo" />
+          <img src="/images/Untitled design (1).png" alt="Logo" />
         </div>
 
         <div className="dropdown">
@@ -25,9 +27,7 @@ function NavBar() {
           </div>
         </div>
 
-        <div className="login">
-          <button>Login</button>
-        </div>
+        <button onClick={() => navigate("/login")}>Login</button>
       </nav>
     </div>
   );

@@ -28,8 +28,7 @@
 }
 
 .logo img {
-  height: 100px;
-  width: 100px;
+  height: 40px;
 }
 
 .dropdown {
@@ -70,10 +69,29 @@
   display: block;
 }
 
-.login button {
-  background-color: transparent;
-  border: none;
+/* New styles for username and logout button */
+.user-controls {
+  display: flex;
+  align-items: center;
+}
+
+.username {
   color: white;
+  margin-right: 15px;
   font-size: 16px;
+}
+
+.logout-btn {
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 4px;
+  color: white;
+  padding: 5px 10px;
+  font-size: 14px;
   cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }

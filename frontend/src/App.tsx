@@ -13,6 +13,8 @@ import {
   faTwitter,
   faInstagram,
 } from "@fortawesome/free-brands-svg-icons";
+import UserHomePage from "./pages/UserHomePage";
+import AuthorizeView from "./components/AuthorizeView";
 
 library.add(faFacebook, faTwitter, faInstagram);
 
@@ -28,6 +30,14 @@ function App() {
           <Route path="/managemovies" element={<ManageMoviesPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/productdetail" element={<ProductDetailPage />} />
+          <Route
+            path="/userhome"
+            element={
+              <AuthorizeView>
+                <UserHomePage />
+              </AuthorizeView>
+            }
+          />
         </Routes>
       </Router>
     </>
