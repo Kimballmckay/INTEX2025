@@ -67,6 +67,18 @@ namespace Intex2025.API.Controllers
             return Ok(movieGenres);
         }
 
+        [HttpGet("{show_id}")]
+        public async Task<IActionResult> GetMovieById(string show_id)
+        {
+            var movie = await _movieContext.Movies_Titles.FindAsync(show_id);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+            return Ok(movie);
+        }
+
+
 
         [HttpPost("AddMovie")]
         public IActionResult AddMovie([FromBody] Movies_Title newMovie)
