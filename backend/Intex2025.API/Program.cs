@@ -43,8 +43,8 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.SameSite = SameSiteMode.None;  // Use None to allow cross-site cookies
     options.Cookie.Name = ".AspNetCore.Identity.Application";
-    options.LoginPath = "/login";
     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    options.LoginPath = "/login";
 });
 
 builder.Services.AddCors(options =>
@@ -91,7 +91,8 @@ app.MapPost("/logout", async (HttpContext context, SignInManager<IdentityUser> s
     {
         HttpOnly = true,
         Secure = true,
-        SameSite = SameSiteMode.Strict,
+        SameSite = SameSiteMode.None,
+        Path = "/",
     });
 
     return Results.Ok(new { message = "Logout successful" });
