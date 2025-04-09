@@ -6,9 +6,15 @@ using Intex2025.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add user secrets in development environment
+if (builder.Environment.IsDevelopment())
+{
+    builder.Configuration.AddUserSecrets<Program>(); // This will load user secrets
+}
 
+// Add services to the container.
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -16,47 +22,48 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<MovieDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("MovieConnection")));
 
-// security 
+// Security - Identity
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("IdentityConnection")));
 
-// keep this here
-// security 
+// Keep this here
 builder.Services.AddAuthorization();
 
-// security 
+// Security - Add Identity services
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
     {
         options.Password.RequireDigit = false;
         options.Password.RequireLowercase = false;
         options.Password.RequireNonAlphanumeric = false;
         options.Password.RequireUppercase = false;
-        options.Password.RequiredLength = 17;
+        options.Password.RequiredLength = 14;
         options.Password.RequiredUniqueChars = 0;
-        //changeds
     })
     .AddRoles<IdentityRole>()
-   .AddEntityFrameworkStores<ApplicationDbContext>()
-   .AddDefaultTokenProviders();
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
 
-// security
+// Security - Identity options configuration
 builder.Services.Configure<IdentityOptions>(options =>
 {
     options.ClaimsIdentity.UserIdClaimType = ClaimTypes.NameIdentifier;
     options.ClaimsIdentity.UserNameClaimType = ClaimTypes.Email; // Ensure email is stored in claims
 });
 
+// Security - Custom UserClaimsPrincipalFactory
 builder.Services.AddScoped<IUserClaimsPrincipalFactory<IdentityUser>, CustomUserClaimsPrincipalFactory>();
 
+// Security - Configure Application Cookie
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.Cookie.HttpOnly = true;
-    options.Cookie.SameSite = SameSiteMode.None;  // Use None to allow cross-site cookies
+    options.Cookie.SameSite = SameSiteMode.None; // Use None to allow cross-site cookies
     options.Cookie.Name = ".AspNetCore.Identity.Application";
     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
     options.LoginPath = "/login";
 });
 
+// CORS policy configuration
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp",
@@ -88,10 +95,10 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-// security 
+// Security - Identity API
 app.MapIdentityApi<IdentityUser>();
 
-// security
+// Security - Logout endpoint
 app.MapPost("/logout", async (HttpContext context, SignInManager<IdentityUser> signInManager) =>
 {
     await signInManager.SignOutAsync();
@@ -108,7 +115,7 @@ app.MapPost("/logout", async (HttpContext context, SignInManager<IdentityUser> s
     return Results.Ok(new { message = "Logout successful" });
 }).RequireAuthorization();
 
-// info on logged-in user, are they authenticated?
+// Info on logged-in user, are they authenticated?
 app.MapGet("/pingauth", (ClaimsPrincipal user) =>
 {
     if (!user.Identity?.IsAuthenticated ?? false)

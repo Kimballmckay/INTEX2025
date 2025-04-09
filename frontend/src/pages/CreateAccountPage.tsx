@@ -28,9 +28,11 @@ function CreateAccountPage() {
       setError("Please enter a valid email address.");
     } else if (password !== confirmPassword) {
       setError("Passwords do not match.");
+    } else if (password.length < 14) {
+      setError("Password must be at least 14 characters long.");
     } else {
       setError("");
-      fetch("https://localhost:5000/createaccount", {
+      fetch("https://localhost:5000/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

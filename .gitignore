@@ -272,3 +272,9 @@ packages/react-devtools-extensions/.tempUserDataDir
 packages/react-devtools-fusebox/dist
 packages/react-devtools-inline/dist
 packages/react-devtools-shell/dist
+
+# Secret files
+**/secrets.json
+.env
+*.pfx
+*.key
