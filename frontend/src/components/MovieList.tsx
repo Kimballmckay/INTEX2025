@@ -3,25 +3,25 @@ import { MoviesTitle } from "../types/MoviesTitle";
 import { fetchMovies } from "../api/MoviesAPI";
 import "./MovieList.css";
 
-function MovieList({ selectedGenres }: { selectedGenres: string[] }) {
+function MovieList({ selectedGenres, searchQuery }: { selectedGenres: string[]; searchQuery: string }) {
   const [movies, setMovies] = useState<MoviesTitle[]>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
-  // When genres change, reset movies list and pagination
+  // When genres or search query change, reset movies list and pagination
   useEffect(() => {
     setMovies([]);
     setPage(1);
     setHasMore(true);
-  }, [selectedGenres]);
+  }, [selectedGenres, searchQuery]);
 
   useEffect(() => {
     const loadMovies = async () => {
       setLoading(true);
       try {
         const pageSize = 10;
-        const data = await fetchMovies(pageSize, page, selectedGenres);
+        const data = await fetchMovies(pageSize, page, selectedGenres, searchQuery);
 
         if (data.movies.length === 0) {
           setHasMore(false);
@@ -38,7 +38,7 @@ function MovieList({ selectedGenres }: { selectedGenres: string[] }) {
     if (hasMore) {
       loadMovies();
     }
-  }, [page, selectedGenres, hasMore]);
+  }, [page, selectedGenres, hasMore, searchQuery]);
 
   const handleScroll = () => {
     const bottom =
@@ -75,9 +75,6 @@ function MovieList({ selectedGenres }: { selectedGenres: string[] }) {
               height={300}
             />
             <h3>{movie.title}</h3>
-            <ul>
-              <li>Genre: {movie.genre}</li>
-            </ul>
           </div>
         );
       })}
