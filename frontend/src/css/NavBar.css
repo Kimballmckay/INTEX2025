@@ -1,5 +1,4 @@
 /* nav bar styles */
-
 .App {
   font-family: Arial, sans-serif;
 }
@@ -17,8 +16,20 @@
   z-index: 10;
 }
 
-.logo img {
+.profile-pic {
+  margin-right: 20px;
+}
+
+.profile-pic img {
   height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.logo img {
+  height: 100px;
+  width: 100px;
 }
 
 .dropdown {

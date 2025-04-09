@@ -15,7 +15,7 @@ const NewMovieForm = ({ onSuccess, onCancel }: NewMovieFormProps) => {
     director: "",
     cast: "",
     country: "",
-    release_year: 0,
+    release_year: "" as unknown as number,
     rating: "",
     duration: "",
     description: "",
@@ -23,7 +23,11 @@ const NewMovieForm = ({ onSuccess, onCancel }: NewMovieFormProps) => {
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value, type } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "number" ? (value === "" ? "" : parseInt(value)) : value,
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -84,9 +88,11 @@ const NewMovieForm = ({ onSuccess, onCancel }: NewMovieFormProps) => {
         Release Year:
         <input
           type="number"
-          name="category"
+          name="release_year"
           value={formData.release_year}
           onChange={handleChange}
+          min={1870}
+          max={2030}
         />
       </label>
       <label>
