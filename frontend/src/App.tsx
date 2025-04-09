@@ -8,17 +8,6 @@ import LoginPage from "./pages/LoginPage";
 import ManageMoviesPage from "./pages/ManageMoviesPage";
 import PrivacyPage from "./pages/PrivacyPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
-import MovieList from "./components/MovieList";
-import MoviePage from "./pages/MoviePage";
-import GenreFilter from "./components/GenreFilter";
-// import { library } from "@fortawesome/fontawesome-svg-core";
-// import {
-//   faFacebook,
-//   faTwitter,
-//   faInstagram,
-// } from "@fortawesome/free-brands-svg-icons";
-
-// library.add(faFacebook, faTwitter, faInstagram);
 
 function App() {
   return (
