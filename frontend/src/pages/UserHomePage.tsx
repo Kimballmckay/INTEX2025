@@ -3,7 +3,8 @@ import { Carousel } from "react-bootstrap";
 import NavBar2 from "../components/NavBar2";
 import Footer from "../components/Footer";
 import { useState } from "react";
-import AuthorizeView from "../components/AuthorizeView";
+import AuthorizeView, { AuthorizedUser } from "../components/AuthorizeView";
+import Logout from "../components/Logout";
 
 function UserHomePage() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -81,105 +82,117 @@ function UserHomePage() {
   ];
 
   return (
-    <AuthorizeView>
-      {/* HOME PAGE */}
-      <div className="homepage">
-        {/* HEADER CAROUSEL */}
-        <section className="hero-carousel">
-          <nav>
-            <NavBar2 />
-          </nav>
-          <Carousel controls={true} indicators={true} fade interval={4000}>
-            {carouselItems.map((item, index) => (
-              <Carousel.Item key={index}>
-                <div className="carousel-background">
-                  <img src={item.image} className="carousel-img" alt="Slide" />
-                  <div className="carousel-overlay">
-                    <div className="carousel-text">
-                      <h1>{item.title}</h1>
-                      <p>{item.subtitle}</p>
+    <>
+      <AuthorizeView>
+        <Logout>
+          Logout
+          <AuthorizedUser value="email" />
+        </Logout>
+        <div className="homepage">
+          {/* HEADER CAROUSEL */}
+          <section className="hero-carousel">
+            <nav>
+              <NavBar2 />
+            </nav>
+            <Carousel controls={true} indicators={true} fade interval={4000}>
+              {carouselItems.map((item, index) => (
+                <Carousel.Item key={index}>
+                  <div className="carousel-background">
+                    <img
+                      src={item.image}
+                      className="carousel-img"
+                      alt="Slide"
+                    />
+                    <div className="carousel-overlay">
+                      <div className="carousel-text">
+                        <h1>{item.title}</h1>
+                        <p>{item.subtitle}</p>
+                      </div>
                     </div>
                   </div>
+                </Carousel.Item>
+              ))}
+            </Carousel>
+          </section>
+
+          {/* FIND SOMETHING NEW SECTION */}
+          <section className="find-new">
+            <h2>Find Something New</h2>
+            <div className="movie-grid">
+              {top10Movies.map((src, idx) => (
+                <div className="movie-item" key={idx}>
+                  <span className="ranking">{idx + 1}</span>
+                  <img src={src} alt={`Top ${idx + 1}`} />
                 </div>
-              </Carousel.Item>
-            ))}
-          </Carousel>
-        </section>
+              ))}
+            </div>
+          </section>
 
-        {/* FIND SOMETHING NEW SECTION */}
-        <section className="find-new">
-          <h2>Find Something New</h2>
-          <div className="movie-grid">
-            {top10Movies.map((src, idx) => (
-              <div className="movie-item" key={idx}>
-                <span className="ranking">{idx + 1}</span>
-                <img src={src} alt={`Top ${idx + 1}`} />
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* MORE REASONS TO JOIN */}
-        <section className="reasons-to-join">
-          <h2>More Reasons to Join</h2>
-          <div className="reason-cards">
-            <div className="card">
-              Options Tailored to You
-              <div className="subtext">
-                Discover your next favorite movie effortlessly with our smart
-                filters and personalized recommendations.
-              </div>
-            </div>
-            <div className="card">
-              Endless Choices
-              <div className="subtext">
-                Explore a vast library of movies and shows, from timeless
-                classics to the latest releases.
-              </div>
-            </div>
-            <div className="card">
-              Exclusive Access
-              <div className="subtext">
-                Get early access to new releases and special screenings, just
-                for our members.
-              </div>
-            </div>
-            <div className="card">
-              Personalized Experience
-              <div className="subtext">
-                Enjoy a viewing experience tailored to your preferences, with
-                recommendations you'll love.
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ SECTION */}
-        <section className="faq">
-          <h2>Frequently Asked Questions</h2>
-          <br />
-          <br />
-          {faqItems.map((faq, index) => (
-            <div key={index} className="faq-card">
-              <div className="faq-question" onClick={() => toggleAnswer(index)}>
-                <h5>{faq.question}</h5>
-                <div className="faq-plus-icon">+</div>
-              </div>
-              {activeIndex === index && (
-                <div className="faq-answer">
-                  <p>{faq.answer}</p>
+          {/* MORE REASONS TO JOIN */}
+          <section className="reasons-to-join">
+            <h2>More Reasons to Join</h2>
+            <div className="reason-cards">
+              <div className="card">
+                Options Tailored to You
+                <div className="subtext">
+                  Discover your next favorite movie effortlessly with our smart
+                  filters and personalized recommendations.
                 </div>
-              )}
+              </div>
+              <div className="card">
+                Endless Choices
+                <div className="subtext">
+                  Explore a vast library of movies and shows, from timeless
+                  classics to the latest releases.
+                </div>
+              </div>
+              <div className="card">
+                Exclusive Access
+                <div className="subtext">
+                  Get early access to new releases and special screenings, just
+                  for our members.
+                </div>
+              </div>
+              <div className="card">
+                Personalized Experience
+                <div className="subtext">
+                  Enjoy a viewing experience tailored to your preferences, with
+                  recommendations you'll love.
+                </div>
+              </div>
             </div>
-          ))}
-        </section>
+          </section>
 
-        {/* FOOTER */}
-        <div>
-          <Footer />
+          {/* FAQ SECTION */}
+          <section className="faq">
+            <h2>Frequently Asked Questions</h2>
+            <br />
+            <br />
+            {faqItems.map((faq, index) => (
+              <div key={index} className="faq-card">
+                <div
+                  className="faq-question"
+                  onClick={() => toggleAnswer(index)}
+                >
+                  <h5>{faq.question}</h5>
+                  <div className="faq-plus-icon">+</div>
+                </div>
+                {activeIndex === index && (
+                  <div className="faq-answer">
+                    <p>{faq.answer}</p>
+                  </div>
+                )}
+              </div>
+            ))}
+          </section>
+
+          {/* FOOTER */}
+          <div>
+            <Footer />
+          </div>
         </div>
-      </div>
-    </AuthorizeView>
+      </AuthorizeView>
+    </>
   );
 }
 

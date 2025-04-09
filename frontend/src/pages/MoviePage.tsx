@@ -4,6 +4,7 @@ import GenreFilter from "../components/GenreFilter";
 import Logout from "../components/Logout";
 import MovieBand from "../components/MovieBand";
 import MovieList from "../components/MovieList";
+import NavBar2 from "../components/NavBar2";
 
 // add in fetch url {credentials:'include'}
 
@@ -13,29 +14,20 @@ function MoviePage() {
 
   return (
     <>
-      {/* //security (
       <AuthorizeView>
-        <span>
-          <Logout>
-            Logout
-            <AuthorizedUser value="email" />
-          </Logout>
-        </span> */}
-      {/* after we merge, we need to move authorize view to the bottom of the whole return */}
+        <NavBar2 />
 
-      {/* </AuthorizeView>
-      ) <div></div> */}
-      <div className="container mt-4" style={{ color: "white" }}>
-        <div className="row">
-          <MovieBand />
-        </div>
-        <div className="row">
-          <div className="col-md-3">
-            <GenreFilter
-              selectedGenres={selectedGenres}
-              setSelectedGenres={setSelectedGenres}
-            />
+        <div className="container mt-4" style={{ color: "white" }}>
+          <div className="row">
+            <MovieBand />
           </div>
+          <div className="row">
+            <div className="col-md-3">
+              <GenreFilter
+                selectedGenres={selectedGenres}
+                setSelectedGenres={setSelectedGenres}
+              />
+            </div>
           <div className="col-md-9">
             {/* Add a search input */}
             <input
@@ -48,7 +40,7 @@ function MoviePage() {
             <MovieList selectedGenres={selectedGenres} searchQuery={searchQuery} />
           </div>
         </div>
-      </div>
+      </AuthorizeView>
     </>
   );
 }

@@ -1,11 +1,13 @@
 import "../css/NavBar.css";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import { UserContext } from "./AuthorizeView"; // Import UserContext properly
+// import { UserContext } from "./AuthorizeView"; // Import UserContext properly
+import Logout from "./Logout";
+import { AuthorizedUser } from "./AuthorizeView";
 
 function NavBar2() {
   const navigate = useNavigate();
-  const user = useContext(UserContext); // Access UserContext
+  // const user = useContext(UserContext); // Access UserContext
 
   const handleLogout = async () => {
     try {
@@ -45,17 +47,19 @@ function NavBar2() {
           </div>
         </div>
 
-        {user ? (
-          <div className="user-controls">
-            <span className="username">Welcome {user.email}!</span>{" "}
-            {/* Use email instead of username */}
-            <button className="logout-btn" onClick={handleLogout}>
-              Logout
-            </button>
-          </div>
-        ) : (
+        {/* {user ? (
+          <div className="user-controls"> */}
+        {/* <span className="username">Welcome {user.email}!</span>{" "} */}
+        {/* Use email instead of username */}
+        <div>
+          <Logout>
+            Logout
+            <AuthorizedUser value="email" />
+          </Logout>
+        </div>
+        {/* ) : (
           <button onClick={() => navigate("/login")}>Login</button>
-        )}
+        )} */}
       </nav>
     </div>
   );
