@@ -31,7 +31,10 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/managemovies" element={<ManageMoviesPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
-          <Route path="/productdetail" element={<ProductDetailPage />} />
+          <Route
+            path="/productdetail/:show_id"
+            element={<ProductDetailPage />}
+          />
           <Route path="/movies" element={<MoviePage />} />
           <Route
             path="/userhome"
