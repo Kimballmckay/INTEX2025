@@ -2,42 +2,30 @@ import { useNavigate, useParams } from "react-router-dom";
 import AuthorizeView, { AuthorizedUser } from "../components/AuthorizeView";
 import Logout from "../components/Logout";
 import { MoviesTitle } from "../types/MoviesTitle";
+import { Recommendation } from "../types/Recommendation";
 import { useEffect, useState } from "react";
 
 function ProductDetailPage() {
   const navigate = useNavigate();
   const { show_id } = useParams();
   const [movie, setMovie] = useState<MoviesTitle | null>(null);
-  const [recommendations, setRecommendations] = useState<MoviesTitle[]>([]);
+  const [recommendations, setRecommendations] = useState<Recommendation | null>(
+    null
+  );
 
   useEffect(() => {
+    // Fetch movie details
     fetch(`https://localhost:5000/Movie/${show_id}`)
       .then((response) => response.json())
       .then((data) => setMovie(data))
       .catch((error) => console.error(error));
-  }, [show_id]);
 
-  useEffect(() => {
-    fetch(`https://localhost:5000/Movie/recommend/${show_id}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to fetch recommendations");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        // The backend should be returning an array of movie objects
-        console.log("Recommendations data:", data); // Add this for debugging
-        setRecommendations(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching recommendations:", error);
-      });
+    // Fetch recommendations based on show_id
+    fetch(`https://localhost:5000/Recommendations/Recommend/${show_id}`)
+      .then((response) => response.json())
+      .then((data) => setRecommendations(data))
+      .catch((error) => console.error(error));
   }, [show_id]);
-
-  const handleRecommendationClick = (recommendedShowId: string) => {
-    navigate(`/movie/${recommendedShowId}`);
-  };
 
   if (!movie) return <div>Loading...</div>;
 
@@ -68,24 +56,16 @@ function ProductDetailPage() {
 
       <div>
         <h4>Recommended</h4>
-        {recommendations.length > 0 ? (
+        {recommendations ? (
           <ul>
-            {recommendations.map((recommendation) => (
-              <li
-                key={recommendation.show_id}
-                onClick={() =>
-                  handleRecommendationClick(recommendation.show_id)
-                }
-                style={{ cursor: "pointer" }}
-              >
-                {recommendation.title}{" "}
-                {recommendation.release_year &&
-                  `(${recommendation.release_year})`}
-              </li>
-            ))}
+            <li>{recommendations.recommendation1}</li>
+            <li>{recommendations.recommendation2}</li>
+            <li>{recommendations.recommendation3}</li>
+            <li>{recommendations.recommendation4}</li>
+            <li>{recommendations.recommendation5}</li>
           </ul>
         ) : (
-          <p>No recommendations available</p>
+          <p>No recommendations available.</p>
         )}
       </div>
     </div>
