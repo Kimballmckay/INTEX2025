@@ -73,7 +73,7 @@ const EditMovieForm = ({ movie, onSuccess, onCancel }: EditMovieFormProps) => {
         Release Year:
         <input
           type="number"
-          name="category"
+          name="release_year"
           value={formData.release_year}
           onChange={handleChange}
         />
