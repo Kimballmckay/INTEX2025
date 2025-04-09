@@ -33,6 +33,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
         options.Password.RequireUppercase = false;
         options.Password.RequiredLength = 17;
         options.Password.RequiredUniqueChars = 0;
+        //change
     })
     .AddRoles<IdentityRole>()
    .AddEntityFrameworkStores<ApplicationDbContext>()
