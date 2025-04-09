@@ -5,6 +5,8 @@ import Pagination from "../components/Pagination";
 import NewMovieForm from "../components/NewMovieForm";
 import EditMovieForm from "../components/EditMovieForm";
 import "../css/ManageMoviesPage.css";
+import { useNavigate } from "react-router-dom";
+import { getCurrentUser } from "../api/AuthAPI"; // 👈 make sure this matches your file
 
 const ManageMoviesPage = () => {
   const [movies, setMovies] = useState<MoviesTitle[]>([]);
@@ -16,6 +18,20 @@ const ManageMoviesPage = () => {
   const [showForm, setShowForm] = useState(false);
   const [editingMovie, setEditingMovie] = useState<MoviesTitle | null>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkAccess = async () => {
+      const user = await getCurrentUser();
+
+      if (!user || !user.Roles.includes("ADMIN")) {
+        navigate("/unauthorized");
+      }
+    };
+
+    checkAccess();
+  }, []);
 
   useEffect(() => {
     const loadMovies = async () => {

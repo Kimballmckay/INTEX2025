@@ -9,6 +9,7 @@ import ManageMoviesPage from "./pages/ManageMoviesPage";
 import PrivacyPage from "./pages/PrivacyPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import MoviePage from "./pages/MoviePage";
+import UnauthorizedPage from "./pages/UnauthorizedPage";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/productdetail" element={<ProductDetailPage />} />
           <Route path="/movies" element={<MoviePage />} />
+          <Route path="/unauthorized" element={<UnauthorizedPage />} />
         </Routes>
       </Router>
     </>
