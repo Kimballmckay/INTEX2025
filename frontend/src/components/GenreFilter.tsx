@@ -32,7 +32,9 @@ function GenreFilter({
       ? selectedGenres.filter((g) => g !== target.value)
       : [...selectedGenres, target.value];
 
-    setSelectedGenres(updatedGenres);
+    const cleanedGenres = updatedGenres.map((g) => g.trim());
+
+    setSelectedGenres(cleanedGenres);
   }
 
   return (

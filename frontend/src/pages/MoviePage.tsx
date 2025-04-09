@@ -24,7 +24,7 @@ function MoviePage() {
 
       {/* </AuthorizeView>
       ) <div></div> */}
-      <div className="container mt-4">
+      <div className="container mt-4" style={{ color: "white" }}>
         <div className="row">
           <MovieBand />
         </div>
