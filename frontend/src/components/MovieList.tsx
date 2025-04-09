@@ -57,14 +57,24 @@ function MovieList({ selectedGenres }: { selectedGenres: string[] }) {
 
   return (
     <div>
-      {movies.map((movie, index) => (
-        <div key={`${movie.show_id}-${index}`} id="movieCard">
-          <h3>{movie.title}</h3>
-          <ul>
-            <li>Genre: {movie.genre}</li>
-          </ul>
-        </div>
-      ))}
+      {movies.map((movie, index) => {
+        const imageUrl = `https://movieimagesstorage.blob.core.windows.net/movieimages/Movie%20Posters/Movie%20Posters/${encodeURIComponent(movie.title!)}.jpg`;
+
+        return (
+          <div key={`${movie.show_id}-${index}`} id="movieCard">
+            <h3>{movie.title}</h3>
+            <img
+              src={imageUrl}
+              alt={`${movie.title} poster`}
+              width={200}
+              height={300}
+            />
+            <ul>
+              <li>Genre: {movie.genre}</li>
+            </ul>
+          </div>
+        );
+      })}
       {loading && <p>Loading...</p>}
       {!hasMore && <p>No more movies to load</p>}
     </div>
