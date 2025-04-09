@@ -6,7 +6,6 @@ import NewMovieForm from "../components/NewMovieForm";
 import EditMovieForm from "../components/EditMovieForm";
 import "../css/ManageMoviesPage.css";
 import { useNavigate } from "react-router-dom";
-import { getCurrentUser } from "../api/AuthAPI"; // 👈 make sure this matches your file
 import Logout from "../components/Logout";
 import AuthorizeView, { AuthorizedUser } from "../components/AuthorizeView";
 import { Nav } from "react-bootstrap";
@@ -23,24 +22,10 @@ const ManageMoviesPage = () => {
   const [editingMovie, setEditingMovie] = useState<MoviesTitle | null>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const checkAccess = async () => {
-      const user = await getCurrentUser();
-
-      if (!user || !user.Roles.includes("ADMIN")) {
-        navigate("/unauthorized");
-      }
-    };
-
-    checkAccess();
-  }, []);
-
   useEffect(() => {
     const loadMovies = async () => {
       try {
-        const data = await fetchMovies(pageSize, pageNum, []);
+        const data = await fetchMovies(pageSize, pageNum, [], "");
         setMovies(data.movies);
         setTotalPages(Math.ceil(data.totalNumMovies / pageSize));
       } catch (err) {
@@ -98,7 +83,7 @@ const ManageMoviesPage = () => {
             <NewMovieForm
               onSuccess={() => {
                 setShowForm(false);
-                fetchMovies(pageSize, pageNum, []).then((data) =>
+                fetchMovies(pageSize, pageNum, [], "").then((data) =>
                   setMovies(data.movies)
                 );
               }}
@@ -111,7 +96,7 @@ const ManageMoviesPage = () => {
               movie={editingMovie}
               onSuccess={() => {
                 setEditingMovie(null);
-                fetchMovies(pageSize, pageNum, []).then((data) =>
+                fetchMovies(pageSize, pageNum, [], "").then((data) =>
                   setMovies(data.movies)
                 );
               }}

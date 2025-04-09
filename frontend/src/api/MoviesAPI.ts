@@ -47,6 +47,7 @@ export const addMovie = async (newMovie: MoviesTitle): Promise<MoviesTitle> => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(newMovie),
+      credentials: "include",
     });
 
     if (!response.ok) {
@@ -71,6 +72,7 @@ export const updateMovie = async (
         "Content-Type": "application/json",
       },
       body: JSON.stringify(updatedMovie),
+      credentials: "include",
     });
 
     return await response.json();
@@ -84,6 +86,7 @@ export const deleteMovie = async (show_id: string): Promise<void> => {
   try {
     const response = await fetch(`${API_URL}/DeleteMovie/${show_id}`, {
       method: "DELETE",
+      credentials: "include",
     });
 
     if (!response.ok) {
