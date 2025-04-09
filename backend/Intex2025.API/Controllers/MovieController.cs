@@ -27,7 +27,7 @@ namespace Intex2025.API.Controllers
 
             if (movieGenres != null && movieGenres.Any())
             {
-                query = query.Where(g => movieGenres.Contains(g.genre));
+                query = query.Where(g => movieGenres.Contains(g.genre.ToLower().Trim()));
             }
 
             var totalNumMovies = query.Count();
@@ -61,6 +61,7 @@ namespace Intex2025.API.Controllers
 
             return Ok(movieGenres);
         }
+
 
         [HttpPost("AddMovie")]
         public IActionResult AddMovie([FromBody] Movies_Title newMovie)

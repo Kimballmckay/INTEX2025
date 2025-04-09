@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { MoviesTitle } from "../types/MoviesTitle";
+import { fetchMovies } from "../api/MoviesAPI";
 
 function MovieList({ selectedGenres }: { selectedGenres: string[] }) {
   const [movies, setMovies] = useState<MoviesTitle[]>([]);
@@ -7,33 +8,36 @@ function MovieList({ selectedGenres }: { selectedGenres: string[] }) {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
+  // When genres change, reset movies list and pagination
   useEffect(() => {
-    const fetchMovies = async () => {
-      const genreParams = selectedGenres
-        .map((genre) => `genre=${encodeURIComponent(genre)}`)
-        .join("&");
+    setMovies([]);
+    setPage(1);
+    setHasMore(true);
+  }, [selectedGenres]);
 
+  useEffect(() => {
+    const loadMovies = async () => {
       setLoading(true);
       try {
-        const response = await fetch(
-          `https://localhost:5000/Movie/AllMovies?pageNum=${page}${selectedGenres.length ? `&${genreParams}` : ""}`
-        );
-        const data = await response.json();
+        const pageSize = 10;
+        const data = await fetchMovies(pageSize, page, selectedGenres);
+
         if (data.movies.length === 0) {
           setHasMore(false);
         } else {
-          setMovies((prevMovies) => [...prevMovies, ...data.movies]);
+          setMovies((prev) => [...prev, ...data.movies]);
         }
       } catch (error) {
         console.error("Error fetching movies:", error);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     if (hasMore) {
-      fetchMovies();
+      loadMovies();
     }
-  }, [page, selectedGenres]);
+  }, [page, selectedGenres, hasMore]);
 
   const handleScroll = () => {
     const bottom =
@@ -53,15 +57,14 @@ function MovieList({ selectedGenres }: { selectedGenres: string[] }) {
 
   return (
     <div>
-      {movies.map((movie) => (
-        <div key={movie.show_id} id="movieCard">
+      {movies.map((movie, index) => (
+        <div key={`${movie.show_id}-${index}`} id="movieCard">
           <h3>{movie.title}</h3>
           <ul>
             <li>Genre: {movie.genre}</li>
           </ul>
         </div>
       ))}
-
       {loading && <p>Loading...</p>}
       {!hasMore && <p>No more movies to load</p>}
     </div>
