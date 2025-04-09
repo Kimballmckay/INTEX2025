@@ -2,12 +2,20 @@ import { useEffect, useState } from "react";
 import { MoviesTitle } from "../types/MoviesTitle";
 import { fetchMovies } from "../api/MoviesAPI";
 import "./MovieList.css";
+import { useNavigate } from "react-router-dom";
 
-function MovieList({ selectedGenres, searchQuery }: { selectedGenres: string[]; searchQuery: string }) {
+function MovieList({
+  selectedGenres,
+  searchQuery,
+}: {
+  selectedGenres: string[];
+  searchQuery: string;
+}) {
   const [movies, setMovies] = useState<MoviesTitle[]>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+  const navigate = useNavigate();
 
   // When genres or search query change, reset movies list and pagination
   useEffect(() => {
@@ -21,7 +29,12 @@ function MovieList({ selectedGenres, searchQuery }: { selectedGenres: string[]; 
       setLoading(true);
       try {
         const pageSize = 10;
-        const data = await fetchMovies(pageSize, page, selectedGenres, searchQuery);
+        const data = await fetchMovies(
+          pageSize,
+          page,
+          selectedGenres,
+          searchQuery
+        );
 
         if (data.movies.length === 0) {
           setHasMore(false);
@@ -67,6 +80,7 @@ function MovieList({ selectedGenres, searchQuery }: { selectedGenres: string[]; 
             key={`${movie.show_id}-${index}`}
             className="col-md-3 mb-3"
             id="movieCard"
+            onClick={() => navigate(`/productdetail/${movie.show_id}`)}
           >
             <img
               src={imageUrl}

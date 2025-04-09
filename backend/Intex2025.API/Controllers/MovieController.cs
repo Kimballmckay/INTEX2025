@@ -82,6 +82,7 @@ namespace Intex2025.API.Controllers
             return Ok(movie);
         }
 
+
         [HttpPost("AddMovie")]
         public IActionResult AddMovie([FromBody] Movies_Title newMovie)
         {
