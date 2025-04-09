@@ -1,5 +1,6 @@
 import React from "react";
 import "../css/Footer.css";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebook,
@@ -8,10 +9,12 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 
 function Footer() {
+  const navigate = useNavigate(); // Initialize navigate here
+
   return (
     <footer className="footer">
       <div className="footer-left">
-        <p>&copy; {new Date().getFullYear()} RetroStream</p>
+        <p>&copy; {new Date().getFullYear()} CineNiche</p>
         <div className="social-links">
           <a
             href="https://facebook.com"
@@ -49,7 +52,9 @@ function Footer() {
       </div>
 
       <div className="footer-right">
-        <a href="/privacy-policy">Privacy Policy</a>
+        <button className="footer-button" onClick={() => navigate("/privacy")}>
+          Privacy Policy
+        </button>
       </div>
     </footer>
   );

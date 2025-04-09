@@ -8,8 +8,16 @@ import LoginPage from "./pages/LoginPage";
 import ManageMoviesPage from "./pages/ManageMoviesPage";
 import PrivacyPage from "./pages/PrivacyPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
-import MoviePage from "./pages/MoviePage";
-import UnauthorizedPage from "./pages/UnauthorizedPage";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faFacebook,
+  faTwitter,
+  faInstagram,
+} from "@fortawesome/free-brands-svg-icons";
+import UserHomePage from "./pages/UserHomePage";
+import AuthorizeView from "./components/AuthorizeView";
+
+library.add(faFacebook, faTwitter, faInstagram);
 
 function App() {
   return (
@@ -23,8 +31,14 @@ function App() {
           <Route path="/managemovies" element={<ManageMoviesPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/productdetail" element={<ProductDetailPage />} />
-          <Route path="/movies" element={<MoviePage />} />
-          <Route path="/unauthorized" element={<UnauthorizedPage />} />
+          <Route
+            path="/userhome"
+            element={
+              <AuthorizeView>
+                <UserHomePage />
+              </AuthorizeView>
+            }
+          />
         </Routes>
       </Router>
     </>
