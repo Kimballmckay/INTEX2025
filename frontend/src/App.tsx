@@ -8,6 +8,7 @@ import LoginPage from "./pages/LoginPage";
 import ManageMoviesPage from "./pages/ManageMoviesPage";
 import PrivacyPage from "./pages/PrivacyPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
+import MoviePage from "./pages/MoviePage";
 
 function App() {
   return (
