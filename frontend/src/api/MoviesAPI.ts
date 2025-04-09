@@ -10,15 +10,21 @@ const API_URL = "https://localhost:5000/Movie";
 export const fetchMovies = async (
   pageSize: number,
   pageNum: number,
-  selectedGenres: string[]
+  selectedGenres: string[],
+  searchQuery: string
 ): Promise<FetchMoviesResponse> => {
   try {
     console.log(selectedGenres);
     const genreParams = selectedGenres
       .map((cat) => `movieGenres=${encodeURIComponent(cat)}`)
-      .join(`&`);
+      .join("&");
 
     let url = `${API_URL}/AllMovies?pageSize=${pageSize}&pageNum=${pageNum}${selectedGenres.length ? `&${genreParams}` : ""}`;
+    
+    // Append search query parameter if it's provided
+    if (searchQuery) {
+      url += `&searchQuery=${encodeURIComponent(searchQuery)}`;
+    }
 
     const response = await fetch(url);
 

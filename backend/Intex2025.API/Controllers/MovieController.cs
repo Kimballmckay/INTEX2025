@@ -19,38 +19,42 @@ namespace Intex2025.API.Controllers
             _movieContext = temp;
         }
 
-        // Updated GetMovies to handle pagination
+        // Updated GetMovies to handle pagination and search query
         [HttpGet("AllMovies")]
-        public IActionResult GetMovies(int pageSize = 5, int pageNum = 1, [FromQuery] List<string>? movieGenres = null)
+        public IActionResult GetMovies(int pageSize = 5, int pageNum = 1, [FromQuery] List<string>? movieGenres = null, [FromQuery] string? searchQuery = null)
         {
             var query = _movieContext.Movies_Titles.AsQueryable();
 
+            // Filter by genre
             if (movieGenres != null && movieGenres.Any())
             {
                 var lowerTrimmedSelectedGenres = movieGenres.Select(g => g.ToLower().Trim()).ToList();
-
-                // Check if the genre string contains ANY of the selected genres
-                // NOTE: This translates better but has the substring issue (e.g., "action" matches "non-action")
                 query = query.Where(m => !string.IsNullOrEmpty(m.genre) &&
                        lowerTrimmedSelectedGenres.Any(sg => m.genre.ToLower().Contains(sg)));
+            }
+
+            // Filter by title search query
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                query = query.Where(m => m.title.ToLower().Contains(searchQuery.ToLower()));
             }
 
             var totalNumMovies = query.Count();
 
             // Get the movies from the database, with pagination
-            var something = query
-                .Skip((pageNum-1) * pageSize)
+            var movies = query
+                .Skip((pageNum - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
 
-            var someObject = new
+            var result = new
             {
-                Movies = something,
+                Movies = movies,
                 TotalNumMovies = totalNumMovies,
             };
 
             // Return the movies
-            return Ok(someObject);
+            return Ok(result);
         }
 
         [HttpGet("GetMovieGenres")]
@@ -66,7 +70,6 @@ namespace Intex2025.API.Controllers
 
             return Ok(movieGenres);
         }
-
 
         [HttpPost("AddMovie")]
         public IActionResult AddMovie([FromBody] Movies_Title newMovie)
@@ -97,7 +100,6 @@ namespace Intex2025.API.Controllers
             return Ok(newMovie);
         }
 
-
         [HttpPut("UpdateMovie/{show_id}")]
         public IActionResult UpdateMovie(string show_id, [FromBody] Movies_Title updatedMovie)
         {
@@ -124,16 +126,15 @@ namespace Intex2025.API.Controllers
         public IActionResult DeleteMovie(string show_id)
         {
             var movie = _movieContext.Movies_Titles.Find(show_id);
-
             if (movie == null)
             {
-                return NotFound(new { message = "Movie not found" });
+                return NotFound();
             }
 
             _movieContext.Movies_Titles.Remove(movie);
             _movieContext.SaveChanges();
 
-            return NoContent();
+            return Ok();
         }
     }
 }
