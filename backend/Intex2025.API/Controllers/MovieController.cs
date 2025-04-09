@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.JSInterop.Infrastructure;
 
 namespace Intex2025.API.Controllers
 {
@@ -82,6 +83,7 @@ namespace Intex2025.API.Controllers
             return Ok(movie);
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPost("AddMovie")]
         public IActionResult AddMovie([FromBody] Movies_Title newMovie)
         {
@@ -111,6 +113,7 @@ namespace Intex2025.API.Controllers
             return Ok(newMovie);
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPut("UpdateMovie/{show_id}")]
         public IActionResult UpdateMovie(string show_id, [FromBody] Movies_Title updatedMovie)
         {
@@ -133,6 +136,7 @@ namespace Intex2025.API.Controllers
             return Ok(existingMovie);
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpDelete("DeleteMovie/{show_id}")]
         public IActionResult DeleteMovie(string show_id)
         {
@@ -140,7 +144,7 @@ namespace Intex2025.API.Controllers
             if (movie == null)
             {
                 return NotFound();
-            }
+            };
 
             _movieContext.Movies_Titles.Remove(movie);
             _movieContext.SaveChanges();
