@@ -27,7 +27,12 @@ namespace Intex2025.API.Controllers
 
             if (movieGenres != null && movieGenres.Any())
             {
-                query = query.Where(g => movieGenres.Contains(g.genre.ToLower().Trim()));
+                var lowerTrimmedSelectedGenres = movieGenres.Select(g => g.ToLower().Trim()).ToList();
+
+                // Check if the genre string contains ANY of the selected genres
+                // NOTE: This translates better but has the substring issue (e.g., "action" matches "non-action")
+                query = query.Where(m => !string.IsNullOrEmpty(m.genre) &&
+                       lowerTrimmedSelectedGenres.Any(sg => m.genre.ToLower().Contains(sg)));
             }
 
             var totalNumMovies = query.Count();

@@ -13,6 +13,7 @@ export const fetchMovies = async (
   selectedGenres: string[]
 ): Promise<FetchMoviesResponse> => {
   try {
+    console.log(selectedGenres);
     const genreParams = selectedGenres
       .map((cat) => `movieGenres=${encodeURIComponent(cat)}`)
       .join(`&`);

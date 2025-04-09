@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./GenreFilter.css";
 
 function GenreFilter({
@@ -9,6 +9,8 @@ function GenreFilter({
   setSelectedGenres: (genres: string[]) => void;
 }) {
   const [genres, setGenres] = useState<string[]>([]);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchGenres = async () => {
@@ -17,7 +19,6 @@ function GenreFilter({
           "https://localhost:5000/Movie/GetMovieGenres"
         );
         const data = await response.json();
-        console.log("Fetched genres", data);
         setGenres(data);
       } catch (error) {
         console.error("Error fetching genres", error);
@@ -27,33 +28,56 @@ function GenreFilter({
     fetchGenres();
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
+      ) {
+        setDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   function handleCheckboxChange({ target }: { target: HTMLInputElement }) {
     const updatedGenres = selectedGenres.includes(target.value)
       ? selectedGenres.filter((g) => g !== target.value)
       : [...selectedGenres, target.value];
 
     const cleanedGenres = updatedGenres.map((g) => g.trim());
-
     setSelectedGenres(cleanedGenres);
   }
 
   return (
-    <div className="genre-filter">
+    <div className="genre-filter" ref={dropdownRef}>
       <h5>Movie Genres</h5>
-      <div className="genre-list">
-        {genres.map((g) => (
-          <div key={g} className="genre-item">
-            <input
-              type="checkbox"
-              id={g}
-              value={g}
-              className="genre-checkbox"
-              onChange={handleCheckboxChange}
-            />
-            <label htmlFor={g}>{g}</label>
-          </div>
-        ))}
-      </div>
+      <button
+        className="dropdown-toggle"
+        onClick={() => setDropdownOpen((prev) => !prev)}
+      >
+        <i className="bi bi-filter"></i>
+        Select Genres
+      </button>
+      {dropdownOpen && (
+        <div className="genre-dropdown">
+          {genres.map((g) => (
+            <div key={g} className="genre-item">
+              <input
+                type="checkbox"
+                id={g}
+                value={g}
+                className="genre-checkbox"
+                checked={selectedGenres.includes(g)}
+                onChange={handleCheckboxChange}
+              />
+              <label htmlFor={g}>{g}</label>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
