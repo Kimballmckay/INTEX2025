@@ -885,9 +885,7 @@
             "related": ".pdb;.xml"
           }
         },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        "frameworkReferences": ["Microsoft.AspNetCore.App"]
       },
       "Swashbuckle.AspNetCore.SwaggerGen/6.6.2": {
         "type": "package",
@@ -917,9 +915,7 @@
             "related": ".pdb;.xml"
           }
         },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        "frameworkReferences": ["Microsoft.AspNetCore.App"]
       },
       "System.CodeDom/4.4.0": {
         "type": "package",
@@ -3175,23 +3171,24 @@
     ]
   },
   "packageFolders": {
-    "/Users/sarahboyer/.nuget/packages/": {}
+    "C:\\Users\\prest\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/sarahboyer/Desktop/INTEX2025/backend/Intex2025.API/Intex2025.API.csproj",
+      "projectUniqueName": "C:\\Users\\prest\\OneDrive\\Desktop\\IntexII\\INTEX2025\\backend\\Intex2025.API\\Intex2025.API.csproj",
       "projectName": "Intex2025.API",
-      "projectPath": "/Users/sarahboyer/Desktop/INTEX2025/backend/Intex2025.API/Intex2025.API.csproj",
-      "packagesPath": "/Users/sarahboyer/.nuget/packages/",
-      "outputPath": "/Users/sarahboyer/Desktop/INTEX2025/backend/Intex2025.API/obj/",
+      "projectPath": "C:\\Users\\prest\\OneDrive\\Desktop\\IntexII\\INTEX2025\\backend\\Intex2025.API\\Intex2025.API.csproj",
+      "packagesPath": "C:\\Users\\prest\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\prest\\OneDrive\\Desktop\\IntexII\\INTEX2025\\backend\\Intex2025.API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/sarahboyer/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\prest\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
-      "originalTargetFrameworks": [
-        "net8.0"
-      ],
+      "originalTargetFrameworks": ["net8.0"],
       "sources": {
         "https://api.nuget.org/v3/index.json": {}
       },
@@ -3202,9 +3199,7 @@
         }
       },
       "warningProperties": {
-        "warnAsError": [
-          "NU1605"
-        ]
+        "warnAsError": ["NU1605"]
       },
       "restoreAuditProperties": {
         "enableAudit": "true",

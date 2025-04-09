@@ -1,78 +1,90 @@
 import { useEffect, useState } from "react";
 import { MoviesTitle } from "../types/MoviesTitle";
+import { fetchMovies } from "../api/MoviesAPI";
+import "./MovieList.css";
 
-function MovieList() {
-    const [movies, setMovies] = useState<MoviesTitle[]>([]); // Holds the list of movies
-    const [page, setPage] = useState(1); // Tracks the current page for pagination
-    const [loading, setLoading] = useState(false); // To track if new data is being fetched
-    const [hasMore, setHasMore] = useState(true); // Track if there are more movies to load
+function MovieList({ selectedGenres }: { selectedGenres: string[] }) {
+  const [movies, setMovies] = useState<MoviesTitle[]>([]);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
 
-    // Fetch movies on component load or when the page changes
-    useEffect(() => {
-        const fetchMovies = async () => {
-            setLoading(true);
+  // When genres change, reset movies list and pagination
+  useEffect(() => {
+    setMovies([]);
+    setPage(1);
+    setHasMore(true);
+  }, [selectedGenres]);
 
-            // Log the current page for debugging
-            console.log("Fetching page:", page);
+  useEffect(() => {
+    const loadMovies = async () => {
+      setLoading(true);
+      try {
+        const pageSize = 10;
+        const data = await fetchMovies(pageSize, page, selectedGenres);
 
-            const response = await fetch(`https://localhost:5000/Movie/AllMovies?page=${page}`);
-            const data = await response.json();
-
-            // If there are no more movies, set hasMore to false
-            if (data.length === 0) {
-                setHasMore(false);
-            }
-
-            // Only add new movies if they are fetched successfully
-            if (data.length > 0) {
-                setMovies((prevMovies) => [...prevMovies, ...data]); // Append new movies
-            }
-
-            setLoading(false);
-        };
-
-        // Only fetch movies if there are more movies to load
-        if (hasMore) {
-            fetchMovies();
+        if (data.movies.length === 0) {
+          setHasMore(false);
+        } else {
+          setMovies((prev) => [...prev, ...data.movies]);
         }
-
-    }, [page]); // Depend on the page number to trigger fetching
-
-    // Scroll event handler to detect when the user reaches the bottom
-    const handleScroll = () => {
-        const bottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100;
-
-        // If we're at the bottom of the page, not already loading, and there are more movies
-        if (bottom && !loading && hasMore) {
-            setPage((prevPage) => prevPage + 1); // Increment the page number to load more movies
-        }
+      } catch (error) {
+        console.error("Error fetching movies:", error);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    // Add scroll event listener on component mount and clean it up on unmount
-    useEffect(() => {
-        window.addEventListener("scroll", handleScroll);
+    if (hasMore) {
+      loadMovies();
+    }
+  }, [page, selectedGenres, hasMore]);
 
-        // Cleanup on component unmount
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
-    }, [loading, hasMore]); // Depend on loading and hasMore state to manage event listener behavior
+  const handleScroll = () => {
+    const bottom =
+      window.innerHeight + window.scrollY >=
+      document.documentElement.scrollHeight - 100;
+    if (bottom && !loading && hasMore) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  };
 
-    return (
-        <div>
-            <h1>Movie List</h1>
-            {movies.map((movie) => (
-                <div key={movie.show_id} id="movieCard">
-                    <h3>{movie.title}</h3>
-                    <ul>
-                        <li>Genre: {movie.genre}</li>
-                    </ul>
-                </div>
-            ))}
-            {loading && <p>Loading...</p>} {/* Loading indicator */}
-            {!hasMore && <p>No more movies to load</p>} {/* No more movies message */}
-        </div>
-    );
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [loading, hasMore]);
+
+  return (
+    <div className="row">
+      {movies.map((movie, index) => {
+        const cleanTitle = movie.title.replace(/[^a-zA-Z0-9\s]/g, ""); // Removes special characters
+        const imageUrl = `https://movieimagesstorage.blob.core.windows.net/movieimages/Movie%20Posters/Movie%20Posters/${encodeURIComponent(cleanTitle)}.jpg`;
+
+        return (
+          <div
+            key={`${movie.show_id}-${index}`}
+            className="col-md-3 mb-3"
+            id="movieCard"
+          >
+            <img
+              src={imageUrl}
+              alt={`${movie.title} poster`}
+              width={200}
+              height={300}
+            />
+            <h3>{movie.title}</h3>
+            <ul>
+              <li>Genre: {movie.genre}</li>
+            </ul>
+          </div>
+        );
+      })}
+      {loading && <p>Loading...</p>}
+      {!hasMore && <p>No more movies to load</p>}
+    </div>
+  );
 }
 
 export default MovieList;
