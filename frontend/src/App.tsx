@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
+//import "bootstrap-icons/font/bootstrap-icons.css";
 import HomePage from "./pages/HomePage";
 import CreateAccountPage from "./pages/CreateAccountPage";
 import LoginPage from "./pages/LoginPage";
@@ -16,6 +16,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import UserHomePage from "./pages/UserHomePage";
 import AuthorizeView from "./components/AuthorizeView";
+import MoviePage from "./pages/MoviePage";
 
 library.add(faFacebook, faTwitter, faInstagram);
 
@@ -28,9 +29,24 @@ function App() {
           <Route path="/home" element={<HomePage />} />
           <Route path="/createaccount" element={<CreateAccountPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/managemovies" element={<ManageMoviesPage />} />
+          <Route
+            path="/managemovies"
+            element={
+              <AuthorizeView>
+                <ManageMoviesPage />{" "}
+              </AuthorizeView>
+            }
+          />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/productdetail" element={<ProductDetailPage />} />
+          <Route
+            path="/movies"
+            element={
+              <AuthorizeView>
+                <MoviePage />
+              </AuthorizeView>
+            }
+          />
           <Route
             path="/userhome"
             element={
