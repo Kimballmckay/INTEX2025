@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.JSInterop.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 namespace Intex2025.API.Controllers
 {
@@ -165,6 +166,48 @@ namespace Intex2025.API.Controllers
                 .ToList();
 
             return Ok(matchingMovies);
+        }
+
+        [HttpGet("GetMovieByTitle/{title}")]
+        public async Task<IActionResult> GetMovieByTitle(string title)
+        {
+            if (string.IsNullOrEmpty(title))
+            {
+                return BadRequest("Movie title cannot be empty.");            
+            }
+
+            var movie = await _movieContext.Movies_Titles
+                .FirstOrDefaultAsync(m => m.title.ToLower() == title.ToLower());
+
+            if (movie == null)
+            {
+                return NotFound($"Movie with title '{title}' not found.");
+            }
+
+            // construct the URL for the React Router productdetail route
+            string productDetailUrl = $"/productdetail/{movie.show_id}";
+
+            // Return a RedirectResult to navigate the client-side to the product detail page
+            return Redirect(productDetailUrl);
+        }
+
+        [HttpGet("titlelookup/{title}")]
+        public async Task<IActionResult> GetMovieIdByTitle(string title)
+        {
+            if (string.IsNullOrEmpty(title))
+            {
+                return BadRequest("Movie title cannot be empty.");
+            }
+
+            var movie = await _movieContext.Movies_Titles
+                .FirstOrDefaultAsync(m => m.title.ToLower() == title.ToLower());
+
+            if (movie == null)
+            {
+                return NotFound($"Movie with title '{title}' not found.");
+            }
+
+            return Ok(new { show_id = movie.show_id });
         }
     }
 }
