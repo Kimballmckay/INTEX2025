@@ -33,6 +33,29 @@ function ProductDetailPage() {
 
   if (!movie) return <div>Loading...</div>;
 
+  const handleRecommendationClick = async (title: string) => {
+    try {
+      const response = await fetch(
+        `https://localhost:5000/Movie/titlelookup/${encodeURIComponent(title)}`
+      ); // New backend endpoint (see next step)
+      if (!response.ok) {
+        console.error(
+          `Error fetching show_id for title "${title}":`,
+          response.status
+        );
+        return;
+      }
+      const data = await response.json();
+      if (data && data.show_id) {
+        navigate(`/productdetail/${data.show_id}`);
+      } else {
+        console.error(`show_id not found for title "${title}"`);
+      }
+    } catch (error) {
+      console.error("Error fetching show_id:", error);
+    }
+  };
+
   const cleanTitle = movie.title.replace(/[^a-zA-Z0-9\s]/g, ""); // Removes special characters
   const imageUrl = `https://movieimagesstorage.blob.core.windows.net/movieimages/Movie%20Posters/Movie%20Posters/${encodeURIComponent(cleanTitle)}.jpg`;
 
@@ -47,8 +70,7 @@ function ProductDetailPage() {
           height={450}
           style={{ borderRadius: "8px", objectFit: "cover" }}
           onError={(e) => {
-            e.currentTarget.src =
-              "https://via.placeholder.com/200x300?text=No+Image";
+            e.currentTarget.style.display = "none";
           }}
         />
 
@@ -91,17 +113,28 @@ function ProductDetailPage() {
         <h4 className="mb-3">Recommended</h4>
         {recommendations && recommendations.length > 0 ? (
           <div className="d-flex flex-wrap justify-content-center gap-4">
-            {[recommendations[0].recommendation1, recommendations[0].recommendation2, recommendations[0].recommendation3, recommendations[0].recommendation4, recommendations[0].recommendation5]
+
+            {[
+              recommendations[0]?.recommendation1,
+              recommendations[0]?.recommendation2,
+              recommendations[0]?.recommendation3,
+              recommendations[0]?.recommendation4,
+              recommendations[0]?.recommendation5,
+            ]
+           
+
               .filter((title) => title)
               .map((title, index) => {
-                const cleanRecTitle = title.replace(/[^a-zA-Z0-9\s]/g, "");
+                const cleanRecTitle = title.replace(/[^a-zA-Z0-9\sñ]/g, "");
+
                 const recImageUrl = `https://movieimagesstorage.blob.core.windows.net/movieimages/Movie%20Posters/Movie%20Posters/${encodeURIComponent(cleanRecTitle)}.jpg`;
 
                 return (
                   <div
                     key={index}
                     className="movie-card d-flex flex-column align-items-center"
-                    style={{ width: 200 }}
+                    style={{ width: 200, cursor: "pointer" }}
+                    onClick={() => handleRecommendationClick(title)}
                   >
                     <img
                       src={recImageUrl}
@@ -112,8 +145,7 @@ function ProductDetailPage() {
                         objectFit: "cover",
                       }}
                       onError={(e) => {
-                        e.currentTarget.src =
-                          "https://via.placeholder.com/200x300?text=No+Image";
+                        e.currentTarget.style.display = "none"; // Just hide it
                       }}
                     />
                     <p className="mt-2 text-center" style={{ fontSize: "0.9rem" }}>
