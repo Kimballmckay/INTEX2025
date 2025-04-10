@@ -151,5 +151,20 @@ namespace Intex2025.API.Controllers
 
             return Ok();
         }
+
+        [HttpPost("byshowids")]
+        public IActionResult GetMoviesByShowIds([FromBody] List<string> showIds)
+        {
+            if (showIds == null || !showIds.Any())
+            {
+                return BadRequest("No show IDs provided.");
+            }
+
+            var matchingMovies = _movieContext.Movies_Titles
+                .Where(m => showIds.Contains(m.show_id))
+                .ToList();
+
+            return Ok(matchingMovies);
+        }
     }
 }
