@@ -1,29 +1,23 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, useEffect, createContext, ReactNode } from "react";
 import { Navigate } from "react-router-dom";
-
-const UserContext = createContext<User | null>(null);
 
 interface User {
   email: string;
 }
 
-function AuthorizeView(props: { children: React.ReactNode }) {
-  const [authorized, setAuthorized] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(true); // add a loading state
-  //const navigate = useNavigate();
-  let emptyuser: User = { email: "" };
+const UserContext = createContext<User | null>(null);
 
-  const [user, setUser] = useState(emptyuser);
+function AuthorizeView(props: { children: ReactNode }) {
+  const [authorized, setAuthorized] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     async function fetchWithRetry(url: string, options: any) {
       try {
         const response = await fetch(url, options);
-        //console.log('AuthorizeView: Raw Response:', response);
-
         const contentType = response.headers.get("content-type");
 
-        // Ensure response is JSON before parsing
         if (!contentType || !contentType.includes("application/json")) {
           throw new Error("Invalid response format from server");
         }
@@ -65,9 +59,10 @@ function AuthorizeView(props: { children: React.ReactNode }) {
 export function AuthorizedUser(props: { value: string }) {
   const user = React.useContext(UserContext);
 
-  if (!user) return null; // Prevents errors if context is null
+  if (!user) return null;
 
   return props.value === "email" ? <>{user.email}</> : null;
 }
 
+export { UserContext };
 export default AuthorizeView;
