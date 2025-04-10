@@ -16,11 +16,11 @@ namespace Intex2025.API.Controllers
         }
 
         [HttpGet("Recommend/{show_id}")]
-        public ActionResult<Recommendations> GetRecommendationsByShowId(int show_id)
+        public ActionResult<Recommendations> GetRecommendationsByShowId(string show_id)
         {
             var recommendations = _recommendationContext.Recommendations
-                .Where(r => r.show_id == show_id) // Filter by show_id
-                .FirstOrDefault(); // Return the first match
+                .Where(r => r.show_id == show_id)
+                .ToList();
 
             if (recommendations == null)
             {
