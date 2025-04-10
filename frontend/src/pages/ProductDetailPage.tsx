@@ -15,32 +15,38 @@ function ProductDetailPage() {
   useEffect(() => {
     if (!show_id) return;
 
+    // Load previously submitted rating from localStorage
+    const savedRating = localStorage.getItem(`rating_${show_id}`);
+    if (savedRating) {
+      setUserRating(parseInt(savedRating));
+    }
+
     // Fetch movie details
-    fetch(`https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Movie/${show_id}`, {
-      credentials: "include",
-    })
+    fetch(
+      `https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Movie/${show_id}`,
+      {
+        credentials: "include",
+      }
+    )
       .then((response) => response.json())
       .then((data) => setMovie(data))
       .catch((error) => console.error(error));
 
-    // Fetch recommendations based on show_id
-    fetch(`https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Recommendation/Recommend/${show_id}`, {
-      credentials: "include",
-    })
-      .then((response) => response.json())
-      .then((data) => setRecommendations(data))
-      .catch((error) => console.error(error));
-
     // Fetch average rating for the movie
-    fetch(`https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Movie/GetAverageRating/${show_id}`, {
-      credentials: "include", // 👈 Add this
-    })
+    fetch(
+      `https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Movie/GetAverageRating/${show_id}`,
+      {
+        credentials: "include",
+      }
+    )
       .then((response) => response.json())
       .then((data) => setAverageRating(data))
       .catch((error) => console.error(error));
 
-    // First try collaborative recommendations
-    fetch(`https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Recommendation/Recommend/${show_id}`)
+    // Try collaborative recommendations first
+    fetch(
+      `https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Recommendation/Recommend/${show_id}`
+    )
       .then((response) => response.json())
       .then((data) => {
         if (data && data.length > 0 && data[0]?.recommendation1) {
@@ -53,8 +59,10 @@ function ProductDetailPage() {
           ].filter((title) => !!title);
           setRecommendations(titles);
         } else {
-          // Fallback to content-based
-          fetch(`https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/MovieSimilarity/top5/${show_id}`)
+          // Fallback to content-based recommendations
+          fetch(
+            `https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/MovieSimilarity/top5/${show_id}`
+          )
             .then((res) => res.json())
             .then(async (similarMovies: MovieSimilarity[]) => {
               const titles: string[] = [];
@@ -82,13 +90,6 @@ function ProductDetailPage() {
       });
   }, [show_id]);
 
-    // Load previously submitted rating from localStorage
-    const savedRating = localStorage.getItem(`rating_${show_id}`);
-    if (savedRating) {
-      setUserRating(parseInt(savedRating));
-    }
-  }, [show_id]);
-
   const handleStarClick = (rating: number) => {
     if (rating < 1 || rating > 5) {
       alert("Please select a rating between 1 and 5.");
@@ -102,14 +103,17 @@ function ProductDetailPage() {
   const submitRating = (rating: number) => {
     if (!show_id) return;
 
-    fetch(`https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Movie/AddRating/${show_id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(rating),
-      credentials: "include",
-    })
+    fetch(
+      `https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Movie/AddRating/${show_id}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(rating),
+        credentials: "include",
+      }
+    )
       .then(async (response) => {
         if (!response.ok) {
           const errorText = await response.text();
@@ -133,7 +137,7 @@ function ProductDetailPage() {
         {
           credentials: "include",
         }
-      ); // New backend endpoint (see next step)
+      );
 
       if (!response.ok) {
         console.error(
@@ -142,7 +146,7 @@ function ProductDetailPage() {
         );
         return;
       }
-      
+
       const data = await response.json();
       if (data?.show_id) {
         navigate(`/productdetail/${data.show_id}`);
@@ -155,9 +159,7 @@ function ProductDetailPage() {
   if (!movie) return <div>Loading...</div>;
 
   const cleanTitle = movie.title.replace(/[^a-zA-Z0-9\s]/g, "");
-  const imageUrl = `https://movieimagesstorage.blob.core.windows.net/movieimages/Movie%20Posters/Movie%20Posters/${encodeURIComponent(
-    cleanTitle
-  )}.jpg`;
+  const imageUrl = `https://movieimagesstorage.blob.core.windows.net/movieimages/Movie%20Posters/Movie%20Posters/${encodeURIComponent(cleanTitle)}.jpg`;
 
   return (
     <div style={{ color: "white" }}>
@@ -179,33 +181,44 @@ function ProductDetailPage() {
             {movie.rating} • {movie.duration} • {movie.release_year}
           </p>
 
-          <p><strong>Description:</strong> {movie.description}</p>
-          <p><strong>Genre:</strong> {movie.genre}</p>
-          <p><strong>Country:</strong> {movie.country}</p>
-          <p><strong>Type:</strong> {movie.type}</p>
-          <p><strong>Director:</strong> {movie.director}</p>
+          <p>
+            <strong>Description:</strong> {movie.description}
+          </p>
+          <p>
+            <strong>Genre:</strong> {movie.genre}
+          </p>
+          <p>
+            <strong>Country:</strong> {movie.country}
+          </p>
+          <p>
+            <strong>Type:</strong> {movie.type}
+          </p>
+          <p>
+            <strong>Director:</strong> {movie.director}
+          </p>
 
           <p className="mb-2">
             <strong>Average Rating: </strong>
-            {averageRating === 0 ? (
-              "No ratings yet"
-            ) : (
-              <>
-                {averageRating.toFixed(2)} <span>★</span>
-              </>
-            )}
+            {averageRating === 0
+              ? "No ratings yet"
+              : `${averageRating.toFixed(2)} ★`}
           </p>
 
-          {/* Star Rating */}
           <div className="mb-3">
-            <label htmlFor="star-rating"><strong>Your Rating:</strong></label>
-            <div id="star-rating" style={{ fontSize: "2rem", cursor: "pointer" }}>
+            <label htmlFor="star-rating">
+              <strong>Your Rating:</strong>
+            </label>
+            <div
+              id="star-rating"
+              style={{ fontSize: "2rem", cursor: "pointer" }}
+            >
               {[1, 2, 3, 4, 5].map((star) => (
                 <span
                   key={star}
                   onClick={() => handleStarClick(star)}
                   style={{
-                    color: userRating && star <= userRating ? "#ffc107" : "#e4e5e9",
+                    color:
+                      userRating && star <= userRating ? "#ffc107" : "#e4e5e9",
                     transition: "color 0.2s",
                   }}
                 >
@@ -217,18 +230,13 @@ function ProductDetailPage() {
         </div>
       </div>
 
-      {/* Recommendations Section */}
       <div className="mt-4">
         <h4 className="mb-3">Recommended</h4>
         {recommendations.length > 0 ? (
           <div className="d-flex flex-wrap justify-content-center gap-4">
-            {[recommendations[0]?.recommendation1,
-
             {recommendations.map((title, index) => {
               const cleanRecTitle = title.replace(/[^a-zA-Z0-9\sñ]/g, "");
-              const recImageUrl = `https://movieimagesstorage.blob.core.windows.net/movieimages/Movie%20Posters/Movie%20Posters/${encodeURIComponent(
-                cleanRecTitle
-              )}.jpg`;
+              const recImageUrl = `https://movieimagesstorage.blob.core.windows.net/movieimages/Movie%20Posters/Movie%20Posters/${encodeURIComponent(cleanRecTitle)}.jpg`;
 
               return (
                 <div
@@ -258,49 +266,6 @@ function ProductDetailPage() {
                 </div>
               );
             })}
-
-            {[
-              recommendations[0]?.recommendation1,
-              recommendations[0]?.recommendation2,
-              recommendations[0]?.recommendation3,
-              recommendations[0]?.recommendation4,
-              recommendations[0]?.recommendation5,
-            ]
-
-              .filter((title) => title)
-              .map((title, index) => {
-                const cleanRecTitle = title.replace(/[^a-zA-Z0-9\sñ]/g, "");
-                const recImageUrl = `https://movieimagesstorage.blob.core.windows.net/movieimages/Movie%20Posters/Movie%20Posters/${encodeURIComponent(cleanRecTitle)}.jpg`;
-
-                return (
-                  <div
-                    key={index}
-                    className="movie-card d-flex flex-column align-items-center"
-                    style={{ width: 200, cursor: "pointer" }}
-                    onClick={() => handleRecommendationClick(title)}
-                  >
-                    <img
-                      src={recImageUrl}
-                      alt={`${title} poster`}
-                      style={{
-                        width: "100%",
-                        aspectRatio: "2/3",
-                        objectFit: "cover",
-                      }}
-                      onError={(e) => {
-                        e.currentTarget.style.display = "none";
-                      }}
-                    />
-                    <p
-                      className="mt-2 text-center"
-                      style={{ fontSize: "0.9rem" }}
-                    >
-                      {title}
-                    </p>
-                  </div>
-                );
-              })}
-
           </div>
         ) : (
           <p>No recommendations available</p>
