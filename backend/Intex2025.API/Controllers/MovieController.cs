@@ -22,6 +22,7 @@ namespace Intex2025.API.Controllers
         }
 
         // Updated GetMovies to handle pagination and search query
+        [Authorize]
         [HttpGet("AllMovies")]
         public IActionResult GetMovies(int pageSize = 5, int pageNum = 1, [FromQuery] List<string>? movieGenres = null, [FromQuery] string? searchQuery = null)
         {
@@ -59,6 +60,7 @@ namespace Intex2025.API.Controllers
             return Ok(result);
         }
 
+        [Authorize]
         [HttpGet("GetMovieGenres")]
         public IActionResult GetMovieGenres()
         {
@@ -73,6 +75,7 @@ namespace Intex2025.API.Controllers
             return Ok(movieGenres);
         }
 
+        [Authorize]
         [HttpGet("{show_id}")]
         public async Task<IActionResult> GetMovieById(string show_id)
         {
@@ -158,6 +161,7 @@ namespace Intex2025.API.Controllers
             return Ok();
         }
 
+        [Authorize]
         [HttpPost("byshowids")]
         public IActionResult GetMoviesByShowIds([FromBody] List<string> showIds)
         {
@@ -173,6 +177,7 @@ namespace Intex2025.API.Controllers
             return Ok(matchingMovies);
         }
 
+        [Authorize]
         [HttpGet("GetMovieByTitle/{title}")]
         public async Task<IActionResult> GetMovieByTitle(string title)
         {
@@ -196,6 +201,7 @@ namespace Intex2025.API.Controllers
             return Redirect(productDetailUrl);
         }
 
+        [Authorize]
         [HttpGet("titlelookup/{title}")]
         public async Task<IActionResult> GetMovieIdByTitle(string title)
         {
@@ -215,6 +221,7 @@ namespace Intex2025.API.Controllers
             return Ok(new { show_id = movie.show_id });
         }
 
+        [Authorize]
         [HttpGet("GetAverageRating/{show_id}")]
         public IActionResult GetAverageRating(string show_id)
         {
@@ -232,6 +239,7 @@ namespace Intex2025.API.Controllers
             return Ok(averageRating);
         }
 
+        [Authorize]
         [HttpPost("AddRating/{show_id}")]
         public IActionResult AddRating(string show_id, [FromBody] int rating)
         {
