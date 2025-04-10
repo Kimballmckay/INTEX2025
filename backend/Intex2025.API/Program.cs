@@ -29,7 +29,7 @@ builder.Services.AddDbContext<RecommendationsDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("RecommendationConnection")));
 
 builder.Services.AddDbContext<MovieSimilarityDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("MovieSimilarityConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MovieSimilarityConnection")));
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("IdentityConnection")));
@@ -89,9 +89,6 @@ builder.Services.AddSingleton<IEmailSender<IdentityUser>, NoOpEmailSender<Identi
 
 var app = builder.Build();
 
-// Ensure that the database is downloaded before starting the app
-var blobStorageService = app.Services.GetRequiredService<BlobStorageService>();
-await blobStorageService.DownloadDatabaseAsync(); // This will download the file to the local directory
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
