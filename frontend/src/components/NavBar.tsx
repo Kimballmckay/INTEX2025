@@ -8,11 +8,11 @@ function NavBar() {
     <div className="nav-container">
       <nav className="navbar">
         <div className="navbar-content">
-          <div className="logo">
-            <img src="/images/Untitled design (1).png" alt="Logo" />
-          </div>
+          <div className="nav-left">
+            <div className="logo">
+              <img src="/images/Untitled design (1).png" alt="Logo" />
+            </div>
 
-          <div className="nav-menu">
             <div className="dropdown">
               <button className="watch-button">Watch</button>
               <div className="dropdown-content">
@@ -33,7 +33,7 @@ function NavBar() {
 
           <div className="nav-right">
             <button className="nav-button" onClick={() => navigate("/login")}>
-              Login
+              Sign In
             </button>
             <button className="nav-button" onClick={() => navigate("/signup")}>
               Sign Up
