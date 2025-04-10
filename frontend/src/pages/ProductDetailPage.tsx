@@ -10,84 +10,92 @@ function ProductDetailPage() {
   const [movie, setMovie] = useState<MoviesTitle | null>(null);
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
   const [averageRating, setAverageRating] = useState<number>(0);
-  const [userRating, setUserRating] = useState<number | null>(null); // State for storing user rating
+  const [userRating, setUserRating] = useState<number | null>(null);
 
   useEffect(() => {
-    // Fetch movie details
+    if (!show_id) return;
+
     fetch(`https://localhost:5000/Movie/${show_id}`)
       .then((response) => response.json())
       .then((data) => setMovie(data))
       .catch((error) => console.error(error));
 
-    // Fetch recommendations based on show_id
     fetch(`https://localhost:5000/Recommendation/Recommend/${show_id}`)
       .then((response) => response.json())
       .then((data) => setRecommendations(data))
       .catch((error) => console.error(error));
 
-    // Fetch average rating for the movie
     fetch(`https://localhost:5000/Movie/GetAverageRating/${show_id}`)
       .then((response) => response.json())
       .then((data) => setAverageRating(data))
       .catch((error) => console.error(error));
+
+    // Load previously submitted rating from localStorage
+    const savedRating = localStorage.getItem(`rating_${show_id}`);
+    if (savedRating) {
+      setUserRating(parseInt(savedRating));
+    }
   }, [show_id]);
 
-  const handleRatingChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserRating(Number(e.target.value));
-  };
-
-  const handleSubmitRating = () => {
-    if (userRating === null || userRating < 1 || userRating > 5) {
-      alert("Please select a valid rating between 1 and 5.");
+  const handleStarClick = (rating: number) => {
+    if (rating < 1 || rating > 5) {
+      alert("Please select a rating between 1 and 5.");
       return;
     }
+
+    setUserRating(rating);
+    localStorage.setItem(`rating_${show_id}`, rating.toString());
+    submitRating(rating);
+  };
+
+  const submitRating = (rating: number) => {
+    if (!show_id) return;
 
     fetch(`https://localhost:5000/Movie/AddRating/${show_id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(userRating),
+      body: JSON.stringify(rating),
     })
-      .then((response) => response.json())
+      .then(async (response) => {
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(errorText || "Failed to submit rating");
+        }
+        return response.json();
+      })
       .then((data) => {
         setAverageRating(data.averageRating);
       })
-      .catch((error) => console.error("Error submitting rating:", error));
+      .catch((error) => {
+        console.error("Error submitting rating:", error.message);
+        alert("There was a problem submitting your rating.");
+      });
   };
-
-  if (!movie) return <div>Loading...</div>;
 
   const handleRecommendationClick = async (title: string) => {
     try {
       const response = await fetch(
         `https://localhost:5000/Movie/titlelookup/${encodeURIComponent(title)}`
-      ); // New backend endpoint (see next step)
-      if (!response.ok) {
-        console.error(
-          `Error fetching show_id for title "${title}":`,
-          response.status
-        );
-        return;
-      }
+      );
       const data = await response.json();
-      if (data && data.show_id) {
+      if (data?.show_id) {
         navigate(`/productdetail/${data.show_id}`);
-      } else {
-        console.error(`show_id not found for title "${title}"`);
       }
     } catch (error) {
       console.error("Error fetching show_id:", error);
     }
   };
 
-  const cleanTitle = movie.title.replace(/[^a-zA-Z0-9\s]/g, ""); // Removes special characters
+  if (!movie) return <div>Loading...</div>;
+
+  const cleanTitle = movie.title.replace(/[^a-zA-Z0-9\s]/g, "");
   const imageUrl = `https://movieimagesstorage.blob.core.windows.net/movieimages/Movie%20Posters/Movie%20Posters/${encodeURIComponent(cleanTitle)}.jpg`;
 
   return (
     <div style={{ color: "white" }}>
       <div className="d-flex flex-md-row flex-column align-items-start gap-4 mt-4">
-        {/* Movie Poster */}
         <img
           src={imageUrl}
           alt={`${movie.title} poster`}
@@ -99,30 +107,18 @@ function ProductDetailPage() {
           }}
         />
 
-        {/* Movie Info */}
         <div className="flex-grow-1" style={{ minWidth: "300px" }}>
           <h1 className="mb-2">{movie.title}</h1>
           <p className="text-muted mb-3">
             {movie.rating} • {movie.duration} • {movie.release_year}
           </p>
 
-          <p className="mb-2">
-            <strong>Description:</strong> {movie.description}
-          </p>
-          <p className="mb-2">
-            <strong>Genre:</strong> {movie.genre}
-          </p>
-          <p className="mb-2">
-            <strong>Country:</strong> {movie.country}
-          </p>
-          <p className="mb-2">
-            <strong>Type:</strong> {movie.type}
-          </p>
-          <p className="mb-2">
-            <strong>Director:</strong> {movie.director}
-          </p>
+          <p><strong>Description:</strong> {movie.description}</p>
+          <p><strong>Genre:</strong> {movie.genre}</p>
+          <p><strong>Country:</strong> {movie.country}</p>
+          <p><strong>Type:</strong> {movie.type}</p>
+          <p><strong>Director:</strong> {movie.director}</p>
 
-          {/* Average Rating */}
           <p className="mb-2">
             <strong>Average Rating: </strong>
             {averageRating === 0 ? "No ratings yet" : (
@@ -132,40 +128,41 @@ function ProductDetailPage() {
             )}
           </p>
 
-          {/* Rating Input */}
+          {/* Star Rating */}
           <div className="mb-3">
-            <label htmlFor="rating">Rate this movie (1-5): </label>
-            <input
-              type="number"
-              id="rating"
-              value={userRating || ""}
-              onChange={handleRatingChange}
-              min={1}
-              max={5}
-            />
-            <button onClick={handleSubmitRating}>Submit Rating</button>
+            <label htmlFor="star-rating"><strong>Your Rating:</strong></label>
+            <div id="star-rating" style={{ fontSize: "2rem", cursor: "pointer" }}>
+              {[1, 2, 3, 4, 5].map((star) => (
+                <span
+                  key={star}
+                  onClick={() => handleStarClick(star)}
+                  style={{
+                    color: userRating && star <= userRating ? "#ffc107" : "#e4e5e9",
+                    transition: "color 0.2s",
+                  }}
+                >
+                  ★
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </div>
 
+      {/* Recommendations */}
       <div className="mt-4">
         <h4 className="mb-3">Recommended</h4>
-        {recommendations && recommendations.length > 0 ? (
+        {recommendations.length > 0 ? (
           <div className="d-flex flex-wrap justify-content-center gap-4">
-
-            {[
-              recommendations[0]?.recommendation1,
+            {[recommendations[0]?.recommendation1,
               recommendations[0]?.recommendation2,
               recommendations[0]?.recommendation3,
               recommendations[0]?.recommendation4,
               recommendations[0]?.recommendation5,
             ]
-           
-
               .filter((title) => title)
               .map((title, index) => {
                 const cleanRecTitle = title.replace(/[^a-zA-Z0-9\sñ]/g, "");
-
                 const recImageUrl = `https://movieimagesstorage.blob.core.windows.net/movieimages/Movie%20Posters/Movie%20Posters/${encodeURIComponent(cleanRecTitle)}.jpg`;
 
                 return (
@@ -184,7 +181,7 @@ function ProductDetailPage() {
                         objectFit: "cover",
                       }}
                       onError={(e) => {
-                        e.currentTarget.style.display = "none"; // Just hide it
+                        e.currentTarget.style.display = "none";
                       }}
                     />
                     <p className="mt-2 text-center" style={{ fontSize: "0.9rem" }}>

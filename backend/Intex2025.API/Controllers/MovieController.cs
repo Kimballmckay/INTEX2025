@@ -232,39 +232,52 @@ namespace Intex2025.API.Controllers
             return Ok(averageRating);
         }
 
-        [HttpPost("AddRating/{show_id}")]
+       [HttpPost("AddRating/{show_id}")]
         public IActionResult AddRating(string show_id, [FromBody] int rating)
         {
-            // Find the movie by show_id
             var movie = _movieContext.Movies_Titles.Find(show_id);
             if (movie == null)
             {
                 return NotFound("Movie not found");
             }
 
-            // Add the rating to the Movies_Rating table
-            var newRating = new Movies_Rating
+            var userId = 1; // TODO: Replace with actual logged-in user ID in the future
+
+            // Check if this user has already rated this movie
+            var existingRating = _movieContext.Movies_Ratings
+                .FirstOrDefault(r => r.show_id == show_id && r.user_id == userId);
+
+            if (existingRating != null)
             {
-                show_id = show_id,
-                rating = rating,
-                user_id = 1 // Assuming user_id is 1 for now, replace it with actual user ID from authentication
-            };
-            _movieContext.Movies_Ratings.Add(newRating);
+                // Update existing rating
+                existingRating.rating = rating;
+                _movieContext.Movies_Ratings.Update(existingRating);
+            }
+            else
+            {
+                // Add new rating
+                var newRating = new Movies_Rating
+                {
+                    show_id = show_id,
+                    rating = rating,
+                    user_id = userId
+                };
+                _movieContext.Movies_Ratings.Add(newRating);
+            }
+
             _movieContext.SaveChanges();
 
-            // Recalculate the average rating (ensure the ratings exist before calculating)
+            // Recalculate and update the average rating
             var averageRating = _movieContext.Movies_Ratings
                 .Where(r => r.show_id == show_id)
-                .Average(r => r.rating ?? 0);  // Use null-coalescing to avoid nulls in calculation
+                .Average(r => r.rating ?? 0);
 
-            // Update the movie's average rating as a string
-            movie.rating = averageRating.ToString("F1");  // Format to 1 decimal place, e.g., "7.5"
-
-            // Save the updated movie record
+            movie.rating = averageRating.ToString("F1");
             _movieContext.Movies_Titles.Update(movie);
             _movieContext.SaveChanges();
 
             return Ok(new { averageRating = averageRating });
         }
+
     }
 }
