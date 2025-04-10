@@ -2,10 +2,10 @@ import "../css/HomePage.css";
 import { Carousel } from "react-bootstrap";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
-import { useState, useEffect } from "react";
 import AzureRecommendations from "../components/AzureRecommendations";
 import { MoviesTitle } from "../types/MoviesTitle";
-
+import { useState } from "react";
+import CookieConsent from "react-cookie-consent";
 // import AuthorizeView, { AuthorizedUser } from "../components/AuthorizeView";
 // import Logout from "../components/Logout";
 
@@ -206,7 +206,29 @@ function HomePage() {
             </div>
           )}
         </section>
-
+        <CookieConsent
+          location="bottom"
+          buttonText="I Agree"
+          cookieName="userConsentGiven"
+          style={{ background: "#2B373B", color: "#fff", fontSize: "14px" }}
+          buttonStyle={{
+            background: "#4CAF50",
+            color: "#fff",
+            fontSize: "14px",
+            padding: "10px 20px",
+            borderRadius: "5px",
+          }}
+          expires={365}
+        >
+          This website uses cookies to ensure you get the best experience on our
+          website.{" "}
+          <a
+            href="/privacy-policy"
+            style={{ color: "#fff", textDecoration: "underline" }}
+          >
+            Learn more
+          </a>
+        </CookieConsent>
         {/* FOOTER */}
         <div>
           <Footer />
