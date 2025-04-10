@@ -4,14 +4,13 @@ import Logout from "../components/Logout";
 import { MoviesTitle } from "../types/MoviesTitle";
 import { Recommendation } from "../types/Recommendation";
 import { useEffect, useState } from "react";
+import "../css/ProductDetailPage.css";
 
 function ProductDetailPage() {
   const navigate = useNavigate();
   const { show_id } = useParams();
   const [movie, setMovie] = useState<MoviesTitle | null>(null);
-  const [recommendations, setRecommendations] = useState<Recommendation | null>(
-    null
-  );
+  const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
 
   useEffect(() => {
     // Fetch movie details
@@ -21,7 +20,7 @@ function ProductDetailPage() {
       .catch((error) => console.error(error));
 
     // Fetch recommendations based on show_id
-    fetch(`https://localhost:5000/Recommendations/Recommend/${show_id}`)
+    fetch(`https://localhost:5000/Recommendation/Recommend/${show_id}`)
       .then((response) => response.json())
       .then((data) => setRecommendations(data))
       .catch((error) => console.error(error));
@@ -34,36 +33,90 @@ function ProductDetailPage() {
 
   return (
     <div style={{ color: "white" }}>
-      <img
-        src={imageUrl}
-        alt={`${movie.title} poster`}
-        width={200}
-        height={300}
-        onError={(e) => {
-          e.currentTarget.src =
-            "https://via.placeholder.com/200x300?text=No+Image";
-        }}
-      />
-      <h1>{movie.title}</h1>
-      <p>{movie.rating}</p>
-      <p>{movie.duration}</p>
-      <p>{movie.release_year}</p>
-      <p>{movie.description}</p>
-      <p>{movie.genre}</p>
-      <p>{movie.country}</p>
-      <p>{movie.type}</p>
-      <p>{movie.director}</p>
+      <div className="d-flex flex-md-row flex-column align-items-start gap-4 mt-4">
+        {/* Movie Poster */}
+        <img
+          src={imageUrl}
+          alt={`${movie.title} poster`}
+          width={300}
+          height={450}
+          style={{ borderRadius: "8px", objectFit: "cover" }}
+          onError={(e) => {
+            e.currentTarget.src =
+              "https://via.placeholder.com/200x300?text=No+Image";
+          }}
+        />
 
-      <div>
-        <h4>Recommended</h4>
-        {recommendations ? (
-          <ul>
-            <li>{recommendations.recommendation1}</li>
-            <li>{recommendations.recommendation2}</li>
-            <li>{recommendations.recommendation3}</li>
-            <li>{recommendations.recommendation4}</li>
-            <li>{recommendations.recommendation5}</li>
-          </ul>
+        {/* Movie Info */}
+        <div className="flex-grow-1" style={{ minWidth: "300px" }}>
+          <h1 className="mb-2">{movie.title}</h1>
+          <p className="text-muted mb-3">
+            {movie.rating} • {movie.duration} • {movie.release_year}
+          </p>
+
+          <p className="mb-2">
+            <strong>Description:</strong> {movie.description}
+          </p>
+          <p className="mb-2">
+            <strong>Genre:</strong> {movie.genre}
+          </p>
+          <p className="mb-2">
+            <strong>Country:</strong> {movie.country}
+          </p>
+          <p className="mb-2">
+            <strong>Type:</strong> {movie.type}
+          </p>
+          <p className="mb-2">
+            <strong>Director:</strong> {movie.director}
+          </p>
+        </div>
+      </div>
+
+      <div className="mt-4">
+        <h4 className="mb-3">Recommended</h4>
+        {recommendations && recommendations.length > 0 ? (
+          <div className="d-flex flex-wrap justify-content-center gap-4">
+            {[
+              recommendations[0].recommendation1,
+              recommendations[0].recommendation2,
+              recommendations[0].recommendation3,
+              recommendations[0].recommendation4,
+              recommendations[0].recommendation5,
+            ]
+              .filter((title) => title)
+              .map((title, index) => {
+                const cleanRecTitle = title.replace(/[^a-zA-Z0-9\s]/g, "");
+                const recImageUrl = `https://movieimagesstorage.blob.core.windows.net/movieimages/Movie%20Posters/Movie%20Posters/${encodeURIComponent(cleanRecTitle)}.jpg`;
+
+                return (
+                  <div
+                    key={index}
+                    className="movie-card d-flex flex-column align-items-center"
+                    style={{ width: 200 }}
+                  >
+                    <img
+                      src={recImageUrl}
+                      alt={`${title} poster`}
+                      style={{
+                        width: "100%",
+                        aspectRatio: "2/3",
+                        objectFit: "cover",
+                      }}
+                      onError={(e) => {
+                        e.currentTarget.src =
+                          "https://via.placeholder.com/200x300?text=No+Image";
+                      }}
+                    />
+                    <p
+                      className="mt-2 text-center"
+                      style={{ fontSize: "0.9rem" }}
+                    >
+                      {title}
+                    </p>
+                  </div>
+                );
+              })}
+          </div>
         ) : (
           <p>No recommendations available.</p>
         )}
