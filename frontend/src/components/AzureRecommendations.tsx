@@ -20,9 +20,7 @@ const AzureRecommendations: React.FC<AzureRecommendationsProps> = ({
 
   const getAzureRecommendations = async () => {
     const userRatings: RatingInput[] = [
-      { user_id: 1, show_id: "s8381", rating: 4 },
-      { user_id: 1, show_id: "s3466", rating: 5 },
-      { user_id: 1, show_id: "s3181", rating: 4 },
+      { user_id: 88, show_id: "s8381", rating: 4 },
     ];
 
     try {
