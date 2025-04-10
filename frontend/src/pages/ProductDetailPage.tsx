@@ -32,7 +32,7 @@ function ProductDetailPage() {
       .catch((error) => console.error(error));
 
     // Fetch average rating for the movie
-    fetch(`hhttps://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Movie/GetAverageRating/${show_id}`, {
+    fetch(`https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Movie/GetAverageRating/${show_id}`, {
       credentials: "include", // 👈 Add this
     })
       .then((response) => response.json())
@@ -40,7 +40,7 @@ function ProductDetailPage() {
       .catch((error) => console.error(error));
 
     // First try collaborative recommendations
-    fetch(`https://localhost:5000/Recommendation/Recommend/${show_id}`)
+    fetch(`https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Recommendation/Recommend/${show_id}`)
       .then((response) => response.json())
       .then((data) => {
         if (data && data.length > 0 && data[0]?.recommendation1) {
@@ -54,14 +54,14 @@ function ProductDetailPage() {
           setRecommendations(titles);
         } else {
           // Fallback to content-based
-          fetch(`https://localhost:5000/MovieSimilarity/top5/${show_id}`)
+          fetch(`https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/MovieSimilarity/top5/${show_id}`)
             .then((res) => res.json())
             .then(async (similarMovies: MovieSimilarity[]) => {
               const titles: string[] = [];
 
               for (const item of similarMovies) {
                 const res = await fetch(
-                  `https://localhost:5000/Movie/${item.target_show_id}`
+                  `https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Movie/${item.target_show_id}`
                 );
                 const movieData = await res.json();
                 if (movieData?.title) {
@@ -94,7 +94,6 @@ function ProductDetailPage() {
       alert("Please select a rating between 1 and 5.");
       return;
     }
-
     setUserRating(rating);
     localStorage.setItem(`rating_${show_id}`, rating.toString());
     submitRating(rating);
@@ -103,7 +102,7 @@ function ProductDetailPage() {
   const submitRating = (rating: number) => {
     if (!show_id) return;
 
-    fetch(`https://localhost:5000/Movie/AddRating/${show_id}`, {
+    fetch(`https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Movie/AddRating/${show_id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
