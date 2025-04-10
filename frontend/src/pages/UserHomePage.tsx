@@ -5,9 +5,13 @@ import Footer from "../components/Footer";
 import { useState } from "react";
 import AuthorizeView, { AuthorizedUser } from "../components/AuthorizeView";
 import Logout from "../components/Logout";
+import AzureRecommendations from "../components/AzureRecommendations";
+import { MoviesTitle } from "../types/MoviesTitle";
 
 function UserHomePage() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [recommendedMovies, setRecommendedMovies] = useState<MoviesTitle[]>([]);
+
 
   const toggleAnswer = (index: number) => {
     if (activeIndex === index) {
@@ -126,6 +130,27 @@ function UserHomePage() {
                 </div>
               ))}
             </div>
+          </section>
+
+          {/* RECOMMENDATIONS SECTION */}
+          <h2 className="text-center text-white my-5">Just For You</h2>
+          <section className="recommendations-section">
+            <AzureRecommendations onRecommendations={setRecommendedMovies} />
+            {recommendedMovies.length > 0 && (
+              <div className="movie-grid">
+                {recommendedMovies.map((movie, idx) => {
+                  const cleanTitle = movie.title.replace(/[^a-zA-Z0-9\s]/g, "");
+                  const imageUrl = `https://movieimagesstorage.blob.core.windows.net/movieimages/Movie%20Posters/Movie%20Posters/${encodeURIComponent(cleanTitle)}.jpg`;
+
+                  return (
+                    <div key={movie.show_id} className="movie-item">
+                      <span className="ranking">{idx + 1}</span>
+                      <img src={imageUrl} alt={movie.title} />
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </section>
 
           {/* MORE REASONS TO JOIN */}
