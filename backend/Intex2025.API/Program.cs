@@ -23,6 +23,9 @@ builder.Services.AddDbContext<MovieDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("MovieConnection")));
 
 // Security - Identity
+builder.Services.AddDbContext<RecommendationsDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("RecommendationConnection")));
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("IdentityConnection")));
 

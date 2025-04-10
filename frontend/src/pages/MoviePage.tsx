@@ -28,16 +28,20 @@ function MoviePage() {
                 setSelectedGenres={setSelectedGenres}
               />
             </div>
-          <div className="col-md-9">
-            {/* Add a search input */}
-            <input
-              type="text"
-              placeholder="Search by title"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="form-control mb-4"
-            />
-            <MovieList selectedGenres={selectedGenres} searchQuery={searchQuery} />
+            <div className="col-md-9">
+              {/* Add a search input */}
+              <input
+                type="text"
+                placeholder="Search by title"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="form-control mb-4"
+              />
+              <MovieList
+                selectedGenres={selectedGenres}
+                searchQuery={searchQuery}
+              />
+            </div>
           </div>
         </div>
       </AuthorizeView>
