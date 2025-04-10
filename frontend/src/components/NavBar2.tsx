@@ -12,7 +12,7 @@ function NavBar2() {
   const handleLogout = async () => {
     try {
       // Make a request to your logout endpoint
-      await fetch("https://localhost:5000/logout", {
+      await fetch("https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/logout", {
         method: "POST",
         credentials: "include",
       });

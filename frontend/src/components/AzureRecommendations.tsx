@@ -25,7 +25,7 @@ const AzureRecommendations: React.FC<AzureRecommendationsProps> = ({
 
     try {
       const response = await axios.post(
-        "https://localhost:5000/api/azurerecommendations/score",
+        "https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/api/azurerecommendations/score",
         userRatings
       );
       const showIds: string[] = response.data;

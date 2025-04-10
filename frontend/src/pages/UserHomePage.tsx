@@ -12,7 +12,6 @@ function UserHomePage() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [recommendedMovies, setRecommendedMovies] = useState<MoviesTitle[]>([]);
 
-
   const toggleAnswer = (index: number) => {
     if (activeIndex === index) {
       setActiveIndex(null); // Close the answer if the same question is clicked
