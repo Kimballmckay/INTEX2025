@@ -3,47 +3,61 @@
   font-family: Arial, sans-serif;
 }
 
+.nav-container {
+  width: 100%;
+}
+
 .navbar {
+  background-color: rgba(0, 0, 0, 0.9); /* Dark background */
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 120px;
+}
+
+.navbar-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.8); /* Dark blue, very faded */
-  position: fixed;
-  width: 100%;
-  top: 0;
-  padding: 10px 100px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  z-index: 10;
+  height: 100%;
+  padding: 0 50px;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-.profile-pic {
-  margin-right: 20px;
+body {
+  margin-top: 120px; /* Add top margin to body to offset the fixed navbar */
+  padding: 0;
 }
 
-.profile-pic img {
-  height: 40px;
-  width: 40px;
-  border-radius: 50%;
-  object-fit: cover;
+.logo {
+  display: flex;
+  align-items: center;
+  margin-right: 30px; /* Just add some spacing between logo and next element */
 }
 
 .logo img {
-  height: 100px;
-  width: 100px;
+  height: 150px;
+  width: 150px;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  margin: 0 20px;
+}
+
+.nav-right {
+  display: flex;
+  gap: 15px; /* Space between buttons */
 }
 
 .dropdown {
   position: relative;
   display: inline-block;
-  margin-right: auto;
-}
-
-.dropbtn {
-  background-color: transparent;
-  border: none;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
 }
 
 .dropdown-content {
@@ -70,10 +84,29 @@
   display: block;
 }
 
-.login button {
+.nav-button {
   background-color: transparent;
-  border: none;
+  border: 2px solid white;
+  border-radius: 4px;
   color: white;
-  font-size: 16px;
+  font-size: 25px;
   cursor: pointer;
+  padding: 8px 16px;
+  transition: all 0.3s ease;
+}
+
+.watch-button {
+  background-color: transparent;
+  border: 2px solid white;
+  border-radius: 4px;
+  color: white;
+  font-size: 25px;
+  cursor: pointer;
+  padding: 8px 16px;
+  transition: all 0.3s ease;
+}
+
+.nav-button:hover {
+  background-color: white;
+  color: black;
 }
