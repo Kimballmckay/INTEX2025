@@ -17,6 +17,7 @@ import {
 import UserHomePage from "./pages/UserHomePage";
 import AuthorizeView from "./components/AuthorizeView";
 import MoviePage from "./pages/MoviePage";
+import UnauthorizedPage from "./pages/UnauthorizedPage";
 
 library.add(faFacebook, faTwitter, faInstagram);
 
@@ -32,9 +33,9 @@ function App() {
           <Route
             path="/managemovies"
             element={
-              <AuthorizeView>
+              <UnauthorizedPage>
                 <ManageMoviesPage />{" "}
-              </AuthorizeView>
+              </UnauthorizedPage>
             }
           />
           <Route path="/privacy" element={<PrivacyPage />} />

@@ -1,85 +1,122 @@
 import React, { useEffect, useState } from "react";
-import CookieConsent from "react-cookie-consent"; // Import from your installed package
-import { useNavigate } from "react-router-dom";
 
 function CookieConsentBanner() {
-  const navigate = useNavigate();
-  const [consentGiven, setConsentGiven] = useState(false);
+  // Track whether the user has given consent (null if undecided)
+  const [consentGiven, setConsentGiven] = useState<boolean | null>(null);
 
-  // Check if user already consented on page load
   useEffect(() => {
+    // Check if user has made a decision on cookie consent
     const consent = localStorage.getItem("cookieConsent");
     if (consent === "true") {
-      setConsentGiven(true);
+      setConsentGiven(true); // User accepted cookies
+    } else if (consent === "false") {
+      setConsentGiven(false); // User rejected cookies
     }
   }, []);
 
-  // Handle consent acceptance
-  const handleConsent = () => {
+  const handleAccept = () => {
+    // Store that the user accepted cookies
     localStorage.setItem("cookieConsent", "true");
-    setConsentGiven(true);
-    // Here, you can add your tracking scripts or cookies
+    setConsentGiven(true); // Update state to reflect user's choice
     document.cookie =
-      "userConsentGiven=true; path=/; max-age=" + 60 * 60 * 24 * 365; // 1 year
+      "userConsentGiven=true; path=/; max-age=" + 60 * 60 * 24 * 365; // Set cookie for 1 year
+    console.log("Cookies Accepted: ", document.cookie);
   };
 
-  // Handle revoking consent (if needed)
-  const handleRevokeConsent = () => {
+  const handleReject = () => {
+    // Store that the user rejected cookies
     localStorage.setItem("cookieConsent", "false");
-    setConsentGiven(false);
-    // Remove user consent cookie and revoke any tracking
+    setConsentGiven(false); // Update state to reflect user's choice
     document.cookie =
-      "userConsentGiven=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT"; // Remove cookie
+      "userConsentGiven=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT"; // Delete cookie
+    console.log("Cookies Rejected: ", document.cookie);
+  };
+
+  const handleRevokeConsent = () => {
+    // Allow the user to revoke their consent and reset their choice
+    localStorage.removeItem("cookieConsent");
+    setConsentGiven(null); // Reset state to undecided
+    document.cookie =
+      "userConsentGiven=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT"; // Delete cookie
+    console.log("Consent Revoked: ", document.cookie);
   };
 
   return (
     <div className="App">
-      {/* Always render main content */}
       <h1>Welcome to our site!</h1>
 
-      {/* Render Cookie Consent banner */}
-      {!consentGiven && (
-        <CookieConsent
-          location="bottom"
-          buttonText="I Agree"
-          cookieName="userConsentGiven"
+      {/* Show banner only if consent is undecided */}
+      {consentGiven === null && (
+        <div
           style={{
             background: "#2B373B",
             color: "#fff",
-            fontSize: "14px",
-            textAlign: "center",
-            padding: "10px",
+            padding: "20px",
             position: "fixed",
             bottom: "0",
-            left: "0",
             width: "100%",
             zIndex: "9999",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexWrap: "wrap",
           }}
-          buttonStyle={{
-            background: "#4CAF50",
-            color: "#fff",
-            fontSize: "14px",
-            padding: "10px 20px",
-            borderRadius: "5px",
-          }}
-          expires={365}
-          onAccept={handleConsent}
         >
-          This website uses cookies to ensure you get the best experience on our
-          website.{" "}
-          <a
-            href="/privacy-policy"
-            style={{ color: "#fff", textDecoration: "underline" }}
-          >
-            Learn more
-          </a>
-        </CookieConsent>
+          <div style={{ marginBottom: "10px", maxWidth: "75%" }}>
+            This website uses cookies to ensure you get the best experience.{" "}
+            <a
+              href="/privacy-policy"
+              style={{ color: "#fff", textDecoration: "underline" }}
+            >
+              Learn more
+            </a>
+          </div>
+          <div>
+            <button
+              onClick={handleAccept}
+              style={{
+                background: "#4CAF50",
+                color: "#fff",
+                padding: "10px 20px",
+                marginRight: "10px",
+                borderRadius: "5px",
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
+              Accept
+            </button>
+            <button
+              onClick={handleReject}
+              style={{
+                background: "#f44336",
+                color: "#fff",
+                padding: "10px 20px",
+                borderRadius: "5px",
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
+              Reject
+            </button>
+          </div>
+        </div>
       )}
 
-      {/* Button to revoke consent if already given */}
-      {consentGiven && (
-        <button onClick={handleRevokeConsent} style={{ marginTop: "10px" }}>
-          Revoke Consent
+      {/* Button to change consent later (if decision is made) */}
+      {consentGiven !== null && (
+        <button
+          onClick={handleRevokeConsent}
+          style={{
+            marginTop: "20px",
+            padding: "8px 16px",
+            borderRadius: "5px",
+            border: "1px solid #ccc",
+            background: "#eee",
+            cursor: "pointer",
+          }}
+        >
+          Update Cookie Preferences
         </button>
       )}
     </div>
