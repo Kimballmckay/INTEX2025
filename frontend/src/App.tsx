@@ -48,6 +48,10 @@ function App() {
             }
           />
           <Route
+            path="/productdetail/:show_id"
+            element={<ProductDetailPage />}
+          />
+          <Route
             path="/userhome"
             element={
               <AuthorizeView>

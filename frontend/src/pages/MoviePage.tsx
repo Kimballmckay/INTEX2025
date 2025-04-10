@@ -1,4 +1,3 @@
-//security
 import { useState } from "react";
 import AuthorizeView, { AuthorizedUser } from "../components/AuthorizeView";
 import GenreFilter from "../components/GenreFilter";
@@ -11,6 +10,8 @@ import NavBar2 from "../components/NavBar2";
 
 function MoviePage() {
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
   return (
     <>
       <AuthorizeView>
@@ -27,9 +28,16 @@ function MoviePage() {
                 setSelectedGenres={setSelectedGenres}
               />
             </div>
-            <div className="col-md-9">
-              <MovieList selectedGenres={selectedGenres} />
-            </div>
+          <div className="col-md-9">
+            {/* Add a search input */}
+            <input
+              type="text"
+              placeholder="Search by title"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="form-control mb-4"
+            />
+            <MovieList selectedGenres={selectedGenres} searchQuery={searchQuery} />
           </div>
         </div>
       </AuthorizeView>
