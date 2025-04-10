@@ -32,7 +32,7 @@ function CreateAccountPage() {
       setError("Password must be at least 14 characters long.");
     } else {
       setError("");
-      fetch("https://localhost:5000/register", {
+      fetch("https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

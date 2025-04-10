@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Intex2025.API.Data;
 using Intex2025.API.Services;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add user secrets in development environment
@@ -19,12 +20,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Add services to the container
 builder.Services.AddDbContext<MovieDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("MovieConnection")));
 
 // Security - Identity
 builder.Services.AddDbContext<RecommendationsDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("RecommendationConnection")));
+
+builder.Services.AddDbContext<MovieSimilarityDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MovieSimilarityConnection")));
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("IdentityConnection")));
@@ -34,14 +39,14 @@ builder.Services.AddAuthorization();
 
 // Security - Add Identity services
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
-    {
-        options.Password.RequireDigit = false;
-        options.Password.RequireLowercase = false;
-        options.Password.RequireNonAlphanumeric = false;
-        options.Password.RequireUppercase = false;
-        options.Password.RequiredLength = 14;
-        options.Password.RequiredUniqueChars = 0;
-    })
+{
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequiredLength = 14;
+    options.Password.RequiredUniqueChars = 0;
+})
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
@@ -81,7 +86,9 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddSingleton<IEmailSender<IdentityUser>, NoOpEmailSender<IdentityUser>>();
 
+
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -105,7 +112,7 @@ app.MapIdentityApi<IdentityUser>();
 app.MapPost("/logout", async (HttpContext context, SignInManager<IdentityUser> signInManager) =>
 {
     await signInManager.SignOutAsync();
-    
+
     // Ensure authentication cookie is removed
     context.Response.Cookies.Delete(".AspNetCore.Identity.Application", new CookieOptions
     {

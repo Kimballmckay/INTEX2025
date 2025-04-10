@@ -5,7 +5,7 @@ interface FetchMoviesResponse {
   totalNumMovies: number;
 }
 
-const API_URL = "https://localhost:5000/Movie";
+const API_URL = "https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Movie";
 
 export const fetchMovies = async (
   pageSize: number,
@@ -26,7 +26,9 @@ export const fetchMovies = async (
       url += `&searchQuery=${encodeURIComponent(searchQuery)}`;
     }
 
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      credentials: "include", // 👈 this is key for cookie-based auth
+    });
 
     if (!response.ok) {
       throw new Error("Failed to fetch movies");
@@ -104,8 +106,11 @@ export async function fetchMoviesByShowIds(
   showIds: string[]
 ): Promise<MoviesTitle[]> {
   const response = await axios.post(
-    "https://localhost:5000/Movie/byshowids",
-    showIds
+    "https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Movie/byshowids",
+    showIds,
+    {
+      withCredentials: true,
+    }
   );
   return response.data;
 }
