@@ -20,7 +20,7 @@ export const fetchMovies = async (
       .join("&");
 
     let url = `${API_URL}/AllMovies?pageSize=${pageSize}&pageNum=${pageNum}${selectedGenres.length ? `&${genreParams}` : ""}`;
-    
+
     // Append search query parameter if it's provided
     if (searchQuery) {
       url += `&searchQuery=${encodeURIComponent(searchQuery)}`;
@@ -97,3 +97,15 @@ export const deleteMovie = async (show_id: string): Promise<void> => {
     throw error;
   }
 };
+
+import axios from "axios";
+
+export async function fetchMoviesByShowIds(
+  showIds: string[]
+): Promise<MoviesTitle[]> {
+  const response = await axios.post(
+    "https://localhost:5000/Movie/byshowids",
+    showIds
+  );
+  return response.data;
+}

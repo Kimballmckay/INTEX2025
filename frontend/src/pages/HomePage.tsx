@@ -2,12 +2,15 @@ import "../css/HomePage.css";
 import { Carousel } from "react-bootstrap";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
+import AzureRecommendations from "../components/AzureRecommendations";
+import { MoviesTitle } from "../types/MoviesTitle";
 import { useState } from "react";
 import CookieConsent from "react-cookie-consent";
 // import AuthorizeView, { AuthorizedUser } from "../components/AuthorizeView";
 // import Logout from "../components/Logout";
 
 function HomePage() {
+  const [recommendedMovies, setRecommendedMovies] = useState<MoviesTitle[]>([]);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const toggleAnswer = (index: number) => {
@@ -183,6 +186,26 @@ function HomePage() {
           ))}
         </section>
 
+        {/* RECOMMENDATIONS SECTION */}
+        <h2 className="text-center text-white my-5">Just For You</h2>
+        <section className="recommendations-section">
+          <AzureRecommendations onRecommendations={setRecommendedMovies} />
+          {recommendedMovies.length > 0 && (
+            <div className="movie-grid">
+              {recommendedMovies.map((movie, idx) => {
+                const cleanTitle = movie.title.replace(/[^a-zA-Z0-9\s]/g, "");
+                const imageUrl = `https://movieimagesstorage.blob.core.windows.net/movieimages/Movie%20Posters/Movie%20Posters/${encodeURIComponent(cleanTitle)}.jpg`;
+
+                return (
+                  <div key={movie.show_id} className="movie-item">
+                    <span className="ranking">{idx + 1}</span>
+                    <img src={imageUrl} alt={movie.title} />
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </section>
         <CookieConsent
           location="bottom"
           buttonText="I Agree"
