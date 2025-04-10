@@ -14,19 +14,25 @@ function ProductDetailPage() {
 
   useEffect(() => {
     // Fetch movie details
-    fetch(`https://localhost:5000/Movie/${show_id}`)
+    fetch(`https://localhost:5000/Movie/${show_id}`, {
+      credentials: "include",
+    })
       .then((response) => response.json())
       .then((data) => setMovie(data))
       .catch((error) => console.error(error));
 
     // Fetch recommendations based on show_id
-    fetch(`https://localhost:5000/Recommendation/Recommend/${show_id}`)
+    fetch(`https://localhost:5000/Recommendation/Recommend/${show_id}`, {
+      credentials: "include",
+    })
       .then((response) => response.json())
       .then((data) => setRecommendations(data))
       .catch((error) => console.error(error));
 
     // Fetch average rating for the movie
-    fetch(`https://localhost:5000/Movie/GetAverageRating/${show_id}`)
+    fetch(`https://localhost:5000/Movie/GetAverageRating/${show_id}`, {
+      credentials: "include", // 👈 Add this
+    })
       .then((response) => response.json())
       .then((data) => setAverageRating(data))
       .catch((error) => console.error(error));
@@ -48,6 +54,7 @@ function ProductDetailPage() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(userRating),
+      credentials: "include",
     })
       .then((response) => response.json())
       .then((data) => {
@@ -61,7 +68,10 @@ function ProductDetailPage() {
   const handleRecommendationClick = async (title: string) => {
     try {
       const response = await fetch(
-        `https://localhost:5000/Movie/titlelookup/${encodeURIComponent(title)}`
+        `https://localhost:5000/Movie/titlelookup/${encodeURIComponent(title)}`,
+        {
+          credentials: "include",
+        }
       ); // New backend endpoint (see next step)
       if (!response.ok) {
         console.error(
@@ -125,7 +135,9 @@ function ProductDetailPage() {
           {/* Average Rating */}
           <p className="mb-2">
             <strong>Average Rating: </strong>
-            {averageRating === 0 ? "No ratings yet" : (
+            {averageRating === 0 ? (
+              "No ratings yet"
+            ) : (
               <>
                 {averageRating.toFixed(2)} <span>★</span>
               </>
@@ -152,7 +164,6 @@ function ProductDetailPage() {
         <h4 className="mb-3">Recommended</h4>
         {recommendations && recommendations.length > 0 ? (
           <div className="d-flex flex-wrap justify-content-center gap-4">
-
             {[
               recommendations[0]?.recommendation1,
               recommendations[0]?.recommendation2,
@@ -160,7 +171,6 @@ function ProductDetailPage() {
               recommendations[0]?.recommendation4,
               recommendations[0]?.recommendation5,
             ]
-           
 
               .filter((title) => title)
               .map((title, index) => {
@@ -187,7 +197,10 @@ function ProductDetailPage() {
                         e.currentTarget.style.display = "none"; // Just hide it
                       }}
                     />
-                    <p className="mt-2 text-center" style={{ fontSize: "0.9rem" }}>
+                    <p
+                      className="mt-2 text-center"
+                      style={{ fontSize: "0.9rem" }}
+                    >
                       {title}
                     </p>
                   </div>
