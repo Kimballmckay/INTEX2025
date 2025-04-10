@@ -14,13 +14,27 @@ function ProductDetailPage() {
 
   useEffect(() => {
     // Fetch movie details
-    fetch(`https://localhost:5000/Movie/${show_id}`)
+    fetch(`https://localhost:5000/Movie/${show_id}`, {
+      credentials: "include",
+    })
       .then((response) => response.json())
       .then((data) => setMovie(data))
       .catch((error) => console.error(error));
 
-    // Fetch average rating
-    fetch(`https://localhost:5000/Movie/GetAverageRating/${show_id}`)
+
+    // Fetch recommendations based on show_id
+    fetch(`https://localhost:5000/Recommendation/Recommend/${show_id}`, {
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((data) => setRecommendations(data))
+      .catch((error) => console.error(error));
+
+    // Fetch average rating for the movie
+    fetch(`https://localhost:5000/Movie/GetAverageRating/${show_id}`, {
+      credentials: "include", // 👈 Add this
+    })
+
       .then((response) => response.json())
       .then((data) => setAverageRating(data))
       .catch((error) => console.error(error));
@@ -84,6 +98,7 @@ function ProductDetailPage() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(userRating),
+      credentials: "include",
     })
       .then((response) => response.json())
       .then((data) => {
@@ -95,8 +110,13 @@ function ProductDetailPage() {
   const handleRecommendationClick = async (title: string) => {
     try {
       const response = await fetch(
-        `https://localhost:5000/Movie/titlelookup/${encodeURIComponent(title)}`
-      );
+
+        `https://localhost:5000/Movie/titlelookup/${encodeURIComponent(title)}`,
+        {
+          credentials: "include",
+        }
+      ); // New backend endpoint (see next step)
+
       if (!response.ok) {
         console.error(
           `Error fetching show_id for title "${title}":`,
@@ -193,6 +213,7 @@ function ProductDetailPage() {
         <h4 className="mb-3">Recommended</h4>
         {recommendations.length > 0 ? (
           <div className="d-flex flex-wrap justify-content-center gap-4">
+
             {recommendations.map((title, index) => {
               const cleanRecTitle = title.replace(/[^a-zA-Z0-9\sñ]/g, "");
               const recImageUrl = `https://movieimagesstorage.blob.core.windows.net/movieimages/Movie%20Posters/Movie%20Posters/${encodeURIComponent(
@@ -227,6 +248,50 @@ function ProductDetailPage() {
                 </div>
               );
             })}
+
+            {[
+              recommendations[0]?.recommendation1,
+              recommendations[0]?.recommendation2,
+              recommendations[0]?.recommendation3,
+              recommendations[0]?.recommendation4,
+              recommendations[0]?.recommendation5,
+            ]
+
+              .filter((title) => title)
+              .map((title, index) => {
+                const cleanRecTitle = title.replace(/[^a-zA-Z0-9\sñ]/g, "");
+
+                const recImageUrl = `https://movieimagesstorage.blob.core.windows.net/movieimages/Movie%20Posters/Movie%20Posters/${encodeURIComponent(cleanRecTitle)}.jpg`;
+
+                return (
+                  <div
+                    key={index}
+                    className="movie-card d-flex flex-column align-items-center"
+                    style={{ width: 200, cursor: "pointer" }}
+                    onClick={() => handleRecommendationClick(title)}
+                  >
+                    <img
+                      src={recImageUrl}
+                      alt={`${title} poster`}
+                      style={{
+                        width: "100%",
+                        aspectRatio: "2/3",
+                        objectFit: "cover",
+                      }}
+                      onError={(e) => {
+                        e.currentTarget.style.display = "none"; // Just hide it
+                      }}
+                    />
+                    <p
+                      className="mt-2 text-center"
+                      style={{ fontSize: "0.9rem" }}
+                    >
+                      {title}
+                    </p>
+                  </div>
+                );
+              })}
+
           </div>
         ) : (
           <p>No recommendations available</p>

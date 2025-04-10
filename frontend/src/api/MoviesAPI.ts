@@ -26,7 +26,9 @@ export const fetchMovies = async (
       url += `&searchQuery=${encodeURIComponent(searchQuery)}`;
     }
 
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      credentials: "include", // 👈 this is key for cookie-based auth
+    });
 
     if (!response.ok) {
       throw new Error("Failed to fetch movies");
@@ -105,7 +107,10 @@ export async function fetchMoviesByShowIds(
 ): Promise<MoviesTitle[]> {
   const response = await axios.post(
     "https://localhost:5000/Movie/byshowids",
-    showIds
+    showIds,
+    {
+      withCredentials: true,
+    }
   );
   return response.data;
 }
