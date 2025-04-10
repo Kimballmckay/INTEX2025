@@ -10,6 +10,7 @@ function ProductDetailPage() {
   const [movie, setMovie] = useState<MoviesTitle | null>(null);
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
   const [averageRating, setAverageRating] = useState<number>(0);
+  const [userRating, setUserRating] = useState<number | null>(null); // State for storing user rating
 
   useEffect(() => {
     // Fetch movie details
@@ -31,9 +32,33 @@ function ProductDetailPage() {
       .catch((error) => console.error(error));
   }, [show_id]);
 
+  const handleRatingChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUserRating(Number(e.target.value));
+  };
+
+  const handleSubmitRating = () => {
+    if (userRating === null || userRating < 1 || userRating > 5) {
+      alert("Please select a valid rating between 1 and 5.");
+      return;
+    }
+
+    fetch(`https://localhost:5000/Movie/AddRating/${show_id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userRating),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setAverageRating(data.averageRating);
+      })
+      .catch((error) => console.error("Error submitting rating:", error));
+  };
+
   if (!movie) return <div>Loading...</div>;
 
-  const cleanTitle = movie.title.replace(/[^a-zA-Z0-9\s]/g, ""); // Removes special characters
+  const cleanTitle = movie.title.replace(/[^a-zA-Z0-9\s]/g, "");
   const imageUrl = `https://movieimagesstorage.blob.core.windows.net/movieimages/Movie%20Posters/Movie%20Posters/${encodeURIComponent(cleanTitle)}.jpg`;
 
   return (
@@ -77,13 +102,27 @@ function ProductDetailPage() {
 
           {/* Average Rating */}
           <p className="mb-2">
-            <strong>Average Rating: </strong> 
+            <strong>Average Rating: </strong>
             {averageRating === 0 ? "No ratings yet" : (
               <>
                 {averageRating.toFixed(2)} <span>★</span>
               </>
             )}
           </p>
+
+          {/* Rating Input */}
+          <div className="mb-3">
+            <label htmlFor="rating">Rate this movie (1-5): </label>
+            <input
+              type="number"
+              id="rating"
+              value={userRating || ""}
+              onChange={handleRatingChange}
+              min={1}
+              max={5}
+            />
+            <button onClick={handleSubmitRating}>Submit Rating</button>
+          </div>
         </div>
       </div>
 
