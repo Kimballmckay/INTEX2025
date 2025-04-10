@@ -1,4 +1,3 @@
-// NotAuthorizedPage.tsx
 import React, { useState, useEffect, createContext } from "react";
 import { Navigate } from "react-router-dom";
 
@@ -6,18 +5,18 @@ const UserContext = createContext<User | null>(null);
 
 interface User {
   email: string;
-  role: string; // Add the role to the user object
+  role: string;
 }
 
 function UnauthorizedPage(props: { children: React.ReactNode }) {
   const [authorized, setAuthorized] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(true); // add a loading state
+  const [loading, setLoading] = useState<boolean>(true);
   let emptyuser: User = { email: "", role: "" };
 
   const [user, setUser] = useState(emptyuser);
 
   useEffect(() => {
-    async function fetchWithRetry(url: string, options: any) {
+    async function fetchUserData(url: string, options: any) {
       try {
         const response = await fetch(url, options);
 
@@ -29,22 +28,37 @@ function UnauthorizedPage(props: { children: React.ReactNode }) {
         }
 
         const data = await response.json();
+        console.log("User data received:", data);
 
-        // Check if the user has the "ADMIN" role
-        if (data.email && data.role === "ADMIN") {
-          setUser({ email: data.email, role: data.role });
-          setAuthorized(true);
+        // Check if we got a valid user response
+        if (data.email) {
+          console.log("User roles array:", data.roles);
+
+          // Extract the first role or empty string if roles array is empty
+          const userRole =
+            data.roles && data.roles.length > 0 ? data.roles[0] : "";
+
+          setUser({ email: data.email, role: userRole });
+
+          // Check if any role in the array is "Administrator"
+          const isAdmin = data.roles && data.roles.includes("Administrator");
+          setAuthorized(isAdmin);
+
+          console.log("User's first role:", userRole);
+          console.log("Is authorized:", isAdmin);
         } else {
-          throw new Error("User is not authorized or does not have ADMIN role");
+          setAuthorized(false);
         }
       } catch (error) {
+        console.error("Error fetching user data:", error);
         setAuthorized(false);
       } finally {
         setLoading(false);
       }
     }
 
-    fetchWithRetry("https://localhost:5000/pingauth", {
+    // Using the CurrentUser API that provides both email and roles
+    fetchUserData("https://localhost:5000/api/Account/CurrentUser", {
       method: "GET",
       credentials: "include",
     });
