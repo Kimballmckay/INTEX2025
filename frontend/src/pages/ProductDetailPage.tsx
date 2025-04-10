@@ -1,6 +1,4 @@
 import { useNavigate, useParams } from "react-router-dom";
-import AuthorizeView, { AuthorizedUser } from "../components/AuthorizeView";
-import Logout from "../components/Logout";
 import { MoviesTitle } from "../types/MoviesTitle";
 import { Recommendation } from "../types/Recommendation";
 import { useEffect, useState } from "react";
@@ -11,6 +9,7 @@ function ProductDetailPage() {
   const { show_id } = useParams();
   const [movie, setMovie] = useState<MoviesTitle | null>(null);
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
+  const [averageRating, setAverageRating] = useState<number>(0);
 
   useEffect(() => {
     // Fetch movie details
@@ -23,6 +22,12 @@ function ProductDetailPage() {
     fetch(`https://localhost:5000/Recommendation/Recommend/${show_id}`)
       .then((response) => response.json())
       .then((data) => setRecommendations(data))
+      .catch((error) => console.error(error));
+
+    // Fetch average rating for the movie
+    fetch(`https://localhost:5000/Movie/GetAverageRating/${show_id}`)
+      .then((response) => response.json())
+      .then((data) => setAverageRating(data))
       .catch((error) => console.error(error));
   }, [show_id]);
 
@@ -91,6 +96,16 @@ function ProductDetailPage() {
           <p className="mb-2">
             <strong>Director:</strong> {movie.director}
           </p>
+
+          {/* Average Rating */}
+          <p className="mb-2">
+            <strong>Average Rating: </strong> 
+            {averageRating === 0 ? "No ratings yet" : (
+              <>
+                {averageRating.toFixed(2)} <span>★</span>
+              </>
+            )}
+          </p>
         </div>
       </div>
 
@@ -98,6 +113,7 @@ function ProductDetailPage() {
         <h4 className="mb-3">Recommended</h4>
         {recommendations && recommendations.length > 0 ? (
           <div className="d-flex flex-wrap justify-content-center gap-4">
+
             {[
               recommendations[0]?.recommendation1,
               recommendations[0]?.recommendation2,
@@ -105,6 +121,8 @@ function ProductDetailPage() {
               recommendations[0]?.recommendation4,
               recommendations[0]?.recommendation5,
             ]
+           
+
               .filter((title) => title)
               .map((title, index) => {
                 const cleanRecTitle = title.replace(/[^a-zA-Z0-9\sñ]/g, "");
@@ -130,10 +148,7 @@ function ProductDetailPage() {
                         e.currentTarget.style.display = "none"; // Just hide it
                       }}
                     />
-                    <p
-                      className="mt-2 text-center"
-                      style={{ fontSize: "0.9rem" }}
-                    >
+                    <p className="mt-2 text-center" style={{ fontSize: "0.9rem" }}>
                       {title}
                     </p>
                   </div>

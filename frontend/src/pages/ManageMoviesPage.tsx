@@ -10,6 +10,7 @@ import Logout from "../components/Logout";
 import AuthorizeView, { AuthorizedUser } from "../components/AuthorizeView";
 import { Nav } from "react-bootstrap";
 import NavBar2 from "../components/NavBar2";
+import UnauthorizedPage from "./UnauthorizedPage";
 
 const ManageMoviesPage = () => {
   const [movies, setMovies] = useState<MoviesTitle[]>([]);
@@ -64,7 +65,7 @@ const ManageMoviesPage = () => {
 
   return (
     <>
-      <AuthorizeView>
+      <UnauthorizedPage>
         <NavBar2 />
         {/* <Logout>
           Logout
@@ -298,7 +299,7 @@ const ManageMoviesPage = () => {
             }}
           />
         </div>
-      </AuthorizeView>
+      </UnauthorizedPage>
     </>
   );
 };

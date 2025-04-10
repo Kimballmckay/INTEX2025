@@ -168,6 +168,7 @@ namespace Intex2025.API.Controllers
             return Ok(matchingMovies);
         }
 
+
         [HttpGet("GetMovieByTitle/{title}")]
         public async Task<IActionResult> GetMovieByTitle(string title)
         {
@@ -208,6 +209,23 @@ namespace Intex2025.API.Controllers
             }
 
             return Ok(new { show_id = movie.show_id });
+
+        [HttpGet("GetAverageRating/{show_id}")]
+        public IActionResult GetAverageRating(string show_id)
+        {
+            var ratings = _movieContext.Movies_Ratings
+                .Where(r => r.show_id == show_id && r.rating.HasValue) // Ensure rating is not null
+                .Select(r => r.rating)
+                .ToList();
+
+            if (ratings.Count == 0)
+            {
+                return Ok(0);  // No ratings, return 0
+            }
+
+            var averageRating = ratings.Average();
+            return Ok(averageRating);
+
         }
     }
 }
