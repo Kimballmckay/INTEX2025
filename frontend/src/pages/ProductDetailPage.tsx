@@ -14,7 +14,7 @@ function ProductDetailPage() {
 
   useEffect(() => {
     // Fetch movie details
-    fetch(`https://localhost:5000/Movie/${show_id}`, {
+    fetch(`https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Movie/${show_id}`, {
       credentials: "include",
     })
       .then((response) => response.json())
@@ -23,7 +23,7 @@ function ProductDetailPage() {
 
 
     // Fetch recommendations based on show_id
-    fetch(`https://localhost:5000/Recommendation/Recommend/${show_id}`, {
+    fetch(`https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Recommendation/Recommend/${show_id}`, {
       credentials: "include",
     })
       .then((response) => response.json())
@@ -31,7 +31,7 @@ function ProductDetailPage() {
       .catch((error) => console.error(error));
 
     // Fetch average rating for the movie
-    fetch(`https://localhost:5000/Movie/GetAverageRating/${show_id}`, {
+    fetch(`hhttps://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Movie/GetAverageRating/${show_id}`, {
       credentials: "include", // 👈 Add this
     })
 
@@ -110,8 +110,7 @@ function ProductDetailPage() {
   const handleRecommendationClick = async (title: string) => {
     try {
       const response = await fetch(
-
-        `https://localhost:5000/Movie/titlelookup/${encodeURIComponent(title)}`,
+        `https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Movie/titlelookup/${encodeURIComponent(title)}`,
         {
           credentials: "include",
         }

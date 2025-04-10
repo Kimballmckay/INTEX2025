@@ -16,7 +16,7 @@ function GenreFilter({
     const fetchGenres = async () => {
       try {
         const response = await fetch(
-          "https://localhost:5000/Movie/GetMovieGenres",
+          "https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Movie/GetMovieGenres",
           {
             credentials: "include", // 👈 sends auth cookies for secure access
           }
