@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 function CookieConsentBanner() {
   // Track whether the user has given consent (null if undecided)

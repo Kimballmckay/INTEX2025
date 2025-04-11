@@ -1,7 +1,6 @@
 import { useState } from "react";
-import AuthorizeView, { AuthorizedUser } from "../components/AuthorizeView";
+import AuthorizeView from "../components/AuthorizeView";
 import GenreFilter from "../components/GenreFilter";
-import Logout from "../components/Logout";
 import MovieBand from "../components/MovieBand";
 import MovieList from "../components/MovieList";
 import NavBar2 from "../components/NavBar2";

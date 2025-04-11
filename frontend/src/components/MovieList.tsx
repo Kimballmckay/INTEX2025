@@ -72,7 +72,7 @@ function MovieList({
   return (
     <div className="row">
       {movies.map((movie, index) => {
-        const cleanTitle = movie.title.replace(/[^a-zA-Z0-9\s]/g, ""); // Removes special characters
+        const cleanTitle = (movie.title ?? "").replace(/[^a-zA-Z0-9\s]/g, ""); // Removes special characters
         const imageUrl = `https://movieimagesstorage.blob.core.windows.net/movieimages/Movie%20Posters/Movie%20Posters/${encodeURIComponent(cleanTitle)}.jpg`;
 
         return (
