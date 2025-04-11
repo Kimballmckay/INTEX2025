@@ -47,14 +47,14 @@ function HomePage() {
       image: "/images/b9d8af7b-591c-4b02-9237-158b1a6f372d.jpg",
     },
     {
-      title: "Watch It Like It's 1979",
-      subtitle: "Old-school stories on demand.",
+      title: "Streaming Classics in Hi-Fi",
+      subtitle: "Retro vibes. Timeless cinema.",
       image: "/images/roma2.png",
     },
     {
-      title: "Watch It Like It's 1979",
-      subtitle: "Old-school stories on demand",
-      image: "/images/randommovie.jpg",
+      title: "Find Tailored Options Just for You!",
+      subtitle: "Stop wasting time. Start streaming now.",
+      image: "/images/netflix.jpg",
     },
     {
       title: "Watch It Like It's 1979",
@@ -79,23 +79,28 @@ function HomePage() {
   const faqItems = [
     {
       question: "What is this service?",
-      answer: "We stream retro films with hi-fi flavor and analog heart.",
+      answer:
+        "We're a streaming platform dedicated to retro films—think cult classics, midnight movies, vintage sci-fi, and analog gems. Everything we stream is curated for lovers of hi-fi flavor and old-school charm, with an emphasis on grainy nostalgia and cinematic soul. Whether you're into drive-in horror flicks or ‘80s VHS rarities, this is your analog sanctuary in a digital world.",
     },
     {
       question: "How much does it cost?",
-      answer: "Less than a vinyl record. Plans start at $4.99/month.",
+      answer:
+        "Our plans start at just $4.99/month—less than the price of a vinyl reissue or a large latte. For that, you get unlimited access to our hand-picked collection of retro films, themed collections, and exclusive content. No ads, no fluff—just pure vintage vibes.",
     },
     {
       question: "Can I watch on any device?",
-      answer: "Yep—TV, tablet, laptop, VHS (just kidding).",
+      answer:
+        "Yes! You can stream our films on your TV, laptop, tablet, or phone—any device with a modern browser or streaming app support. We optimize for all major platforms so your retro experience stays smooth. And while we don’t *really* support VHS, we love the spirit of it.",
     },
     {
       question: "How do I cancel my subscription?",
-      answer: "You can cancel anytime via your account settings.",
+      answer:
+        "We keep things drama-free. You can cancel your subscription anytime right from your account settings. No phone calls, no guilt trips, no secret menu options. Just a couple of clicks and you’re all set—though we’ll be sad to see you go.",
     },
     {
       question: "Is there a free trial?",
-      answer: "Yes, we offer a 7-day free trial for new users.",
+      answer:
+        "Absolutely. New members get a 7-day free trial to explore our catalog and see if it vibes with their inner cinephile. No credit card games—just good old-fashioned film discovery. Cancel anytime during the trial and you won’t be charged a thing.",
     },
   ];
 
