@@ -41,29 +41,30 @@ function UserHomePage() {
 
   const carouselItems = [
     {
-      title: "Streaming Classics in Hi-Fi",
-      subtitle: "Retro vibes. Timeless cinema.",
-      image: "/images/Fatima.jpg",
+      title: "Discover What's Worth Watching",
+      subtitle:
+        "Smart recommendations tailored to your taste, bringing the golden age of film to your modern screen",
+      image: "/images/netflix.jpg",
     },
     {
       title: "Lights, Camera, Nostalgia",
       subtitle: "Relive the golden age of film.",
-      image: "/images/roma.jpg",
+      image: "/images/b9d8af7b-591c-4b02-9237-158b1a6f372d.jpg",
     },
     {
-      title: "Watch It Like It's 1979",
-      subtitle: "Old-school stories on demand.",
-      image: "/images/MoonriseKingdom.webp",
+      title: "Streaming Classics in Hi-Fi",
+      subtitle: "Retro vibes. Timeless cinema.",
+      image: "/images/roma2.png",
     },
     {
-      title: "Watch It Like It's 1979",
-      subtitle: "Old-school stories on demand.",
-      image: "/images/Zion.jpg",
+      title: "Suggestions For You",
+      subtitle: "Find Just What You're Looking For",
+      image: "/images/brighterday.webp",
     },
     {
-      title: "Watch It Like It's 1979",
-      subtitle: "Old-school stories on demand.",
-      image: "/images/Zion.jpg",
+      title: "Everything You Need",
+      subtitle: "Options For Every Taste",
+      image: "/images/Untitled design (3).png",
     },
   ];
 

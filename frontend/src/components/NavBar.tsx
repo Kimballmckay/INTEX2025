@@ -9,7 +9,7 @@ function NavBar() {
       <nav className="navbar">
         <div className="navbar-content">
           <div className="nav-left">
-            <div className="logo" onClick={() => navigate("/userhome")}>
+            <div className="logo" onClick={() => navigate("/")}>
               <img src="/images/Untitled design (1).png" alt="Logo" />
             </div>
 

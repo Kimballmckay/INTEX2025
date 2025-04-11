@@ -78,6 +78,7 @@
   /* Ensure buttons stay consistent */
   min-width: 100px;
   white-space: nowrap;
+  margin-right: 2.5rem;
 }
 
 .dropdown-content {
