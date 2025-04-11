@@ -1,6 +1,6 @@
 export async function getCurrentUser() {
   const response = await fetch(
-    "https://localhost:5000/api/account/CurrentUser",
+    "https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/api/account/CurrentUser",
     {
       credentials: "include", // Important for sending cookies
     }

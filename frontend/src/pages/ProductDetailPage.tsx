@@ -20,7 +20,7 @@ function ProductDetailPage() {
     setUserRating(null);
 
     // Fetch movie details
-    fetch(`https://localhost:5000/Movie/${show_id}`, {
+    fetch(`https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Movie/${show_id}`, {
       credentials: "include",
     })
       .then((response) => response.json())
@@ -28,7 +28,7 @@ function ProductDetailPage() {
       .catch((error) => console.error(error));
 
     // Fetch average rating
-    fetch(`https://localhost:5000/Movie/GetAverageRating/${show_id}`, {
+    fetch(`https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Movie/GetAverageRating/${show_id}`, {
       credentials: "include",
     })
       .then((response) => response.json())
@@ -36,7 +36,7 @@ function ProductDetailPage() {
       .catch((error) => console.error(error));
 
     // Fetch recommendations
-    fetch(`https://localhost:5000/Recommendation/Recommend/${show_id}`, {
+    fetch(`https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Recommendation/Recommend/${show_id}`, {
       credentials: "include",
     })
       .then((response) => response.json())
@@ -52,7 +52,7 @@ function ProductDetailPage() {
           setRecommendations(titles);
         } else {
           // Fallback to similar movies if no recommendations found
-          fetch(`https://localhost:5000/MovieSimilarity/top5/${show_id}`, {
+          fetch(`https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/MovieSimilarity/top5/${show_id}`, {
             credentials: "include",
           })
             .then((res) => res.json())
@@ -61,7 +61,7 @@ function ProductDetailPage() {
 
               for (const item of similarMovies) {
                 const res = await fetch(
-                  `https://localhost:5000/Movie/${item.target_show_id}`,
+                  `https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Movie/${item.target_show_id}`,
                   {
                     credentials: "include",
                   }
@@ -103,7 +103,7 @@ function ProductDetailPage() {
   const submitRating = (rating: number) => {
     if (!show_id) return;
 
-    fetch(`https://localhost:5000/Movie/AddRating/${show_id}`, {
+    fetch(`https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Movie/AddRating/${show_id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -130,7 +130,7 @@ function ProductDetailPage() {
   const handleRecommendationClick = async (title: string) => {
     try {
       const response = await fetch(
-        `https://localhost:5000/Movie/titlelookup/${encodeURIComponent(title)}`,
+        `https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Movie/titlelookup/${encodeURIComponent(title)}`,
         {
           credentials: "include",
         }
