@@ -62,14 +62,30 @@ builder.Services.Configure<IdentityOptions>(options =>
 builder.Services.AddScoped<IUserClaimsPrincipalFactory<IdentityUser>, CustomUserClaimsPrincipalFactory>();
 
 // Security - Configure Application Cookie
+//builder.Services.ConfigureApplicationCookie(options =>
+//{
+    //options.Cookie.HttpOnly = true;
+    //options.Cookie.SameSite = SameSiteMode.None; // Use None to allow cross-site cookies
+    //options.Cookie.Name = ".AspNetCore.Identity.Application";
+    //options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    //options.LoginPath = "/login";
+//});
+
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.Cookie.HttpOnly = true;
-    options.Cookie.SameSite = SameSiteMode.None; // Use None to allow cross-site cookies
-    options.Cookie.Name = ".AspNetCore.Identity.Application";
     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-    options.LoginPath = "/login";
+    options.Cookie.SameSite = SameSiteMode.Lax;
+    options.Cookie.Name = ".AspNetCore.Identity.Application";
+
+    // 👇 This prevents redirecting to /Account/Login (which causes your 404)
+    options.Events.OnRedirectToLogin = context =>
+    {
+        context.Response.StatusCode = 401; // Send 401 instead of redirecting
+        return Task.CompletedTask;
+    };
 });
+
 
 // CORS policy configuration
 builder.Services.AddCors(options =>
@@ -83,6 +99,7 @@ builder.Services.AddCors(options =>
                 .AllowAnyHeader();
         });
 });
+
 
 builder.Services.AddSingleton<IEmailSender<IdentityUser>, NoOpEmailSender<IdentityUser>>();
 
