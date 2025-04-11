@@ -7,10 +7,12 @@ import AuthorizeView, { AuthorizedUser } from "../components/AuthorizeView";
 import Logout from "../components/Logout";
 import AzureRecommendations from "../components/AzureRecommendations";
 import { MoviesTitle } from "../types/MoviesTitle";
+import { useNavigate } from "react-router-dom";
 
 function UserHomePage() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [recommendedMovies, setRecommendedMovies] = useState<MoviesTitle[]>([]);
+  const navigate = useNavigate();
 
   const toggleAnswer = (index: number) => {
     if (activeIndex === index) {
@@ -145,7 +147,13 @@ function UserHomePage() {
                   const imageUrl = `https://movieimagesstorage.blob.core.windows.net/movieimages/Movie%20Posters/Movie%20Posters/${encodeURIComponent(cleanTitle)}.jpg`;
 
                   return (
-                    <div key={movie.show_id} className="movie-item">
+                    <div
+                      key={movie.show_id}
+                      className="movie-item"
+                      onClick={() =>
+                        navigate(`/productdetail/${movie.show_id}`)
+                      }
+                    >
                       <span className="ranking">{idx + 1}</span>
                       <img src={imageUrl} alt={movie.title} />
                     </div>
