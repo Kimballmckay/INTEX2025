@@ -82,6 +82,9 @@ function LoginPage() {
                   placeholder="Email address"
                   value={email}
                   onChange={handleChange}
+                  onCopy={(e) => e.preventDefault()}
+                  onCut={(e) => e.preventDefault()}
+                  onPaste={(e) => e.preventDefault()}
                 />
               </div>
 
@@ -94,6 +97,9 @@ function LoginPage() {
                   placeholder="Password"
                   value={password}
                   onChange={handleChange}
+                  onCopy={(e) => e.preventDefault()}
+                  onCut={(e) => e.preventDefault()}
+                  onPaste={(e) => e.preventDefault()}
                 />
               </div>
 
