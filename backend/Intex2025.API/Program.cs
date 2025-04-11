@@ -65,10 +65,9 @@ builder.Services.AddScoped<IUserClaimsPrincipalFactory<IdentityUser>, CustomUser
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.Cookie.HttpOnly = true;
-    options.Cookie.SameSite = SameSiteMode.None; // Use None to allow cross-site cookies
+    options.Cookie.SameSite = SameSiteMode.Lax; // Use None to allow cross-site cookies
     options.Cookie.Name = ".AspNetCore.Identity.Application";
     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-    options.LoginPath = "/login";
 });
 
 // CORS policy configuration
@@ -118,7 +117,7 @@ app.MapPost("/logout", async (HttpContext context, SignInManager<IdentityUser> s
     {
         HttpOnly = true,
         Secure = true,
-        SameSite = SameSiteMode.None,
+        SameSite = SameSiteMode.Lax,
         Path = "/",
     });
 
