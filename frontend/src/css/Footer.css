@@ -20,18 +20,18 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 5rem;
+  gap: 1rem; /* Reduced gap for copyright placement */
 }
 
 .social-links {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1rem; /* Increased gap between social links */
 }
 
 .social-links a {
   color: #ccc;
-  font-size: 1.25rem;
+  font-size: 2rem; /* Further increased size of social media links */
   text-decoration: none;
   transition: color 0.3s;
 }
@@ -54,16 +54,49 @@
 
 .footer-right {
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
+  flex-direction: column; /* Changed to column layout */
+  justify-content: center;
+  align-items: flex-end;
+  padding-right: 2rem; /* Added padding to move elements from edge */
 }
 
 .footer-right a {
   color: #ccc;
   text-decoration: none;
-  font-size: 0.9rem;
 }
 
 .footer-right a:hover {
   color: #fff;
+}
+
+.footer-button {
+  background-color: transparent; /* Changed to transparent background */
+  box-shadow:
+    0 0 0 4px var(--retro-black),
+    0 0 0 8px #4eb7b4,
+    0 0 0 14px var(--retro-black),
+    0 0 0 17px #064c72;
+  border-radius: 4px;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 8px 16px;
+  transition: all 0.3s ease;
+  font-family: "Oswald", sans-serif;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Hover effect on buttons */
+.footer-button:hover {
+  background-color: #064c72;
+  color: var(--retro-cream);
+  border: #064c72;
+}
+
+/* New copyright style */
+.copyright {
+  font-size: 1.2rem; /* Larger copyright text */
+  margin-top: 0.5rem;
+  color: #ccc;
 }

@@ -2,13 +2,14 @@ import "../css/HomePage.css";
 import { Carousel } from "react-bootstrap";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import CookieConsent from "react-cookie-consent";
 // import AuthorizeView, { AuthorizedUser } from "../components/AuthorizeView";
 // import Logout from "../components/Logout";
 
 function HomePage() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const movieCarouselRef = useRef<HTMLDivElement>(null);
 
   const toggleAnswer = (index: number) => {
     if (activeIndex === index) {
@@ -18,31 +19,47 @@ function HomePage() {
     }
   };
 
+  // Function to scroll the movie carousel
+  const scrollCarousel = (direction: "left" | "right") => {
+    if (movieCarouselRef.current) {
+      const scrollAmount = movieCarouselRef.current.clientWidth * 0.8; // Scroll 80% of the visible width
+      const scrollPosition =
+        direction === "left"
+          ? movieCarouselRef.current.scrollLeft - scrollAmount
+          : movieCarouselRef.current.scrollLeft + scrollAmount;
+
+      movieCarouselRef.current.scrollTo({
+        left: scrollPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+
   const carouselItems = [
     {
       title: "Streaming Classics in Hi-Fi",
       subtitle: "Retro vibes. Timeless cinema.",
-      image: "/images/Fatima.jpg",
+      image: "/images/brighterday.webp",
     },
     {
       title: "Lights, Camera, Nostalgia",
       subtitle: "Relive the golden age of film.",
-      image: "/images/roma.jpg",
+      image: "/images/b9d8af7b-591c-4b02-9237-158b1a6f372d.jpg",
     },
     {
       title: "Watch It Like It's 1979",
       subtitle: "Old-school stories on demand.",
-      image: "/images/MoonriseKingdom.webp",
+      image: "/images/roma2.png",
+    },
+    {
+      title: "Watch It Like It's 1979",
+      subtitle: "Old-school stories on demand",
+      image: "/images/randommovie.jpg",
     },
     {
       title: "Watch It Like It's 1979",
       subtitle: "Old-school stories on demand.",
-      image: "/images/Zion.jpg",
-    },
-    {
-      title: "Watch It Like It's 1979",
-      subtitle: "Old-school stories on demand.",
-      image: "/images/Zion.jpg",
+      image: "/images/Untitled design (3).png",
     },
   ];
 
@@ -115,16 +132,34 @@ function HomePage() {
           </Carousel>
         </section>
 
-        {/* FIND SOMETHING NEW SECTION */}
+        {/* FIND SOMETHING NEW SECTION - Updated to be a horizontal carousel */}
         <section className="find-new">
           <h2>Find Something New</h2>
-          <div className="movie-grid">
-            {top10Movies.map((src, idx) => (
-              <div className="movie-item" key={idx}>
-                <span className="ranking">{idx + 1}</span>
-                <img src={src} alt={`Top ${idx + 1}`} />
-              </div>
-            ))}
+          <div className="movie-carousel-container">
+            <button
+              className="carousel-control prev"
+              onClick={() => scrollCarousel("left")}
+              aria-label="Previous movies"
+            >
+              &lt;
+            </button>
+
+            <div className="movie-carousel" ref={movieCarouselRef}>
+              {top10Movies.map((src, idx) => (
+                <div className="movie-item" key={idx}>
+                  <span className="ranking">{idx + 1}</span>
+                  <img src={src} alt={`Top ${idx + 1}`} />
+                </div>
+              ))}
+            </div>
+
+            <button
+              className="carousel-control next"
+              onClick={() => scrollCarousel("right")}
+              aria-label="Next movies"
+            >
+              &gt;
+            </button>
           </div>
         </section>
 

@@ -1,3 +1,7 @@
+/* Google Font Imports - at the top */
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
 /* Retro Color Variables */
 :root {
   --retro-yellow: #f2c94c;
@@ -6,6 +10,7 @@
   --retro-burgundy: #6d2c2c;
   --retro-cream: #fdf5e6;
   --retro-black: #111;
+  --retro-light-black: #222; /* Added slightly lighter color for FAQ */
 }
 
 body {
@@ -15,226 +20,44 @@ body {
   margin: 0;
   padding: 0;
   color: var(--retro-black);
+  overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
+html {
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+/* Updated header font to a retro, businesslike font */
 h1,
 h2 {
-  font-family: "Oswald", sans-serif;
+  font-family: "DM Serif Display", serif;
   text-transform: uppercase;
   font-weight: 700;
   margin-bottom: 1rem;
-  font-size: 2.5rem; /* Increased font size */
+  font-size: 2.5rem;
+  color: white; /* Making all headers white */
+  padding: 0 2.5rem; /* Adding more space from the edge */
 }
 
-/* HERO CAROUSEL */
+/* HERO CAROUSEL - MODIFIED */
 .hero-carousel {
   background: var(--retro-black);
   color: white;
   position: relative;
-  overflow: hidden;
-  height: 100vh; /* Make the carousel take up the full viewport height */
+  overflow: visible;
+  height: 105vh; /* MODIFIED: Increased height */
+  max-width: 100%;
 }
 
 .carousel-background {
   position: relative;
-  height: 100%; /* Ensure it fills the carousel */
+  height: 100%;
   overflow: hidden;
 }
 
 .carousel-img {
   width: 100%;
   height: 100%;
-  object-fit: contain; /* Ensure image scales without cutting off */
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 0;
-}
-
-.carousel-overlay {
-  position: relative;
-  z-index: 1;
-  background: linear-gradient(
-    to right,
-    rgba(0, 0, 0, 0.8) 30%,
-    rgba(0, 0, 0, 0.1) 80%
-  );
-  height: 100%;
-  display: flex;
-  align-items: center;
-  padding-left: 5vw;
-}
-
-.carousel-text {
-  color: white;
-  z-index: 2;
-  max-width: 600px;
-}
-
-.carousel-text h1 {
-  font-size: 3rem;
-}
-
-.carousel-text p {
-  font-size: 1.2rem;
-  opacity: 0.9;
-}
-
-.carousel-item {
-  height: 100vh !important; /* Ensure the carousel items are the height of the viewport */
-}
-
-/* FIND SOMETHING NEW SECTION */
-.find-new {
-  padding: 4rem 2rem;
-  background-color: var(--retro-black);
-  color: white;
-}
-
-.movie-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 20px;
-  width: 100%;
-  padding: 2rem;
-}
-
-.movie-item {
-  position: relative;
-}
-
-.movie-item img {
-  width: 100%;
-  border-radius: 8px;
-}
-
-.ranking {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  background: var(--retro-black);
-  color: white;
-  font-size: 1.5rem;
-  font-weight: bold;
-  border-radius: 4px;
-  padding: 2px 6px;
-}
-
-/* REASONS TO JOIN */
-.reasons-to-join {
-  padding: 4rem 2rem;
-  color: var(--retro-cream);
-  text-align: left;
-}
-
-.reason-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 2.5rem;
-  margin-top: 2rem;
-  padding: 2rem;
-  height: 300px;
-}
-
-.card {
-  background: #064c72;
-  padding: 2rem; /* Reduced padding */
-  flex: 1 1 calc(25% - 1rem);
-  margin: 0.5rem;
-  border-radius: 16px;
-  font-weight: bold;
-  box-shadow:
-    0 0 0 4px var(--retro-black),
-    /* Black border */ 0 0 0 8px var(--retro-red),
-    /* Red border */ 0 0 0 14px var(--retro-black),
-    /* Black border */ 0 0 0 17px var(--retro-orange); /* Orange border */
-  position: relative; /* Added for positioning logo */
-  text-align: center;
-  color: var(--retro-cream);
-  font-size: 1.2rem; /* Adjusted font size */
-}
-
-.card .subtext {
-  font-size: 1rem; /* Adjusted font size */
-  margin-top: 1rem;
-  color: var(--retro-cream);
-  text-align: center;
-}
-
-.card .logo {
-  position: absolute;
-  bottom: 1rem; /* Changed position to bottom right */
-  right: 1rem;
-  width: 30px; /* Adjust size as needed */
-  height: 30px; /* Adjust size as needed */
-  font-size: 2rem;
-}
-
-/* Media query for mobile view */
-@media (max-width: 600px) {
-  .card {
-    padding: 1rem; /* Further reduced padding for mobile */
-    font-size: 1rem; /* Adjusted font size for mobile */
-  }
-
-  .card .subtext {
-    font-size: 0.9rem; /* Adjusted font size for mobile */
-  }
-
-  .card .logo {
-    width: 20px; /* Adjust size as needed for mobile */
-    height: 20px; /* Adjust size as needed for mobile */
-    font-size: 1.5rem; /* Adjusted font size for mobile */
-  }
-}
-
-/* FAQ */
-/* Retro Color Variables */
-:root {
-  --retro-yellow: #f2c94c;
-  --retro-orange: #f2994a;
-  --retro-red: #eb5757;
-  --retro-burgundy: #6d2c2c;
-  --retro-cream: #fdf5e6;
-  --retro-black: #111;
-}
-
-body {
-  background-color: var(--retro-black);
-  font-family: "IBM Plex Sans", sans-serif;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  color: var(--retro-black);
-}
-
-h1,
-h2 {
-  font-family: "Oswald", sans-serif;
-  text-transform: uppercase;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  font-size: 2.5rem; /* Increased font size */
-}
-
-/* HERO CAROUSEL */
-.hero-carousel {
-  background: var(--retro-black);
-  color: white;
-  position: relative;
-  overflow: hidden;
-  height: 1000px; /* Set a fixed height */
-}
-
-.carousel-background {
-  position: relative;
-  height: 1000px;
-  overflow: hidden;
-}
-
-.carousel-img {
-  width: 100%;
-  height: 1000px !important;
   object-fit: cover;
   position: absolute;
   top: 0;
@@ -263,40 +86,140 @@ h2 {
 }
 
 .carousel-text h1 {
-  font-size: 3rem;
+  font-size: 3.5rem;
 }
 
 .carousel-text p {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   opacity: 0.9;
 }
 
 .carousel-item {
-  height: 1000px !important; /* match your .carousel-background height */
+  height: 100vh !important; /* MODIFIED: Match the hero-carousel height */
 }
 
-/* FIND SOMETHING NEW SECTION */
+/* Enhanced Bootstrap Carousel Controls - Simple Arrows */
+.carousel-control-prev,
+.carousel-control-next {
+  width: 5%;
+  opacity: 0.7; /* MODIFIED: Adjusted opacity for visibility */
+  z-index: 10;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  width: 30px;
+  height: 30px;
+  background-color: transparent; /* No background */
+  background-size: 100% 100%;
+  /* MODIFIED: Added filter to make default Bootstrap icons white */
+  filter: brightness(0) invert(1);
+}
+
+/* MODIFIED: Adjusted hover opacity */
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+  opacity: 0.9;
+}
+
+.carousel-indicators {
+  z-index: 10;
+  bottom: 2rem;
+}
+
+.carousel-indicators button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin: 0 6px;
+  background-color: rgba(255, 255, 255, 0.6);
+  border: 2px solid var(--retro-black);
+}
+
+.carousel-indicators .active {
+  background-color: var(--retro-cream);
+}
+
+/* FIND SOMETHING NEW SECTION - IMPROVED CAROUSEL */
 .find-new {
-  padding: 4rem 2rem;
+  padding: 4rem 0; /* Removed horizontal padding */
   background-color: var(--retro-black);
   color: white;
+  overflow: hidden; /* Prevent horizontal scrollbar */
+  max-width: 100%;
 }
 
-.movie-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 20px;
+.movie-carousel-container {
+  position: relative;
+  padding: 0;
+  margin: 2rem 0;
   width: 100%;
-  padding: 2rem;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.movie-carousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  gap: 20px;
+  padding: 1rem 2rem;
+  max-width: 100%;
+}
+
+.movie-carousel::-webkit-scrollbar {
+  display: none;
 }
 
 .movie-item {
   position: relative;
+  flex: 0 0 auto;
+  width: calc(20% - 16px);
+  min-width: 150px;
 }
 
 .movie-item img {
   width: 100%;
   border-radius: 8px;
+  height: 500px; /* MODIFIED: Made movie photos longer */
+  object-fit: cover;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Improved Carousel Controls - NO CIRCLES (For Smaller Carousel) */
+.carousel-control {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent; /* No background */
+  color: var(--retro-cream);
+  border: none;
+  width: 40px;
+  height: 40px;
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-control:hover {
+  color: var(--retro-orange);
+}
+
+.carousel-control:focus {
+  outline: none;
+}
+
+.carousel-control.prev {
+  left: 10px;
+}
+
+.carousel-control.next {
+  right: 10px;
 }
 
 .ranking {
@@ -305,74 +228,288 @@ h2 {
   left: 8px;
   background: var(--retro-black);
   color: white;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: bold;
   border-radius: 4px;
-  padding: 2px 6px;
+  padding: 2px 8px;
+  z-index: 2;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* REASONS TO JOIN */
+/* REASONS TO JOIN - UPDATED */
 .reasons-to-join {
-  padding: 4rem 2rem;
+  padding: 4rem 0; /* Removed horizontal padding */
   color: var(--retro-cream);
   text-align: left;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .reason-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 2.5rem;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(250px, 1fr)
+  ); /* Increased min size */
+  gap: 2rem;
   margin-top: 2rem;
   padding: 2rem;
-  height: 300px;
+  height: 350px; /* Increased height */
+  max-width: 100%;
 }
 
 .card {
   background: #064c72;
-  padding: 2rem; /* Reduced padding */
+  padding: 2.5rem; /* Increased padding */
   flex: 1 1 calc(25% - 1rem);
   margin: 0.5rem;
   border-radius: 16px;
   font-weight: bold;
   box-shadow:
     0 0 0 4px var(--retro-black),
-    /* Black border */ 0 0 0 8px var(--retro-orange),
-    /* Red border */ 0 0 0 14px var(--retro-black),
-    /* Black border */ 0 0 0 17px var(--retro-red);
+    0 0 0 8px var(--retro-red),
+    0 0 0 14px var(--retro-black),
+    0 0 0 17px var(--retro-orange);
+  position: relative;
+  text-align: center;
+  color: var(--retro-cream);
+  font-size: 1.4rem; /* Increased font size */
+  font-family: "Inter", sans-serif; /* Changed to cleaner font */
 }
 
-/* FAQ SECTION */
-.faq {
-  padding: 4rem 2rem;
-  background-color: var(--retro-black);
+.card .subtext {
+  font-size: 1.2rem; /* Increased font size */
+  margin-top: 1.2rem;
   color: var(--retro-cream);
+  text-align: center;
+  font-family: "Inter", sans-serif; /* Changed to cleaner font */
+}
+
+.card .logo {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  width: 35px; /* Slightly bigger */
+  height: 35px; /* Slightly bigger */
+  font-size: 2.2rem;
+}
+
+/* FAQ SECTION - UPDATED */
+.faq {
+  padding: 4rem 0; /* Removed horizontal padding */
+  background-color: black;
+  color: white;
+  max-width: 100%;
+  overflow: hidden;
+  /* background-image: url("/images/Untitled design (4).png"); Add your image path here */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+/* Adding overlay to ensure text is readable over the background image
+.faq::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(17, 17, 17, 0.85); /* Semi-transparent overlay */
+/* z-index: 0;
+} */
+*/ .faq > * {
+  position: relative;
+  z-index: 1; /* Ensure content is above the overlay */
+}
+
+.faq h2 {
+  padding: 0 2.5rem; /* Consistent with other headers */
+  text-align: center; /* Center the FAQ heading */
+  margin-bottom: 2rem;
 }
 
 .faq-card {
-  background: var(--retro-black);
+  background: var(--retro-light-black); /* Lighter background color */
   border-radius: 8px;
   padding: 1.5rem;
-  margin-bottom: 1rem;
-  box-shadow: 0 0 0 5px var(--retro-cream);
-  gap: 10rem;
+  margin: 0 auto 1.5rem auto; /* Center and increased bottom margin */
+  max-width: 800px; /* Make cards a bit smaller and centered */
+  box-shadow: none; /* Removed border */
+  font-family: "Inter", sans-serif; /* Changed to cleaner font */
 }
 
 .faq-question {
   display: flex;
   justify-content: space-between;
   cursor: pointer;
-  font-size: 1.2rem;
+  font-size: 1.3rem; /* Slightly bigger */
   font-weight: bold;
 }
 
 .faq-plus-icon {
-  font-size: 1.5rem;
-  color: var(--retro-cream);
+  font-size: 1.6rem; /* Slightly bigger */
+  color: white;
 }
 
 .faq-answer {
-  margin-top: 1rem;
-  font-size: 1rem;
+  margin-top: 1.2rem;
+  font-size: 1.1rem; /* Slightly bigger */
   font-weight: normal;
-  color: var(--retro-cream);
+  color: white;
+}
+
+/* Media query for mobile view */
+@media (max-width: 992px) {
+  .movie-item {
+    width: calc(25% - 15px); /* Show 4 items on medium screens */
+  }
+
+  .carousel-text h1 {
+    font-size: 3rem;
+  }
+
+  .reason-cards {
+    height: auto; /* Allow cards to flow on smaller screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .movie-item {
+    width: calc(33.333% - 13.333px); /* Show 3 items on small screens */
+  }
+
+  .hero-carousel {
+    height: 80vh; /* MODIFIED: Adjusted height */
+  }
+
+  .carousel-item {
+    height: 80vh !important; /* MODIFIED: Adjusted height */
+  }
+
+  .carousel-text h1 {
+    font-size: 2.5rem;
+  }
+
+  .carousel-text p {
+    font-size: 1.2rem;
+  }
+
+  .movie-item img {
+    height: 300px; /* MODIFIED: Adjusted height */
+  }
+
+  .card {
+    padding: 2rem;
+    font-size: 1.3rem;
+  }
+
+  h1,
+  h2 {
+    padding: 0 1.5rem; /* Smaller padding on mobile */
+  }
+}
+
+@media (max-width: 576px) {
+  .movie-item {
+    width: calc(50% - 10px); /* Show 2 items on very small screens */
+  }
+
+  .hero-carousel {
+    height: 75vh; /* MODIFIED: Adjusted height */
+  }
+
+  .carousel-item {
+    height: 75vh !important; /* MODIFIED: Adjusted height */
+  }
+
+  .carousel-text h1 {
+    font-size: 2rem;
+  }
+
+  .carousel-text p {
+    font-size: 1rem;
+  }
+
+  .movie-item img {
+    height: 250px; /* MODIFIED: Adjusted height */
+  }
+
+  .card {
+    padding: 1.5rem;
+    font-size: 1.2rem;
+  }
+
+  .card .subtext {
+    font-size: 1rem;
+  }
+
+  .card .logo {
+    width: 25px;
+    height: 25px;
+    font-size: 1.7rem;
+  }
+
+  .faq-card {
+    margin: 0 1rem 1.2rem 1rem;
+  }
+
+  h1,
+  h2 {
+    padding: 0 1rem; /* Even smaller padding on small mobile */
+  }
+}
+
+/* arrows */
+/* Retro Arrows */
+.hero-carousel .carousel-control-prev,
+.hero-carousel .carousel-control-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px; /* Increased width for easier click area */
+  height: 50px; /* Increased height */
+  background-color: transparent;
+  border: none;
+  font-size: 4rem; /* Increased size */
+  color: var(--retro-black);
+  z-index: 10;
+  text-decoration: none; /* Remove underline */
+  font-weight: bold; /* Make sure the arrow is clear and visible */
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.hero-carousel .carousel-control-prev {
+  left: 10px; /* Position left */
+}
+
+.hero-carousel .carousel-control-next {
+  right: 10px; /* Position right */
+}
+
+/* Arrows as text content */
+.hero-carousel .carousel-control-prev::before {
+  content: "<"; /* Left arrow symbol */
+  font-family: "Arial", sans-serif;
+  font-size: 4rem;
+  color: var(--retro-black);
+  text-decoration: none; /* Remove underline */
+}
+
+.hero-carousel .carousel-control-next::before {
+  content: ">"; /* Right arrow symbol */
+  font-family: "Arial", sans-serif;
+  font-size: 4rem;
+  color: var(--retro-black);
+  text-decoration: none; /* Remove underline */
+}
+
+/* Hover Effects */
+.hero-carousel .carousel-control-prev:hover,
+.hero-carousel .carousel-control-next:hover {
+  color: var(--retro-cream); /* Change color on hover */
+  transform: scale(1.2); /* Make the arrow bigger on hover */
 }
