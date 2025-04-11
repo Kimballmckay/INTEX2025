@@ -12,14 +12,14 @@ function ProductDetailPage() {
   const [averageRating, setAverageRating] = useState<number>(0);
   const [userRating, setUserRating] = useState<number | null>(null);
 
+  // Fetch movie data, average rating, and recommendations whenever show_id changes
   useEffect(() => {
     if (!show_id) return;
 
-    const savedRating = localStorage.getItem(`rating_${show_id}`);
-    if (savedRating) {
-      setUserRating(parseInt(savedRating));
-    }
+    // Reset userRating when movie changes
+    setUserRating(null);
 
+    // Fetch movie details
     fetch(`https://localhost:5000/Movie/${show_id}`, {
       credentials: "include",
     })
@@ -27,6 +27,7 @@ function ProductDetailPage() {
       .then((data) => setMovie(data))
       .catch((error) => console.error(error));
 
+    // Fetch average rating
     fetch(`https://localhost:5000/Movie/GetAverageRating/${show_id}`, {
       credentials: "include",
     })
@@ -34,6 +35,7 @@ function ProductDetailPage() {
       .then((data) => setAverageRating(data))
       .catch((error) => console.error(error));
 
+    // Fetch recommendations
     fetch(`https://localhost:5000/Recommendation/Recommend/${show_id}`, {
       credentials: "include",
     })
@@ -49,6 +51,7 @@ function ProductDetailPage() {
           ].filter((title) => !!title);
           setRecommendations(titles);
         } else {
+          // Fallback to similar movies if no recommendations found
           fetch(`https://localhost:5000/MovieSimilarity/top5/${show_id}`, {
             credentials: "include",
           })
@@ -79,14 +82,13 @@ function ProductDetailPage() {
       .catch((err) => {
         console.error("Error fetching recommendations:", err);
       });
-  }, [show_id]);
 
-  const savedRating = localStorage.getItem(`rating_${show_id}`);
-  useEffect(() => {
+    // Reset user rating from localStorage (if any) on new show_id
+    const savedRating = localStorage.getItem(`rating_${show_id}`);
     if (savedRating) {
       setUserRating(parseInt(savedRating));
     }
-  }, [show_id]);
+  }, [show_id]); // Dependency on show_id to reset rating and fetch fresh data
 
   const handleStarClick = (rating: number) => {
     if (rating < 1 || rating > 5) {
