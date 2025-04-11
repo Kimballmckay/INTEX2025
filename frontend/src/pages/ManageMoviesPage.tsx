@@ -63,10 +63,6 @@ const ManageMoviesPage = () => {
     <>
       <UnauthorizedPage>
         <NavBar2 />
-        {/* <Logout>
-          Logout
-          <AuthorizedUser value="email" />
-        </Logout> */}
         <div className="manage-movies-page">
           <h1>Admin - Movies</h1>
 
@@ -77,28 +73,36 @@ const ManageMoviesPage = () => {
           )}
 
           {showForm && (
-            <NewMovieForm
-              onSuccess={() => {
-                setShowForm(false);
-                fetchMovies(pageSize, pageNum, [], "").then((data) =>
-                  setMovies(data.movies)
-                );
-              }}
-              onCancel={() => setShowForm(false)}
-            />
+            <div className="manage-movies-overlay">
+              <div className="manage-movies-card">
+                <NewMovieForm
+                  onSuccess={() => {
+                    setShowForm(false);
+                    fetchMovies(pageSize, pageNum, [], "").then((data) =>
+                      setMovies(data.movies)
+                    );
+                  }}
+                  onCancel={() => setShowForm(false)}
+                />
+              </div>
+            </div>
           )}
 
           {editingMovie && (
-            <EditMovieForm
-              movie={editingMovie}
-              onSuccess={() => {
-                setEditingMovie(null);
-                fetchMovies(pageSize, pageNum, [], "").then((data) =>
-                  setMovies(data.movies)
-                );
-              }}
-              onCancel={() => setEditingMovie(null)}
-            />
+            <div className="manage-movies-overlay">
+              <div className="manage-movies-card">
+                <EditMovieForm
+                  movie={editingMovie}
+                  onSuccess={() => {
+                    setEditingMovie(null);
+                    fetchMovies(pageSize, pageNum, [], "").then((data) =>
+                      setMovies(data.movies)
+                    );
+                  }}
+                  onCancel={() => setEditingMovie(null)}
+                />
+              </div>
+            </div>
           )}
 
           <table className="movie-table">
@@ -124,7 +128,6 @@ const ManageMoviesPage = () => {
                   <td>{m.show_id}</td>
                   <td>{m.type}</td>
 
-                  {/* Title */}
                   <td>
                     {m.title && (
                       <>
@@ -159,7 +162,6 @@ const ManageMoviesPage = () => {
 
                   <td>{m.director}</td>
 
-                  {/* Cast */}
                   <td>
                     {m.cast && (
                       <>
@@ -197,7 +199,6 @@ const ManageMoviesPage = () => {
                   <td>{m.rating}</td>
                   <td>{m.duration}</td>
 
-                  {/* Description */}
                   <td>
                     {m.description && (
                       <>
@@ -232,7 +233,6 @@ const ManageMoviesPage = () => {
                     )}
                   </td>
 
-                  {/* Genre */}
                   <td>
                     {m.genre && (
                       <>

@@ -1,65 +1,89 @@
-/* Wrapper for the entire privacy page layout */
+/* Apply background only when on the privacy page */
+/* Slightly darker, retro-creamy background */
 body.privacy-page {
-  background-color: #ffffff !important;
+  background-color: #f5e9dc !important; /* was #fffaf5 */
+  color: #1a1a1a;
 }
 
+/* Wrapper */
 .privacy-page-wrapper {
+  width: 100vw;
+  min-height: 100vh;
+  background-color: #fffaf5;
   display: flex;
   justify-content: center;
-  background-color: #fff;
-  min-height: 100vh;
-  padding: 2rem;
+  padding: 4rem 1rem;
+  box-sizing: border-box;
 }
 
+/* Container */
 .privacy-container {
+  background-color: #ffffff;
+  color: #1a1a1a;
+  font-family: "IBM Plex Sans", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  padding: 3rem 2.5rem;
   max-width: 900px;
   width: 100%;
-  padding: 3rem 2rem;
-  margin: 0 auto; /* ✅ Ensures centering */
-  background-color: #fff;
-  color: #1a1a1a;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  border-radius: 16px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.05);
   line-height: 1.8;
 }
 
+/* Main title */
 .privacy-container h1 {
-  font-size: 2.5rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
+  font-size: 2.6rem;
+  font-family: "Oswald", sans-serif;
+  background-color: var(--retro-burgundy, #6d2c2c);
+  color: #ffffff;
+  padding: 1rem 1.2rem;
   text-align: center;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  letter-spacing: 1px;
 }
 
+/* Date */
 .updated-date {
   color: #666;
   font-size: 0.95rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   text-align: left;
 }
 
+/* Sections */
 .privacy-container section {
   margin-bottom: 2.5rem;
-  text-align: left;
 }
 
+/* Subheaders */
 .privacy-container h2 {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
+  color: var(--retro-orange, #f2994a);
+  font-family: "Oswald", sans-serif;
   margin-bottom: 1rem;
-  font-weight: 600;
-  color: #000;
-  text-align: left;
+  border-left: 4px solid var(--retro-orange, #f2994a);
+  padding-left: 0.6rem;
 }
 
+/* Paragraphs */
 .privacy-container p {
-  margin: 1rem 0;
   font-size: 1rem;
+  margin: 0.8rem 0;
   text-align: left;
+  color: #222;
+  max-width: 900px;
+  width: 100%;
 }
 
+/* Links */
 .privacy-container a {
-  color: #0056b3;
+  color: var(--retro-red, #eb5757);
   text-decoration: none;
+  font-weight: 500;
+  border-bottom: 1px dotted var(--retro-red, #eb5757);
 }
 
 .privacy-container a:hover {
   text-decoration: underline;
+  color: var(--retro-orange, #f2994a);
 }
