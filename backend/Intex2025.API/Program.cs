@@ -78,10 +78,19 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.Cookie.SameSite = SameSiteMode.Lax;
     options.Cookie.Name = ".AspNetCore.Identity.Application";
 
-    // 👇 This prevents redirecting to /Account/Login (which causes your 404)
+    // ✅ This blocks 302 -> /Account/Login on unauthorized access
     options.Events.OnRedirectToLogin = context =>
     {
-        context.Response.StatusCode = 401; // Send 401 instead of redirecting
+        Console.WriteLine("‼️ RedirectToLogin intercepted");
+        context.Response.StatusCode = 401;
+        return Task.CompletedTask;
+    };
+
+    // ✅ This blocks 403s from redirecting to a login/denied page
+    options.Events.OnRedirectToAccessDenied = context =>
+    {
+        Console.WriteLine("‼️ RedirectToAccessDenied intercepted");
+        context.Response.StatusCode = 403;
         return Task.CompletedTask;
     };
 });
@@ -153,5 +162,7 @@ app.MapGet("/pingauth", (ClaimsPrincipal user) =>
     var email = user.FindFirstValue(ClaimTypes.Email) ?? "unknown@example.com"; // Ensure it's never null
     return Results.Json(new { email = email }); // Return as JSON
 }).RequireAuthorization();
+
+app.MapGet("/ping", () => Results.Ok("✅ Backend is up and public route is working!"));
 
 app.Run();
