@@ -98,6 +98,13 @@ function CreateAccountPage() {
             >
               Go to Login
             </button>
+            <button
+            className="go-login-button"
+            type="button"
+            onClick={() => navigate(-1)}
+            >
+            Back
+          </button>
           </form>
           {error && <p className="create-error">{error}</p>}
         </div>
