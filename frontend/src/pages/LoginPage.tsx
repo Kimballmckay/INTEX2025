@@ -122,6 +122,14 @@ function LoginPage() {
               >
                 CREATE ACCOUNT
               </button>
+
+              <button
+                className="create-account-button"
+                type="button"
+                onClick={() => navigate(-1)}
+              >
+                BACK
+              </button>
             </form>
 
             {error && <p className="login-error">{error}</p>}
