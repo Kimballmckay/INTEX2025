@@ -1,6 +1,22 @@
-/* Google Font Imports - at the top */
+/* Retro Arrows - Force specific styling */
+
 @import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+.hero-carousel .carousel-control-prev,
+.hero-carousel .carousel-control-next {
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 50px !important;
+  height: 50px !important;
+  background-color: transparent !important;
+  border: none !important;
+  font-size: 4rem !important;
+  color: var(--retro-black) !important;
+  z-index: 10 !important;
+  text-decoration: none !important;
+  opacity: 0.7 !important;
+} /* Google Font Imports - at the top */
 
 /* Retro Color Variables */
 :root {
@@ -11,6 +27,22 @@
   --retro-cream: #fdf5e6;
   --retro-black: #111;
   --retro-light-black: #222; /* Added slightly lighter color for FAQ */
+
+  /* Responsive spacing variables */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+
+  /* Responsive font size variables */
+  --font-size-xs: 0.875rem;
+  --font-size-sm: 1rem;
+  --font-size-md: 1.25rem;
+  --font-size-lg: 1.5rem;
+  --font-size-xl: 2rem;
+  --font-size-xxl: 2.5rem;
+  --font-size-hero: clamp(2rem, 5vw, 3.5rem);
 }
 
 body {
@@ -25,6 +57,13 @@ body {
 
 html {
   overflow-x: hidden; /* Prevent horizontal scrolling */
+  box-sizing: border-box; /* Better box model */
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit; /* Ensure all elements use border-box */
 }
 
 /* Updated header font to a retro, businesslike font */
@@ -33,50 +72,61 @@ h2 {
   font-family: "DM Serif Display", serif;
   text-transform: uppercase;
   font-weight: 700;
-  margin-bottom: 1rem;
-  font-size: 2.5rem;
+  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-xxl);
   color: white; /* Making all headers white */
-  padding: 0 2.5rem; /* Adding more space from the edge */
+  padding: 0 clamp(1rem, 4vw, 2.5rem); /* Responsive padding */
 }
 
-/* HERO CAROUSEL - MODIFIED */
+/* HERO CAROUSEL - COMPLETELY REBUILT FOR REACT BOOTSTRAP */
 .hero-carousel {
-  background: var(--retro-black);
-  color: white;
   position: relative;
-  overflow: visible;
-  height: 105vh; /* MODIFIED: Increased height */
-  max-width: 100%;
+  width: 100%;
+  height: 100vh; /* Full viewport height */
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* React Bootstrap specific styles */
+.hero-carousel .carousel,
+.hero-carousel .carousel-inner,
+.hero-carousel .carousel-item,
+.hero-carousel .carousel-item.active {
+  height: 100% !important;
+}
+
+.hero-carousel .carousel-item {
+  position: relative !important;
 }
 
 .carousel-background {
-  position: relative;
+  width: 100%;
   height: 100%;
-  overflow: hidden;
+  position: relative;
 }
 
 .carousel-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 0;
+  object-position: center;
 }
 
 .carousel-overlay {
-  position: relative;
-  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background: linear-gradient(
     to right,
     rgba(0, 0, 0, 0.8) 30%,
     rgba(0, 0, 0, 0.1) 80%
   );
-  height: 100%;
   display: flex;
   align-items: center;
-  padding-left: 5vw;
+  padding-left: 5%;
 }
 
 .carousel-text {
@@ -86,73 +136,105 @@ h2 {
 }
 
 .carousel-text h1 {
-  font-size: 3.5rem;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  padding: 0;
+  margin-bottom: 1rem;
 }
 
 .carousel-text p {
-  font-size: 1.4rem;
+  font-size: clamp(1rem, 2vw, 1.4rem);
   opacity: 0.9;
 }
 
-.carousel-item {
-  height: 100vh !important; /* MODIFIED: Match the hero-carousel height */
+/* Fix nav overlap */
+.hero-carousel nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
 }
 
-/* Enhanced Bootstrap Carousel Controls - Simple Arrows */
-.carousel-control-prev,
-.carousel-control-next {
+/* Override Bootstrap's control arrows */
+.hero-carousel .carousel-control-prev,
+.hero-carousel .carousel-control-next {
   width: 5%;
-  opacity: 0.7; /* MODIFIED: Adjusted opacity for visibility */
-  z-index: 10;
+  z-index: 100;
+  opacity: 0.7;
+  text-decoration: none !important; /* Remove underlines */
 }
 
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
+.hero-carousel .carousel-control-prev:hover,
+.hero-carousel .carousel-control-next:hover {
+  text-decoration: none !important; /* Keep removing underlines even on hover */
+  opacity: 0.9;
+}
+
+.hero-carousel .carousel-control-prev-icon,
+.hero-carousel .carousel-control-next-icon {
+  background-color: transparent !important;
+  filter: none !important;
+  background-image: none !important;
   width: 30px;
   height: 30px;
-  background-color: transparent; /* No background */
-  background-size: 100% 100%;
-  /* MODIFIED: Added filter to make default Bootstrap icons white */
-  filter: brightness(0) invert(1);
+  text-decoration: none !important; /* Remove underlines */
 }
 
-/* MODIFIED: Adjusted hover opacity */
-.carousel-control-prev:hover,
-.carousel-control-next:hover {
-  opacity: 0.9;
+.hero-carousel .carousel-control-prev-icon::before {
+  content: "<";
+  font-family: "Arial", sans-serif;
+  font-size: 4rem;
+  color: var(--retro-black);
+  text-decoration: none;
+  display: inline-block;
 }
 
-.carousel-indicators {
-  z-index: 10;
-  bottom: 2rem;
+.hero-carousel .carousel-control-next-icon::before {
+  content: ">";
+  font-family: "Arial", sans-serif;
+  font-size: 4rem;
+  color: var(--retro-black);
+  text-decoration: none;
+  display: inline-block;
 }
 
-.carousel-indicators button {
-  width: 12px;
-  height: 12px;
+/* Override any Bootstrap default for indicators */
+.hero-carousel .carousel-indicators {
+  z-index: 100;
+  margin-bottom: 1rem;
+}
+
+.hero-carousel .carousel-indicators [data-bs-target] {
+  width: 1px !important; /* Smaller dots */
+  height: 1px !important; /* Smaller dots */
   border-radius: 50%;
   margin: 0 6px;
   background-color: rgba(255, 255, 255, 0.6);
-  border: 2px solid var(--retro-black);
+  border: 1px solid var(--retro-black) !important; /* Thinner border */
+  opacity: 0.5; /* Start with lower opacity */
+  transition: all 0.3s ease; /* Smooth transition for active state */
 }
 
-.carousel-indicators .active {
+.hero-carousel .carousel-indicators .active {
   background-color: var(--retro-cream);
+  opacity: 1; /* Full opacity when active */
+  transform: scale(1.2); /* Slightly larger when active */
 }
 
 /* FIND SOMETHING NEW SECTION - IMPROVED CAROUSEL */
 .find-new {
-  padding: 4rem 0; /* Removed horizontal padding */
+  padding: var(--spacing-xl) 0;
   background-color: var(--retro-black);
   color: white;
-  overflow: hidden; /* Prevent horizontal scrollbar */
+  overflow: hidden;
   max-width: 100%;
+  margin-top: 0; /* Remove top margin to eliminate gap */
 }
 
 .movie-carousel-container {
   position: relative;
   padding: 0;
-  margin: 2rem 0;
+  margin: var(--spacing-lg) 0;
   width: 100%;
   max-width: 100%;
   overflow: hidden;
@@ -164,8 +246,8 @@ h2 {
   scroll-behavior: smooth;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  gap: 20px;
-  padding: 1rem 2rem;
+  gap: clamp(10px, 2vw, 20px);
+  padding: var(--spacing-sm) clamp(1rem, 3vw, 2rem);
   max-width: 100%;
 }
 
@@ -176,29 +258,30 @@ h2 {
 .movie-item {
   position: relative;
   flex: 0 0 auto;
-  width: calc(20% - 16px);
+  width: calc(20% - clamp(10px, 2vw, 16px));
   min-width: 150px;
+  transition: transform 0.3s ease; /* Smooth transition for hover effects */
 }
 
 .movie-item img {
   width: 100%;
   border-radius: 8px;
-  height: 500px; /* MODIFIED: Made movie photos longer */
+  height: clamp(200px, 50vw, 500px); /* Responsive height */
   object-fit: cover;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Improved Carousel Controls - NO CIRCLES (For Smaller Carousel) */
+/* Carousel Controls */
 .carousel-control {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-color: transparent; /* No background */
+  background-color: transparent;
   color: var(--retro-cream);
   border: none;
-  width: 40px;
-  height: 40px;
-  font-size: 2rem;
+  width: clamp(30px, 4vw, 40px);
+  height: clamp(30px, 4vw, 40px);
+  font-size: clamp(1.5rem, 2vw, 2rem);
   cursor: pointer;
   z-index: 5;
   display: flex;
@@ -228,7 +311,7 @@ h2 {
   left: 8px;
   background: var(--retro-black);
   color: white;
-  font-size: 1.25rem;
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
   font-weight: bold;
   border-radius: 4px;
   padding: 2px 8px;
@@ -238,7 +321,7 @@ h2 {
 
 /* REASONS TO JOIN - UPDATED */
 .reasons-to-join {
-  padding: 4rem 0; /* Removed horizontal padding */
+  padding: var(--spacing-xl) 0;
   color: var(--retro-cream);
   text-align: left;
   max-width: 100%;
@@ -247,20 +330,17 @@ h2 {
 
 .reason-cards {
   display: grid;
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(250px, 1fr)
-  ); /* Increased min size */
-  gap: 2rem;
-  margin-top: 2rem;
-  padding: 2rem;
-  height: 350px; /* Increased height */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+  gap: clamp(1rem, 3vw, 2rem);
+  margin-top: var(--spacing-lg);
+  padding: clamp(1rem, 3vw, 2rem);
+  min-height: 350px; /* Changed from fixed height to min-height */
   max-width: 100%;
 }
 
 .card {
   background: #064c72;
-  padding: 2.5rem; /* Increased padding */
+  padding: clamp(1.5rem, 3vw, 2.5rem);
   flex: 1 1 calc(25% - 1rem);
   margin: 0.5rem;
   border-radius: 16px;
@@ -273,243 +353,221 @@ h2 {
   position: relative;
   text-align: center;
   color: var(--retro-cream);
-  font-size: 1.4rem; /* Increased font size */
-  font-family: "Inter", sans-serif; /* Changed to cleaner font */
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-family: "Inter", sans-serif;
+  height: 100%; /* Fill the grid cell height */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align content to the top */
 }
 
 .card .subtext {
-  font-size: 1.2rem; /* Increased font size */
-  margin-top: 1.2rem;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  margin-top: 0.75rem; /* Reduced space between title and subtext */
   color: var(--retro-cream);
   text-align: center;
-  font-family: "Inter", sans-serif; /* Changed to cleaner font */
+  font-family: "Inter", sans-serif;
 }
 
 .card .logo {
   position: absolute;
   bottom: 1rem;
   right: 1rem;
-  width: 35px; /* Slightly bigger */
-  height: 35px; /* Slightly bigger */
-  font-size: 2.2rem;
+  width: clamp(25px, 3vw, 35px);
+  height: clamp(25px, 3vw, 35px);
+  font-size: clamp(1.7rem, 3vw, 2.2rem);
 }
 
 /* FAQ SECTION - UPDATED */
 .faq {
-  padding: 4rem 0; /* Removed horizontal padding */
+  padding: var(--spacing-xl) 0;
   background-color: black;
   color: white;
   max-width: 100%;
   overflow: hidden;
-  /* background-image: url("/images/Untitled design (4).png"); Add your image path here */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   position: relative;
 }
 
-/* Adding overlay to ensure text is readable over the background image
-.faq::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(17, 17, 17, 0.85); /* Semi-transparent overlay */
-/* z-index: 0;
-} */
-*/ .faq > * {
+.faq > * {
   position: relative;
-  z-index: 1; /* Ensure content is above the overlay */
+  z-index: 1;
 }
 
 .faq h2 {
-  padding: 0 2.5rem; /* Consistent with other headers */
-  text-align: center; /* Center the FAQ heading */
-  margin-bottom: 2rem;
+  padding: 0 clamp(1rem, 4vw, 2.5rem);
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
 }
 
 .faq-card {
-  background: var(--retro-light-black); /* Lighter background color */
+  background: var(--retro-light-black);
   border-radius: 8px;
-  padding: 1.5rem;
-  margin: 0 auto 1.5rem auto; /* Center and increased bottom margin */
-  max-width: 800px; /* Make cards a bit smaller and centered */
-  box-shadow: none; /* Removed border */
-  font-family: "Inter", sans-serif; /* Changed to cleaner font */
+  padding: clamp(1rem, 2vw, 1.5rem);
+  margin: 0 auto clamp(1rem, 2vw, 1.5rem) auto;
+  max-width: 800px;
+  width: calc(100% - clamp(2rem, 4vw, 4rem)); /* Responsive width */
+  box-shadow: none;
+  font-family: "Inter", sans-serif;
 }
 
 .faq-question {
   display: flex;
   justify-content: space-between;
   cursor: pointer;
-  font-size: 1.3rem; /* Slightly bigger */
+  font-size: clamp(1.1rem, 1.5vw, 1.3rem);
   font-weight: bold;
 }
 
 .faq-plus-icon {
-  font-size: 1.6rem; /* Slightly bigger */
+  font-size: clamp(1.3rem, 2vw, 1.6rem);
   color: white;
 }
 
 .faq-answer {
-  margin-top: 1.2rem;
-  font-size: 1.1rem; /* Slightly bigger */
+  margin-top: var(--spacing-md);
+  font-size: clamp(1rem, 1.2vw, 1.1rem);
   font-weight: normal;
   color: white;
 }
 
-/* Media query for mobile view */
-@media (max-width: 992px) {
+/* Enhanced media queries for better responsive behavior */
+@media (max-width: 1200px) {
   .movie-item {
-    width: calc(25% - 15px); /* Show 4 items on medium screens */
+    width: calc(25% - clamp(10px, 2vw, 16px)); /* 4 items per row */
+  }
+}
+
+@media (max-width: 992px) {
+  .hero-carousel {
+    height: 90vh;
   }
 
-  .carousel-text h1 {
-    font-size: 3rem;
-  }
-
-  .reason-cards {
-    height: auto; /* Allow cards to flow on smaller screens */
+  .movie-item {
+    width: calc(33.333% - clamp(10px, 2vw, 16px)); /* 3 items per row */
   }
 }
 
 @media (max-width: 768px) {
-  .movie-item {
-    width: calc(33.333% - 13.333px); /* Show 3 items on small screens */
-  }
-
   .hero-carousel {
-    height: 80vh; /* MODIFIED: Adjusted height */
+    height: 80vh;
   }
 
-  .carousel-item {
-    height: 80vh !important; /* MODIFIED: Adjusted height */
+  .carousel-overlay {
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.9) 50%,
+      rgba(0, 0, 0, 0.5) 100%
+    );
   }
 
-  .carousel-text h1 {
-    font-size: 2.5rem;
-  }
-
-  .carousel-text p {
-    font-size: 1.2rem;
-  }
-
-  .movie-item img {
-    height: 300px; /* MODIFIED: Adjusted height */
-  }
-
-  .card {
-    padding: 2rem;
-    font-size: 1.3rem;
-  }
-
-  h1,
-  h2 {
-    padding: 0 1.5rem; /* Smaller padding on mobile */
+  .movie-item {
+    width: calc(50% - clamp(8px, 1.5vw, 13.333px)); /* 2 items per row */
   }
 }
 
 @media (max-width: 576px) {
-  .movie-item {
-    width: calc(50% - 10px); /* Show 2 items on very small screens */
-  }
-
   .hero-carousel {
-    height: 75vh; /* MODIFIED: Adjusted height */
+    height: 85vh;
   }
 
-  .carousel-item {
-    height: 75vh !important; /* MODIFIED: Adjusted height */
+  .movie-item {
+    width: calc(
+      100% - clamp(5px, 1vw, 10px)
+    ); /* 1 item per row for very small devices */
+    max-width: 300px;
+    margin: 0 auto;
   }
 
-  .carousel-text h1 {
-    font-size: 2rem;
+  .carousel-overlay {
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.95) 60%,
+      rgba(0, 0, 0, 0.7) 100%
+    );
+    padding-left: clamp(0.5rem, 3vw, 1rem);
   }
 
-  .carousel-text p {
-    font-size: 1rem;
+  .carousel-text {
+    max-width: 100%;
   }
 
-  .movie-item img {
-    height: 250px; /* MODIFIED: Adjusted height */
-  }
-
-  .card {
-    padding: 1.5rem;
-    font-size: 1.2rem;
-  }
-
-  .card .subtext {
-    font-size: 1rem;
-  }
-
-  .card .logo {
-    width: 25px;
-    height: 25px;
-    font-size: 1.7rem;
-  }
-
-  .faq-card {
-    margin: 0 1rem 1.2rem 1rem;
-  }
-
-  h1,
-  h2 {
-    padding: 0 1rem; /* Even smaller padding on small mobile */
+  .reason-cards {
+    gap: 1rem;
+    padding: 1rem;
   }
 }
 
-/* arrows */
-/* Retro Arrows */
-.hero-carousel .carousel-control-prev,
-.hero-carousel .carousel-control-next {
+/* Add screen reader only class for accessibility */
+.sr-only {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 50px; /* Increased width for easier click area */
-  height: 50px; /* Increased height */
-  background-color: transparent;
-  border: none;
-  font-size: 4rem; /* Increased size */
-  color: var(--retro-black);
-  z-index: 10;
-  text-decoration: none; /* Remove underline */
-  font-weight: bold; /* Make sure the arrow is clear and visible */
-  transition:
-    color 0.3s ease,
-    transform 0.3s ease; /* Smooth transition for hover effect */
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
-.hero-carousel .carousel-control-prev {
-  left: 10px; /* Position left */
+/* Ensure touch targets are large enough on mobile */
+button,
+a,
+.faq-question {
+  min-height: 44px;
+  min-width: 44px;
 }
 
-.hero-carousel .carousel-control-next {
-  right: 10px; /* Position right */
+/* Important: Make sure React Bootstrap carousel fills the entire container */
+@media (min-width: 992px) {
+  .carousel-fade .carousel-item {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+  }
 }
 
-/* Arrows as text content */
-.hero-carousel .carousel-control-prev::before {
-  content: "<"; /* Left arrow symbol */
-  font-family: "Arial", sans-serif;
-  font-size: 4rem;
-  color: var(--retro-black);
-  text-decoration: none; /* Remove underline */
+/* Extra overrides for React Bootstrap */
+.hero-carousel .carousel-indicators button {
+  box-sizing: content-box;
+  flex: 0 1 auto;
+  width: 1px !important; /* Smaller dots */
+  height: 1px !important; /* Smaller dots */
+  padding: 0;
+  margin-right: 3px;
+  margin-left: 3px;
+  text-indent: -999px;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.6) !important;
+  background-clip: padding-box;
+  border: 1px solid var(--retro-black) !important; /* Thinner border */
+  border-radius: 50% !important;
+  opacity: 0.5; /* Start with lower opacity */
+  transition: all 0.3s ease; /* Smooth transition for active state */
 }
 
-.hero-carousel .carousel-control-next::before {
-  content: ">"; /* Right arrow symbol */
-  font-family: "Arial", sans-serif;
-  font-size: 4rem;
-  color: var(--retro-black);
-  text-decoration: none; /* Remove underline */
+.hero-carousel .carousel-indicators .active {
+  opacity: 1 !important; /* Full opacity when active */
+  transform: scale(1.2); /* Slightly larger when active */
+  background-color: var(--retro-cream) !important;
 }
 
-/* Hover Effects */
-.hero-carousel .carousel-control-prev:hover,
-.hero-carousel .carousel-control-next:hover {
-  color: var(--retro-cream); /* Change color on hover */
-  transform: scale(1.2); /* Make the arrow bigger on hover */
+/* Prevent text from getting too small */
+html {
+  font-size: 16px; /* Base font size */
+}
+
+@media (max-width: 320px) {
+  html {
+    font-size: 14px; /* Slightly smaller base font for very small screens */
+  }
+
+  .movie-item {
+    min-width: 120px;
+  }
 }
