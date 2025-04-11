@@ -226,7 +226,7 @@ function UserHomePage() {
             <h2>More Reasons to Join</h2>
             <div className="reason-cards">
               <div className="card">
-                Options Tailored to You
+                Tailored Options
                 <div className="subtext">
                   Discover your next favorite movie effortlessly with our smart
                   filters and personalized recommendations.
