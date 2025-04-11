@@ -8,6 +8,10 @@
   font-family: Arial, sans-serif;
 }
 
+.nav-container {
+  width: 100%;
+}
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -16,23 +20,35 @@
   position: fixed;
   width: 100%;
   top: 0;
-  padding: 10px 100px;
+  padding: 10px 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 10;
   height: 120px;
 }
 
+.navbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
 .logo img {
   height: 170px;
   width: 170px;
+  /* Ensure logo stays consistent */
+  min-height: 170px;
+  min-width: 170px;
+  object-fit: contain;
 }
 
-/* Adjust .nav-left to move the logo more to the left */
+/* Adjust .nav-left to be more responsive */
 .nav-left {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-left: -100px; /* Adjust this if you need more left space */
+  gap: 20px;
 }
 
 .dropdown {
@@ -42,7 +58,8 @@
   text-transform: uppercase;
 }
 
-.dropbtn {
+.dropbtn,
+.watch-button {
   background-color: transparent;
   border: none;
   color: var(--retro-cream);
@@ -58,6 +75,9 @@
   border-radius: 4px;
   padding: 8px 16px;
   transition: all 0.3s ease;
+  /* Ensure buttons stay consistent */
+  min-width: 100px;
+  white-space: nowrap;
 }
 
 .dropdown-content {
@@ -102,16 +122,19 @@
 
 .username {
   color: var(--retro-cream);
-  margin-right: 20px; /* Increase the margin between username and logout button */
   font-size: 20px;
   font-family: "Rampart One", sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
 }
 
-/* Adjust user controls for more gap between username and logout button */
+/* User controls with better spacing for responsive design */
 .user-controls {
   display: flex;
   align-items: center;
-  gap: 30px; /* Adjust this gap to increase space between username and logout button */
+  gap: 20px;
 }
 
 .logout-btn {
@@ -130,19 +153,111 @@
   font-family: "Oswald", sans-serif;
   text-transform: uppercase;
   white-space: nowrap;
+  /* Ensure buttons stay consistent */
+  min-width: 100px;
 }
 
-.logout-btn:hover {
+.logout-btn:hover,
+.watch-button:hover {
   background-color: #064c72;
   color: var(--retro-cream);
-  border: var(--retro-cream);
 }
 
-/* Right side nav container */
+/* Right side nav container - more responsive approach */
 .nav-right {
   display: flex;
   align-items: center;
-  margin-left: 1130px;
 }
 
-/* random change  */
+/* Mobile menu button (hidden by default) */
+.mobile-menu-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--retro-cream);
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Media Queries for Responsiveness */
+@media screen and (max-width: 1200px) {
+  .navbar-content {
+    max-width: 100%;
+  }
+
+  .username {
+    max-width: 150px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .nav-left {
+    gap: 10px;
+  }
+
+  .username {
+    max-width: 120px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .navbar {
+    padding: 10px;
+  }
+
+  .logo img {
+    margin-left: 0;
+  }
+
+  .user-controls {
+    gap: 10px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .navbar {
+    height: auto;
+    min-height: 100px;
+    padding: 5px 10px;
+  }
+
+  .logo img {
+    height: 130px;
+    width: 130px;
+    min-height: 130px;
+    min-width: 130px;
+  }
+
+  .username {
+    font-size: 16px;
+    max-width: 80px;
+  }
+
+  .logout-btn,
+  .watch-button {
+    font-size: 16px;
+    padding: 6px 12px;
+  }
+
+  .nav-left,
+  .nav-right {
+    gap: 5px;
+  }
+}
+
+/* For very small screens, consider a mobile menu approach */
+@media screen and (max-width: 480px) {
+  .navbar-content {
+    position: relative;
+  }
+
+  .user-controls {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+  }
+
+  .username {
+    font-size: 14px;
+  }
+}

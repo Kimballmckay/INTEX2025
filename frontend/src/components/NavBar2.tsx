@@ -10,10 +10,13 @@ function NavBar2() {
   const handleLogout = async () => {
     try {
       // Make a request to your logout endpoint
-      await fetch("https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/logout", {
-        method: "POST",
-        credentials: "include",
-      });
+      await fetch(
+        "https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/logout",
+        {
+          method: "POST",
+          credentials: "include",
+        }
+      );
       navigate("/");
     } catch (error) {
       console.error("Logout failed:", error);
@@ -33,24 +36,16 @@ function NavBar2() {
         <nav className="navbar">
           <div className="navbar-content">
             <div className="nav-left">
-              <div className="logo">
+              <div className="logo" onClick={() => navigate("/userhome")}>
                 <img src="/images/Untitled design (1).png" alt="Logo" />
               </div>
               <div className="dropdown">
-                <button className="watch-button">Watch</button>
-                <div className="dropdown-content">
-                  <a href="#Movies">Movies</a>
-                  <a href="#TVShows">TV Shows</a>
-                  <a href="#Action">Action</a>
-                  <a href="#Adventure">Adventure</a>
-                  <a href="#Drama">Drama</a>
-                  <a href="#Comedy">Comedy</a>
-                  <a href="#Horror">Horror</a>
-                  <a href="#Fantasy">Fantasy</a>
-                  <a href="#Romance">Romance</a>
-                  <a href="#Animation">Animation</a>
-                  <a href="#Documentary">Documentary</a>
-                </div>
+                <button
+                  className="watch-button"
+                  onClick={() => navigate("/movies")}
+                >
+                  Watch
+                </button>
               </div>
             </div>
 

@@ -571,3 +571,172 @@ html {
     min-width: 120px;
   }
 }
+
+/* Fix for viewport fitting issues */
+
+/* Global reset to ensure proper box model */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Force the homepage to fit within the viewport width */
+.homepage {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* Ensure all sections respect container width */
+.homepage section {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Constrain carousel images to prevent overflow */
+.carousel-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  max-width: 100vw;
+}
+
+/* Ensure carousel container doesn't overflow */
+.hero-carousel {
+  width: 100%;
+  max-width: 100vw;
+  overflow: hidden;
+}
+
+/* Fix for the movie carousel container */
+.movie-carousel-container {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Ensure the movie carousel doesn't cause overflow */
+.movie-carousel {
+  width: 100%;
+  max-width: 100%;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+/* Fix for the reasons to join section */
+.reasons-to-join {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.reason-cards {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  padding: 0.5rem;
+}
+
+/* Fix for FAQ section */
+.faq {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* Ensure cards don't overflow their containers */
+.card {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Make sure the width calculations include padding and borders */
+@media (max-width: 768px) {
+  .movie-item {
+    width: calc(50% - 10px);
+    min-width: unset;
+  }
+
+  .card {
+    margin: 0.25rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .movie-item {
+    width: calc(100% - 10px);
+    min-width: unset;
+    max-width: 250px;
+  }
+}
+
+/* Fix cookie consent container */
+.CookieConsent {
+  max-width: 100vw !important;
+}
+
+/* Fix for cards being cut off at the bottom */
+
+/* Final fix for cards being cut off at the bottom */
+
+/* Add more bottom spacing to the entire reasons section */
+.reasons-to-join {
+  padding: var(--spacing-xl) 0 calc(var(--spacing-xl) + 40px) 0; /* Increased bottom padding to 40px */
+  margin-bottom: 40px; /* Increased bottom margin to 40px */
+}
+
+/* Give the cards container more bottom space */
+.reason-cards {
+  min-height: 400px; /* Further increased min-height */
+  padding-bottom: 40px; /* More padding at the bottom */
+  margin-bottom: 20px; /* Increased bottom margin */
+}
+
+/* Fix individual cards by giving them more room at the bottom */
+.card {
+  min-height: 300px; /* Increased min-height to accommodate content better */
+  padding-bottom: 35px; /* More bottom padding */
+  margin-bottom: 25px; /* More bottom margin */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Changed to start alignment with more space at bottom */
+}
+
+/* Ensure card content has plenty of room at the bottom */
+.card .subtext {
+  margin-bottom: 20px; /* More space below text */
+  padding-bottom: 15px; /* More padding below text */
+}
+
+/* Special adjustment for the content layout */
+.homepage section.reasons-to-join {
+  overflow: visible; /* Keep content fully visible */
+  padding-bottom: 50px; /* Significant padding to prevent any cutoff */
+  margin-bottom: 50px; /* Added margin before next section */
+}
+
+/* Make sure the next section doesn't crowd the cards */
+.homepage section.faq {
+  margin-top: 30px; /* Add space before FAQ section */
+}
+
+/* Hide any overflow at the bottom of the screen */
+body {
+  overflow-x: hidden;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+html {
+  overflow-x: hidden;
+}

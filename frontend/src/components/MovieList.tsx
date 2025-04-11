@@ -93,7 +93,7 @@ function MovieList({
         );
       })}
       {loading && <p>Loading...</p>}
-      {!hasMore && <p>No more movies to load</p>}
+      {!hasMore && <p>No more movies</p>}
     </div>
   );
 }

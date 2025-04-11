@@ -15,7 +15,7 @@ const NewMovieForm = ({ onSuccess, onCancel }: NewMovieFormProps) => {
     director: "",
     cast: "",
     country: "",
-    release_year: "" as unknown as number,
+    release_year: 2025,
     rating: "",
     duration: "",
     description: "",
