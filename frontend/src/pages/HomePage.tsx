@@ -173,14 +173,16 @@ function HomePage() {
             Endless Choices
             <div className="subtext">
               Explore a vast library of movies and shows, from timeless classics
-              to the latest releases.
+              to the latest blockbusters. You'll always discover something new
+              to watch and enjoy.
             </div>
           </div>
           <div className="card">
             Exclusive Access
             <div className="subtext">
               Get early access to new releases and special screenings, just for
-              our members.
+              our members. Enjoy exclusive previews and behind-the-scenes
+              content, enhancing your viewing experience.
             </div>
           </div>
           <div className="card">
