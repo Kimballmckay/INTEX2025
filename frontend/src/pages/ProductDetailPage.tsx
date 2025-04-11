@@ -15,38 +15,28 @@ function ProductDetailPage() {
   useEffect(() => {
     if (!show_id) return;
 
-    // Load previously submitted rating from localStorage
     const savedRating = localStorage.getItem(`rating_${show_id}`);
     if (savedRating) {
       setUserRating(parseInt(savedRating));
     }
 
-    // Fetch movie details
-    fetch(
-      `https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Movie/${show_id}`,
-      {
-        credentials: "include",
-      }
-    )
+    fetch(`https://localhost:5000/Movie/${show_id}`, {
+      credentials: "include",
+    })
       .then((response) => response.json())
       .then((data) => setMovie(data))
       .catch((error) => console.error(error));
 
-    // Fetch average rating for the movie
-    fetch(
-      `https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Movie/GetAverageRating/${show_id}`,
-      {
-        credentials: "include",
-      }
-    )
+    fetch(`https://localhost:5000/Movie/GetAverageRating/${show_id}`, {
+      credentials: "include",
+    })
       .then((response) => response.json())
       .then((data) => setAverageRating(data))
       .catch((error) => console.error(error));
 
-    // Try collaborative recommendations first
-    fetch(
-      `https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Recommendation/Recommend/${show_id}`
-    )
+    fetch(`https://localhost:5000/Recommendation/Recommend/${show_id}`, {
+      credentials: "include",
+    })
       .then((response) => response.json())
       .then((data) => {
         if (data && data.length > 0 && data[0]?.recommendation1) {
@@ -59,24 +49,25 @@ function ProductDetailPage() {
           ].filter((title) => !!title);
           setRecommendations(titles);
         } else {
-          // Fallback to content-based recommendations
-          fetch(
-            `https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/MovieSimilarity/top5/${show_id}`
-          )
+          fetch(`https://localhost:5000/MovieSimilarity/top5/${show_id}`, {
+            credentials: "include",
+          })
             .then((res) => res.json())
             .then(async (similarMovies: MovieSimilarity[]) => {
               const titles: string[] = [];
 
               for (const item of similarMovies) {
                 const res = await fetch(
-                  `https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Movie/${item.target_show_id}`
+                  `https://localhost:5000/Movie/${item.target_show_id}`,
+                  {
+                    credentials: "include",
+                  }
                 );
                 const movieData = await res.json();
                 if (movieData?.title) {
                   titles.push(movieData.title);
                 }
               }
-
               setRecommendations(titles);
             })
             .catch((err) => {
@@ -88,6 +79,13 @@ function ProductDetailPage() {
       .catch((err) => {
         console.error("Error fetching recommendations:", err);
       });
+  }, [show_id]);
+
+  const savedRating = localStorage.getItem(`rating_${show_id}`);
+  useEffect(() => {
+    if (savedRating) {
+      setUserRating(parseInt(savedRating));
+    }
   }, [show_id]);
 
   const handleStarClick = (rating: number) => {
@@ -103,17 +101,14 @@ function ProductDetailPage() {
   const submitRating = (rating: number) => {
     if (!show_id) return;
 
-    fetch(
-      `https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Movie/AddRating/${show_id}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(rating),
-        credentials: "include",
-      }
-    )
+    fetch(`https://localhost:5000/Movie/AddRating/${show_id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(rating),
+      credentials: "include",
+    })
       .then(async (response) => {
         if (!response.ok) {
           const errorText = await response.text();
@@ -133,7 +128,7 @@ function ProductDetailPage() {
   const handleRecommendationClick = async (title: string) => {
     try {
       const response = await fetch(
-        `https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Movie/titlelookup/${encodeURIComponent(title)}`,
+        `https://localhost:5000/Movie/titlelookup/${encodeURIComponent(title)}`,
         {
           credentials: "include",
         }
