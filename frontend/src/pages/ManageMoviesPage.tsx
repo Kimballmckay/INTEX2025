@@ -64,11 +64,11 @@ const ManageMoviesPage = () => {
       <UnauthorizedPage>
         <NavBar2 />
         <div className="manage-movies-page">
-          <h1>Admin - Movies</h1>
+          <h1>Admin - Movies/Shows</h1>
 
           {!showForm && (
             <button className="add-movie-btn" onClick={() => setShowForm(true)}>
-              Add Movie
+              Add Movie/Show
             </button>
           )}
 

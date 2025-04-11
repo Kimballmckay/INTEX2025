@@ -9,6 +9,7 @@ function NavBar2() {
 
   const handleLogout = async () => {
     try {
+      // Make a request to your logout endpoint
       await fetch(
         "https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/logout",
         {
@@ -35,10 +36,17 @@ function NavBar2() {
         <nav className="navbar">
           <div className="navbar-content">
             <div className="nav-left">
-              <div className="logo">
+              <div className="logo" onClick={() => navigate("/userhome")}>
                 <img src="/images/Untitled design (1).png" alt="Logo" />
               </div>
-
+              <div className="dropdown">
+                <button
+                  className="watch-button"
+                  onClick={() => navigate("/movies")}
+                >
+                  Watch
+                </button>
+              </div>
               {/* Replace dropdown with a single button */}
               <button
                 className="watch-button"

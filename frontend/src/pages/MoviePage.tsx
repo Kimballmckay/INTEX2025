@@ -16,7 +16,10 @@ function MoviePage() {
       <AuthorizeView>
         <NavBar2 />
 
-        <div className="container mt-4" style={{ color: "white" }}>
+        <div
+          className="container mt-4"
+          style={{ color: "white", paddingTop: "140px" }}
+        >
           <div className="row">
             <MovieBand />
           </div>
