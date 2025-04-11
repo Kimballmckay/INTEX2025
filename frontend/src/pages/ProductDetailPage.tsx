@@ -44,7 +44,7 @@ function ProductDetailPage() {
 
     // Fetch recommendations
     fetch(
-      `https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Recommend/${show_id}`,
+      `https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Recommendation/Recommend/${show_id}`,
       {
         credentials: "include",
       }
