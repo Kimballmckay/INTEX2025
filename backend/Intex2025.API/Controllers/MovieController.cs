@@ -273,7 +273,7 @@ namespace Intex2025.API.Controllers
             }
 
             _movieContext.SaveChanges();
-
+            
             // Recalculate and update the average rating
             var averageRating = _movieContext.Movies_Ratings
                 .Where(r => r.show_id == show_id)
