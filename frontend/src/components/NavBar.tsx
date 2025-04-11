@@ -14,7 +14,7 @@ function NavBar() {
             </div>
 
             <div className="dropdown">
-              <button className="watch-button">Watch</button>
+              <button className="watch-button" onClick={() => navigate("/login")}>Watch</button>
             </div>
           </div>
 
@@ -22,7 +22,7 @@ function NavBar() {
             <button className="nav-button" onClick={() => navigate("/login")}>
               Sign In
             </button>
-            <button className="nav-button" onClick={() => navigate("/signup")}>
+            <button className="nav-button" onClick={() => navigate("/createaccount")}>
               Sign Up
             </button>
           </div>
