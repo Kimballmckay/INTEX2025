@@ -47,13 +47,6 @@ function NavBar2() {
                   Watch
                 </button>
               </div>
-              {/* Replace dropdown with a single button */}
-              <button
-                className="watch-button"
-                onClick={() => navigate("/movies")}
-              >
-                Watch
-              </button>
             </div>
 
             <div className="nav-right">
