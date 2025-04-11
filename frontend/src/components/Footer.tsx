@@ -44,7 +44,7 @@ function Footer() {
 
       <div className="footer-center">
         <img
-          src="/images/Cine (5).png"
+          src="/images/Untitled design (1).png"
           alt="RetroStream Logo"
           className="footer-logo"
         />
