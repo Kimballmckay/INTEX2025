@@ -16,6 +16,18 @@ if (builder.Environment.IsDevelopment())
 // Add services to the container.
 builder.Services.AddControllers();
 
+// 💡 Required for session support
+builder.Services.AddDistributedMemoryCache();
+
+// Add session services
+builder.Services.AddSession(options =>
+{
+    options.Cookie.SameSite = SameSiteMode.None;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    options.Cookie.HttpOnly = true;
+    options.Cookie.Name = ".AspNetCore.Session";
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -125,6 +137,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("AllowReactApp");  // Move this above authentication/authorization
 app.UseHttpsRedirection();
+
+app.UseSession();
 
 app.UseAuthentication();
 app.UseAuthorization();

@@ -2,7 +2,7 @@ import "../css/HomePage.css";
 import { Carousel } from "react-bootstrap";
 import NavBar2 from "../components/NavBar2";
 import Footer from "../components/Footer";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import AuthorizeView, { AuthorizedUser } from "../components/AuthorizeView";
 import Logout from "../components/Logout";
 import AzureRecommendations from "../components/AzureRecommendations";
@@ -13,12 +13,29 @@ function UserHomePage() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [recommendedMovies, setRecommendedMovies] = useState<MoviesTitle[]>([]);
   const navigate = useNavigate();
+  const movieCarouselRef = useRef<HTMLDivElement | null>(null);
 
   const toggleAnswer = (index: number) => {
     if (activeIndex === index) {
       setActiveIndex(null); // Close the answer if the same question is clicked
     } else {
       setActiveIndex(index); // Open the answer
+    }
+  };
+
+  // Function to scroll the movie carousel (added from HomePage)
+  const scrollCarousel = (direction: "left" | "right") => {
+    if (movieCarouselRef.current) {
+      const scrollAmount = movieCarouselRef.current.clientWidth * 0.8; // Scroll 80% of the visible width
+      const scrollPosition =
+        direction === "left"
+          ? movieCarouselRef.current.scrollLeft - scrollAmount
+          : movieCarouselRef.current.scrollLeft + scrollAmount;
+
+      movieCarouselRef.current.scrollTo({
+        left: scrollPosition,
+        behavior: "smooth",
+      });
     }
   };
 
@@ -89,15 +106,17 @@ function UserHomePage() {
   return (
     <>
       <AuthorizeView>
-        <Logout>
-          Logout
-          <AuthorizedUser value="email" />
-        </Logout>
         <div className="homepage">
           {/* HEADER CAROUSEL */}
           <section className="hero-carousel">
             <nav>
               <NavBar2 />
+              <div className="logout-container">
+                <Logout>
+                  Logout
+                  <AuthorizedUser value="email" />
+                </Logout>
+              </div>
             </nav>
             <Carousel controls={true} indicators={true} fade interval={4000}>
               {carouselItems.map((item, index) => (
@@ -120,45 +139,83 @@ function UserHomePage() {
             </Carousel>
           </section>
 
-          {/* FIND SOMETHING NEW SECTION */}
+          {/* FIND SOMETHING NEW SECTION - Changed to match HomePage with carousel */}
           <section className="find-new">
             <h2>Find Something New</h2>
-            <div className="movie-grid">
-              {top10Movies.map((src, idx) => (
-                <div className="movie-item" key={idx}>
-                  <span className="ranking">{idx + 1}</span>
-                  <img src={src} alt={`Top ${idx + 1}`} />
-                </div>
-              ))}
+            <div className="movie-carousel-container">
+              <button
+                className="carousel-control prev"
+                onClick={() => scrollCarousel("left")}
+                aria-label="Previous movies"
+              >
+                &lt;
+              </button>
+
+              <div className="movie-carousel" ref={movieCarouselRef}>
+                {top10Movies.map((src, idx) => (
+                  <div className="movie-item" key={idx}>
+                    <span className="ranking">{idx + 1}</span>
+                    <img src={src} alt={`Top ${idx + 1}`} />
+                  </div>
+                ))}
+              </div>
+
+              <button
+                className="carousel-control next"
+                onClick={() => scrollCarousel("right")}
+                aria-label="Next movies"
+              >
+                &gt;
+              </button>
             </div>
           </section>
 
-          {/* RECOMMENDATIONS SECTION */}
-          <h2 className="text-center text-white my-5">Just For You</h2>
-          <section className="recommendations-section">
+          {/* RECOMMENDATIONS SECTION - Adjusted for better fit */}
+          <section className="recommendations">
+            <h2>Just For You</h2>
             <AzureRecommendations onRecommendations={setRecommendedMovies} />
             {recommendedMovies.length > 0 && (
-              <div className="movie-grid">
-                {recommendedMovies.map((movie, idx) => {
-                  const cleanTitle = (movie.title ?? "").replace(
-                    /[^a-zA-Z0-9\s]/g,
-                    ""
-                  );
-                  const imageUrl = `https://movieimagesstorage.blob.core.windows.net/movieimages/Movie%20Posters/Movie%20Posters/${encodeURIComponent(cleanTitle)}.jpg`;
+              <div className="movie-carousel-container">
+                <button
+                  className="carousel-control prev"
+                  onClick={() => scrollCarousel("left")}
+                  aria-label="Previous recommendations"
+                >
+                  &lt;
+                </button>
 
-                  return (
-                    <div
-                      key={movie.show_id}
-                      className="movie-item"
-                      onClick={() =>
-                        navigate(`/productdetail/${movie.show_id}`)
-                      }
-                    >
-                      <span className="ranking">{idx + 1}</span>
-                      <img src={imageUrl} alt={movie.title} />
-                    </div>
-                  );
-                })}
+                <div className="movie-carousel">
+                  {recommendedMovies.map((movie, idx) => {
+                    const cleanTitle = (movie.title ?? "").replace(
+                      /[^a-zA-Z0-9\s]/g,
+                      ""
+                    );
+                    const imageUrl = `https://movieimagesstorage.blob.core.windows.net/movieimages/Movie%20Posters/Movie%20Posters/${encodeURIComponent(
+                      cleanTitle
+                    )}.jpg`;
+
+                    return (
+                      <div
+                        key={movie.show_id}
+                        className="movie-item"
+                        onClick={() =>
+                          navigate(`/productdetail/${movie.show_id}`)
+                        }
+                      >
+                        <span className="ranking">{idx + 1}</span>
+                        <img src={imageUrl} alt={movie.title} />
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <button
+                  className="carousel-control next"
+                  onClick={() => scrollCarousel("right")}
+                  aria-label="Next recommendations"
+                >
+                  &gt;
+                </button>
               </div>
             )}
           </section>

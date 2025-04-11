@@ -178,7 +178,7 @@ function ProductDetailPage() {
     <>
       <NavBar2 />
 
-      <div style={{ color: "white" }}>
+      <div style={{ color: "white", paddingTop: "140px" }}>
         <div
           className="d-flex flex-md-row flex-column align-items-start gap-4 mt-4"
           style={{ paddingLeft: "1%" }}
