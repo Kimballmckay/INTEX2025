@@ -3,6 +3,7 @@ import { MoviesTitle } from "../types/MoviesTitle";
 import { MovieSimilarity } from "../types/MovieSimilarity";
 import { useEffect, useState } from "react";
 import "../css/ProductDetailPage.css";
+import NavBar2 from "../components/NavBar2";
 
 function ProductDetailPage() {
   const navigate = useNavigate();
@@ -174,116 +175,144 @@ function ProductDetailPage() {
   const imageUrl = `https://movieimagesstorage.blob.core.windows.net/movieimages/Movie%20Posters/Movie%20Posters/${encodeURIComponent(cleanTitle)}.jpg`;
 
   return (
-    <div style={{ color: "white" }}>
-      <div className="d-flex flex-md-row flex-column align-items-start gap-4 mt-4">
-        <img
-          src={imageUrl}
-          alt={`${movie.title} poster`}
-          width={300}
-          height={450}
-          style={{ borderRadius: "8px", objectFit: "cover" }}
-          onError={(e) => {
-            e.currentTarget.style.display = "none";
-          }}
-        />
+    <>
+      <NavBar2 />
 
-        <div className="flex-grow-1" style={{ minWidth: "300px" }}>
-          <h1 className="mb-2">{movie.title}</h1>
-          <p className="text-muted mb-3">
-            {movie.rating} • {movie.duration} • {movie.release_year}
-          </p>
+      <div style={{ color: "white" }}>
+        <div
+          className="d-flex flex-md-row flex-column align-items-start gap-4 mt-4"
+          style={{ paddingLeft: "1%" }}
+        >
+          {/* Back Button */}
+          <button
+            onClick={() => navigate(-1)}
+            style={{
+              background: "none",
+              border: "none",
+              color: "white",
+              fontSize: "1.2rem",
+              cursor: "pointer",
+              marginRight: "10px",
+            }}
+          >
+            ← Back
+          </button>
+          <img
+            src={imageUrl}
+            alt={`${movie.title} poster`}
+            width={300}
+            height={450}
+            style={{ borderRadius: "8px", objectFit: "cover" }}
+            onError={(e) => {
+              e.currentTarget.style.display = "none";
+            }}
+          />
 
-          <p>
-            <strong>Description:</strong> {movie.description}
-          </p>
-          <p>
-            <strong>Genre:</strong> {movie.genre}
-          </p>
-          <p>
-            <strong>Country:</strong> {movie.country}
-          </p>
-          <p>
-            <strong>Type:</strong> {movie.type}
-          </p>
-          <p>
-            <strong>Director:</strong> {movie.director}
-          </p>
+          <div className="flex-grow-1" style={{ maxWidth: "50%" }}>
+            <h1 className="mb-2">{movie.title}</h1>
+            <p className="mb-3">
+              {movie.rating} • {movie.duration} • {movie.release_year}
+            </p>
 
-          <p className="mb-2">
-            <strong>Average Rating: </strong>
-            {averageRating === 0
-              ? "No ratings yet"
-              : `${averageRating.toFixed(2)} ★`}
-          </p>
+            <p>
+              <strong>Description:</strong> {movie.description}
+            </p>
+            <p>
+              <strong>Genre:</strong> {movie.genre}
+            </p>
+            <p>
+              <strong>Country:</strong> {movie.country}
+            </p>
+            <p>
+              <strong>Type:</strong> {movie.type}
+            </p>
+            <p>
+              <strong>Director:</strong> {movie.director}
+            </p>
 
-          <div className="mb-3">
-            <label htmlFor="star-rating">
-              <strong>Your Rating:</strong>
-            </label>
-            <div
-              id="star-rating"
-              style={{ fontSize: "2rem", cursor: "pointer" }}
-            >
-              {[1, 2, 3, 4, 5].map((star) => (
-                <span
-                  key={star}
-                  onClick={() => handleStarClick(star)}
-                  style={{
-                    color:
-                      userRating && star <= userRating ? "#ffc107" : "#e4e5e9",
-                    transition: "color 0.2s",
-                  }}
-                >
-                  ★
-                </span>
-              ))}
+            <p className="mb-2">
+              <strong>Average Rating: </strong>
+              {averageRating === 0
+                ? "No ratings yet"
+                : `${averageRating.toFixed(2)} ★`}
+            </p>
+
+            <div className="mb-3">
+              <label htmlFor="star-rating">
+                <strong>Your Rating:</strong>
+              </label>
+              <div
+                id="star-rating"
+                style={{ fontSize: "2rem", cursor: "pointer" }}
+              >
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <span
+                    key={star}
+                    onClick={() => handleStarClick(star)}
+                    style={{
+                      color:
+                        userRating && star <= userRating
+                          ? "#ffc107"
+                          : "#e4e5e9",
+                      transition: "color 0.2s",
+                    }}
+                  >
+                    ★
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="mt-4">
-        <h4 className="mb-3">Recommended</h4>
-        {recommendations.length > 0 ? (
-          <div className="d-flex flex-wrap justify-content-center gap-4">
-            {recommendations.map((title, index) => {
-              const cleanRecTitle = title.replace(/[^a-zA-Z0-9\sñ]/g, "");
-              const recImageUrl = `https://movieimagesstorage.blob.core.windows.net/movieimages/Movie%20Posters/Movie%20Posters/${encodeURIComponent(cleanRecTitle)}.jpg`;
+        <div className="mt-4">
+          <h4
+            className="mb-3"
+            style={{ paddingLeft: "12%", fontWeight: "bold" }}
+          >
+            Recommended
+          </h4>
+          {recommendations.length > 0 ? (
+            <div className="d-flex  justify-content-center gap-4">
+              {recommendations.map((title, index) => {
+                const cleanRecTitle = title.replace(/[^a-zA-Z0-9\sñ]/g, "");
+                const recImageUrl = `https://movieimagesstorage.blob.core.windows.net/movieimages/Movie%20Posters/Movie%20Posters/${encodeURIComponent(cleanRecTitle)}.jpg`;
 
-              return (
-                <div
-                  key={index}
-                  className="movie-card d-flex flex-column align-items-center"
-                  style={{ width: 200, cursor: "pointer" }}
-                  onClick={() => handleRecommendationClick(title)}
-                >
-                  <img
-                    src={recImageUrl}
-                    alt={`${title} poster`}
-                    style={{
-                      width: "100%",
-                      aspectRatio: "2/3",
-                      objectFit: "cover",
-                    }}
-                    onError={(e) => {
-                      e.currentTarget.style.display = "none";
-                    }}
-                  />
-                  <p
-                    className="mt-2 text-center"
-                    style={{ fontSize: "0.9rem" }}
+                return (
+                  <div
+                    key={index}
+                    className="movie-card d-flex flex-column align-items-center"
+                    style={{ width: 200, cursor: "pointer", outline: "none" }}
+                    onClick={() => handleRecommendationClick(title)}
                   >
-                    {title}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        ) : (
-          <p>No recommendations available</p>
-        )}
+                    <img
+                      src={recImageUrl}
+                      alt={`${title} poster`}
+                      style={{
+                        width: "100%",
+                        height: "300px",
+                        objectFit: "cover",
+                      }}
+                      onError={(e) => {
+                        e.currentTarget.style.display = "none";
+                      }}
+                    />
+                    <p
+                      className="mt-2 text-center"
+                      style={{ fontSize: "0.9rem" }}
+                    >
+                      {title}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <p>No recommendations available</p>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
