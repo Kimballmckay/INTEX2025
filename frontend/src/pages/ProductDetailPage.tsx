@@ -171,7 +171,7 @@ function ProductDetailPage() {
 
   if (!movie) return <div>Loading...</div>;
 
-  const cleanTitle = (movie.title ?? "").replace(/[^a-zA-Z0-9\s]/g, "");
+  const cleanTitle = (movie.title ?? "").replace(/[^a-zA-Z0-9\sñ]/g, "");
   const imageUrl = `https://movieimagesstorage.blob.core.windows.net/movieimages/Movie%20Posters/Movie%20Posters/${encodeURIComponent(cleanTitle)}.jpg`;
 
   return (
