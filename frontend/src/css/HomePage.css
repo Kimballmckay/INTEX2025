@@ -32,56 +32,19 @@ h2 {
   color: white;
   position: relative;
   overflow: hidden;
-  height: 1000px; /* Set a fixed height */
+  height: 100vh; /* Make the carousel take up the full viewport height */
 }
-
-.carousel-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 3rem;
-  width: 100%;
-  height: 100%;
-}
-
-.carousel-text {
-  flex: 1;
-  padding-left: 5vw;
-  color: white;
-  z-index: 2;
-}
-
-.carousel-text h1 {
-  font-size: 3rem;
-}
-
-.carousel-text p {
-  font-size: 1.2rem;
-  opacity: 0.8;
-}
-
-/* .carousel-image {
-  width: 100%;
-  border-radius: 1rem;
-  object-fit: cover;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-  flex: 1;
-  height: 800px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-} */
 
 .carousel-background {
   position: relative;
-  height: 1000px;
+  height: 100%; /* Ensure it fills the carousel */
   overflow: hidden;
 }
 
 .carousel-img {
   width: 100%;
-  height: 1000px !important;
-  object-fit: cover;
+  height: 100%;
+  object-fit: contain; /* Ensure image scales without cutting off */
   position: absolute;
   top: 0;
   left: 0;
@@ -118,7 +81,7 @@ h2 {
 }
 
 .carousel-item {
-  height: 1000px !important; /* match your .carousel-background height */
+  height: 100vh !important; /* Ensure the carousel items are the height of the viewport */
 }
 
 /* FIND SOMETHING NEW SECTION */
