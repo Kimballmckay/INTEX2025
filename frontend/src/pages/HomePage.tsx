@@ -35,9 +35,10 @@ function HomePage() {
 
   const carouselItems = [
     {
-      title: "Streaming Classics in Hi-Fi",
-      subtitle: "Retro vibes. Timeless cinema.",
-      image: "/images/brighterday.webp",
+      title: "Discover What's Worth Watching",
+      subtitle:
+        "Smart recommendations tailored to your taste, bringing the golden age of film to your modern screen",
+      image: "/images/netflix.jpg",
     },
     {
       title: "Lights, Camera, Nostalgia",
@@ -50,13 +51,13 @@ function HomePage() {
       image: "/images/roma2.png",
     },
     {
-      title: "Find Tailored Options Just for You!",
-      subtitle: "Stop wasting time. Start streaming now.",
-      image: "/images/netflix.jpg",
+      title: "Suggestions For You",
+      subtitle: "Find Just What You're Looking For",
+      image: "/images/brighterday.webp",
     },
     {
-      title: "Watch It Like It's 1979",
-      subtitle: "Old-school stories on demand.",
+      title: "Everything You Need",
+      subtitle: "Options For Every Taste",
       image: "/images/Untitled design (3).png",
     },
   ];
@@ -185,8 +186,8 @@ function HomePage() {
           <div className="card">
             Personalized Experience
             <div className="subtext">
-              Enjoy a viewing experience tailored to your preferences, with
-              recommendations you'll love.
+              Enjoy a viewing experience tailored to your preferences through
+              our personalized rating system.
             </div>
           </div>
         </div>

@@ -126,7 +126,7 @@ function LoginPage() {
               <button
                 className="create-account-button"
                 type="button"
-                onClick={() => navigate(-1)}
+                onClick={() => navigate("/")}
               >
                 BACK
               </button>

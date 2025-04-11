@@ -46,6 +46,12 @@ function NavBar2() {
                 >
                   Watch
                 </button>
+                <button
+                  className="watch-button"
+                  onClick={() => navigate("/managemovies")}
+                >
+                  Manage
+                </button>
               </div>
             </div>
 
