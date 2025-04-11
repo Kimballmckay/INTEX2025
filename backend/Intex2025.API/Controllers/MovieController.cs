@@ -22,7 +22,6 @@ namespace Intex2025.API.Controllers
         }
 
         // Updated GetMovies to handle pagination and search query
-        [Authorize]
         [HttpGet("AllMovies")]
         public IActionResult GetMovies(int pageSize = 5, int pageNum = 1, [FromQuery] List<string>? movieGenres = null, [FromQuery] string? searchQuery = null)
         {
