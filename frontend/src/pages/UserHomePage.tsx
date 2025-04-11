@@ -138,7 +138,10 @@ function UserHomePage() {
             {recommendedMovies.length > 0 && (
               <div className="movie-grid">
                 {recommendedMovies.map((movie, idx) => {
-                  const cleanTitle = movie.title.replace(/[^a-zA-Z0-9\s]/g, "");
+                  const cleanTitle = (movie.title ?? "").replace(
+                    /[^a-zA-Z0-9\s]/g,
+                    ""
+                  );
                   const imageUrl = `https://movieimagesstorage.blob.core.windows.net/movieimages/Movie%20Posters/Movie%20Posters/${encodeURIComponent(cleanTitle)}.jpg`;
 
                   return (

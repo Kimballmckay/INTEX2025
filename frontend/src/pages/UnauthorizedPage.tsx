@@ -58,7 +58,7 @@ function UnauthorizedPage(props: { children: React.ReactNode }) {
     }
 
     // Using the CurrentUser API that provides both email and roles
-    fetchUserData("https://localhost:5000/api/Account/CurrentUser", {
+    fetchUserData("https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/api/Account/CurrentUser", {
       method: "GET",
       credentials: "include",
     });

@@ -5,10 +5,6 @@ import Pagination from "../components/Pagination";
 import NewMovieForm from "../components/NewMovieForm";
 import EditMovieForm from "../components/EditMovieForm";
 import "../css/ManageMoviesPage.css";
-import { useNavigate } from "react-router-dom";
-import Logout from "../components/Logout";
-import AuthorizeView, { AuthorizedUser } from "../components/AuthorizeView";
-import { Nav } from "react-bootstrap";
 import NavBar2 from "../components/NavBar2";
 import UnauthorizedPage from "./UnauthorizedPage";
 

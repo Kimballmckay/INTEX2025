@@ -22,7 +22,6 @@ namespace Intex2025.API.Controllers
         }
 
         // Updated GetMovies to handle pagination and search query
-        [Authorize]
         [HttpGet("AllMovies")]
         public IActionResult GetMovies(int pageSize = 5, int pageNum = 1, [FromQuery] List<string>? movieGenres = null, [FromQuery] string? searchQuery = null)
         {
@@ -274,7 +273,7 @@ namespace Intex2025.API.Controllers
             }
 
             _movieContext.SaveChanges();
-
+            
             // Recalculate and update the average rating
             var averageRating = _movieContext.Movies_Ratings
                 .Where(r => r.show_id == show_id)

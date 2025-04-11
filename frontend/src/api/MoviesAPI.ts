@@ -5,7 +5,7 @@ interface FetchMoviesResponse {
   totalNumMovies: number;
 }
 
-const API_URL = "https://localhost:5000/Movie";
+const API_URL = "https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Movie";
 
 export const fetchMovies = async (
   pageSize: number,
@@ -106,7 +106,7 @@ export async function fetchMoviesByShowIds(
   showIds: string[]
 ): Promise<MoviesTitle[]> {
   const response = await axios.post(
-    "https://localhost:5000/Movie/byshowids",
+    "https://cineniche-backend-hxb3ewa5e5b3dwhj.eastus-01.azurewebsites.net/Movie/byshowids",
     showIds,
     {
       withCredentials: true,

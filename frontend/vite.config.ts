@@ -21,7 +21,7 @@ export default defineConfig({
     },
 
     cors: {
-      origin: "http://localhost:3000",
+      origin: "https://mango-cliff-079731d1e.6.azurestaticapps.net",
       credentials: true, // ✅ Allow cookies for authentication
     },
   },

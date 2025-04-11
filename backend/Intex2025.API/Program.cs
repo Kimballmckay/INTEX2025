@@ -62,13 +62,39 @@ builder.Services.Configure<IdentityOptions>(options =>
 builder.Services.AddScoped<IUserClaimsPrincipalFactory<IdentityUser>, CustomUserClaimsPrincipalFactory>();
 
 // Security - Configure Application Cookie
+//builder.Services.ConfigureApplicationCookie(options =>
+//{
+    //options.Cookie.HttpOnly = true;
+    //options.Cookie.SameSite = SameSiteMode.None; // Use None to allow cross-site cookies
+    //options.Cookie.Name = ".AspNetCore.Identity.Application";
+    //options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    //options.LoginPath = "/login";
+//});
+
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.Cookie.HttpOnly = true;
-    options.Cookie.SameSite = SameSiteMode.Lax; // Use None to allow cross-site cookies
-    options.Cookie.Name = ".AspNetCore.Identity.Application";
     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    options.Cookie.SameSite = SameSiteMode.None;
+    options.Cookie.Name = ".AspNetCore.Identity.Application";
+
+    // ✅ This blocks 302 -> /Account/Login on unauthorized access
+    options.Events.OnRedirectToLogin = context =>
+    {
+        Console.WriteLine("‼️ RedirectToLogin intercepted");
+        context.Response.StatusCode = 401;
+        return Task.CompletedTask;
+    };
+
+    // ✅ This blocks 403s from redirecting to a login/denied page
+    options.Events.OnRedirectToAccessDenied = context =>
+    {
+        Console.WriteLine("‼️ RedirectToAccessDenied intercepted");
+        context.Response.StatusCode = 403;
+        return Task.CompletedTask;
+    };
 });
+
 
 // CORS policy configuration
 builder.Services.AddCors(options =>
@@ -76,12 +102,13 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowReactApp",
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000") // Replace with your frontend URL
+            policy.WithOrigins("http://localhost:3000", "https://mango-cliff-079731d1e.6.azurestaticapps.net") // Replace with your frontend URL
                 .AllowCredentials() // Required to allow cookies
                 .AllowAnyMethod()
                 .AllowAnyHeader();
         });
 });
+
 
 builder.Services.AddSingleton<IEmailSender<IdentityUser>, NoOpEmailSender<IdentityUser>>();
 
@@ -117,7 +144,7 @@ app.MapPost("/logout", async (HttpContext context, SignInManager<IdentityUser> s
     {
         HttpOnly = true,
         Secure = true,
-        SameSite = SameSiteMode.Lax,
+        SameSite = SameSiteMode.None,
         Path = "/",
     });
 
@@ -135,5 +162,7 @@ app.MapGet("/pingauth", (ClaimsPrincipal user) =>
     var email = user.FindFirstValue(ClaimTypes.Email) ?? "unknown@example.com"; // Ensure it's never null
     return Results.Json(new { email = email }); // Return as JSON
 }).RequireAuthorization();
+
+app.MapGet("/ping", () => Results.Ok("✅ Backend is up and public route is working!"));
 
 app.Run();
